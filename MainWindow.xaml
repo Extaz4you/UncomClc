@@ -1,0 +1,381 @@
+﻿<Window x:Class="UncomClc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UncomClc"
+        mc:Ignorable="d"
+        Title="UncomClc" Height="1000" Width="2000"
+        WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- Верхний горизонтальный раздел -->
+            <RowDefinition Height="0.9*" />
+            <!-- Верхняя часть (вертикальные разделы) -->
+            <RowDefinition Height="0.2*" />
+            <!-- Середина сообщения (горизонтальный раздел) -->
+            <RowDefinition Height="0.5*" />
+            <!-- Нижняя часть (горизонтальный раздел) -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="57*" />
+            <ColumnDefinition Width="172*"/>
+            <!-- Первый вертикальный раздел -->
+            <ColumnDefinition Width="471*" />
+            <!-- Второй вертикальный раздел -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Верхний горизонтальный раздел -->
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1">
+
+            <!--<ToolBar Background="Moccasin">
+                <Button Content="Файл" Margin="5" Width="120" Click="ShowContextMenu_Click" x:Name="ContextMenuButton" BorderBrush="Tan" BorderThickness="2"/>
+                <Button x:Name="Calculate" Content="Рассчитать" Margin="5" Width="80" BorderBrush="Tan" BorderThickness="2" Click="Calculate_Click"/>
+                <Button x:Name="CalculateAll" Content="Рассчитать все" Margin="5" Width="90" BorderBrush="Tan" BorderThickness="2" Click="CalculateAll_Click"/>
+                <Button x:Name="OpenExcel" Content="Обновить данные" Margin="5" Width="80" BorderBrush="Tan" BorderThickness="2" Click="OpenExcel_Click"/>
+                <Button x:Name="OpenReports" Content="Отчеты" Margin="5" Width="80" BorderBrush="Tan" BorderThickness="2"  Click="Show_Reports"/>
+                <ToolBar.ContextMenu>
+                    <ContextMenu x:Name="TreeViewContextMenu">
+                        <MenuItem x:Name="Add" Header="Добавить новую трубу" Click="Add_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/addpipe.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem x:Name="Delete" Header="Удалить" Click="Delete_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/delete.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem x:Name="OpenFile" Header="Открыть" Click="OpenFile_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/OpenFile.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem x:Name="SaveFile" Header="Сохранить" Click="SaveFile_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/SaveFile.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem x:Name="CreateFile" Header="Создать" Click="CreateFile_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/CreateFile.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </ToolBar.ContextMenu>
+            </ToolBar>
+            
+            <ToolBar Visibility="Hidden">
+                <ToolBar.ContextMenu>
+                    <ContextMenu x:Name="ReportsContextMenu">
+                        <MenuItem x:Name="GenerateReport" Header="Ведомости материалов" Click="GenerateReport_Click">
+
+                        </MenuItem>
+                        <MenuItem x:Name="GeneralReport" Header="Общий перечень линий" Click="GeneralReport_Click">
+
+                        </MenuItem>
+                        <MenuItem x:Name="SingleLine" Header="Параметры отдельной линии" Click="SingleLine_Click">
+
+                        </MenuItem>
+                    </ContextMenu>
+                </ToolBar.ContextMenu>
+            </ToolBar>-->
+
+        </StackPanel>
+
+        <!-- Верхняя 1 часть с вертикальными разделами -->
+        <Border Grid.Row="1" Grid.Column="0" Background="Gray" Margin="5" Grid.ColumnSpan="2">
+            <TreeView FontSize="22" x:Name="PipeLinesTree" >
+                <!--<TreeView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавить новую трубу" Click="AddNewPipe_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/addpipe.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Копировать запись" Click="CopyRecord_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/Copy.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Вставить" x:Name="InsertRecord" Click="InsertRecord_Click" IsEnabled="False">
+
+                        </MenuItem>
+                        <MenuItem Header="Вставить в конец" x:Name="InsertAtTheEndRecord" Click="InsertAtTheEndRecord_Click" IsEnabled="False">
+
+                        </MenuItem>
+                        <MenuItem Header="Удалить запись" Click="DeleteRecord_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/delete.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </TreeView.ContextMenu>-->
+            </TreeView>
+        </Border>
+
+        <!-- Верхняя 2 часть с вертикальными разделами -->
+        <TabControl x:Name="MyTabControl" Grid.Row="1" Grid.Column="2" Margin="5">
+            <TabItem Header="Исходные данные для расчета нагревательной секции из кабеля нагревостойкого с минеральной изоляцией" FontSize="15" FontWeight="Bold" Grid.Row="1" Grid.Column="2" >
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    
+                    <StackPanel Orientation="Horizontal" Margin="10" >
+
+                        <StackPanel Orientation="Vertical">
+
+                            <GroupBox Header="Труба" Margin="5" FontSize="15" FontWeight="Bold">
+                                <StackPanel Orientation="Vertical" Margin="15">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Тип:" />
+                                        <ComboBox Width="160"  x:Name="Pipes" Height="25">
+                                            <ComboBoxItem Content=""/>
+                                        </ComboBox>
+                                        <Button x:Name="EditPipes" Content="..." Width="50" Height="25" Margin="10,0,0,0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Наружный диаметр:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Толщина стенки:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Длина:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="Коэф. запаса:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                                        <Button Content="Задвижки, опоры..."  Width="170" Height="25" BorderThickness="2" x:Name="ValvesAndSupports"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Header="Теплоизоляция 1 слой" Margin="5" FontSize="15" FontWeight="Bold">
+
+                                <StackPanel Orientation="Vertical" Margin="15">
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Тип:"/>
+                                        <ComboBox Width="150" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox">
+                                            <ComboBoxItem Content=" "/>
+                                        </ComboBox>
+                                        <Button x:Name="ThermalIsolationEditButton" Content="..." Height="25" Width="50"  HorizontalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Толщина:"/>
+                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Header="Теплоизоляция 2 слой" Margin="5" FontSize="15" FontWeight="Bold">
+
+                                <StackPanel Orientation="Vertical" Margin="15">
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Тип:"/>
+                                        <ComboBox Width="150" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2">
+                                            <ComboBoxItem Content=" "/>
+                                        </ComboBox>
+                                        <Button x:Name="ThermalIsolationEditButton2" Content="..." Height="25" Width="50"  HorizontalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Толщина:"/>
+                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation2"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <GroupBox Header="Окружающая среда" Margin="5" FontSize="15" FontWeight="Bold">
+                                <StackPanel Orientation="Vertical" Margin="15">
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Мин. температура окр. среды:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="°C"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Макс. температура окр. среды:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="°C"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Размещение трубопровода:"/>
+                                        <TextBox Width="100" Height="25"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Header="Технологический процесс" Margin="5" FontSize="15" FontWeight="Bold">
+                                
+                                <StackPanel Orientation="Vertical" Margin="15">
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Поддерживаемая температура:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="°C"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Макс. доп. температура продукта:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="°C"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Пропарка:"/>
+                                        <TextBox Width="30" Height="25"/>
+                                        <Label Content="Темп. пропарки:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="°C"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Темп. класс ВЗЭО:"/>
+                                        <ComboBox Width="50" Height="25" Margin="0,0,10,0"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="°C"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Рабочая среда:"/>
+                                        <ComboBox Width="150" Height="25"/>
+                                    </StackPanel>
+
+
+                                </StackPanel>
+                            </GroupBox>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <GroupBox Header="Параметры питающей сети" Margin="5" FontSize="15" FontWeight="Bold">
+                                <StackPanel Orientation="Vertical" Margin="15">
+                                    
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Напряжение фазное:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="В"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Напряжение линейное:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="В"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Номинальный ток АВ:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="А"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Header="Параметры КСЭО" Margin="5" FontSize="15" FontWeight="Bold">
+                                <StackPanel Orientation="Vertical" Margin="15">
+                                    
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Питание:"/>
+                                        <TextBox Width="100" Height="25" Margin="0,0,10,0"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="В"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Схема соединения:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Мин. темп. включения:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="°C"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Тип кабеля:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Кол-во жил:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Длина устан. части секции:"/>
+                                        <TextBox Width="50" Height="25"/>
+                                        <Label Content="м"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <GroupBox Header="Допполнительные функции" Margin="5" FontSize="15" FontWeight="Bold">
+                            </GroupBox>
+
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <Border x:Name="Message" Grid.Row="2" Grid.ColumnSpan="3" Margin="5" Background="Gray">
+            <ScrollViewer>
+                <TextBlock x:Name="MessagesBlock">
+
+                </TextBlock>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Нижняя часть с горизонтальным разделом -->
+        <Border Grid.Row="3" Grid.ColumnSpan="3" Margin="5" Background="LightGray">
+            <ScrollViewer>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <!-- Для заголовка или других элементов с фиксированной высотой -->
+                        <RowDefinition Height="*" />
+                        <!-- Этот ряд занимает все оставшееся пространство -->
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Top">
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>

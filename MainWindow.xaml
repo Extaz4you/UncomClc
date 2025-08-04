@@ -7,6 +7,84 @@
         mc:Ignorable="d"
         Title="UncomClc" Height="1000" Width="2000"
         WindowState="Maximized">
+
+    <Window.Resources>
+        <!-- Стиль для круглых кнопок -->
+        <Style x:Key="CircleButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="{TemplateBinding Background}" 
+                                 Stroke="{TemplateBinding BorderBrush}" 
+                                 StrokeThickness="0"/>
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FFDDDDDD"/>
+            <Setter Property="BorderBrush" Value="#FF707070"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+        <!-- Стиль для TextBox с подсказкой "°C" -->
+        <!-- Стиль для TextBox с подсказкой "°C" -->
+        <Style x:Key="TemperatureTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                            Focusable="False"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            VerticalScrollBarVisibility="Hidden"  
+                                            />
+
+                                    <!-- Подсказка "°C" -->
+                                    <TextBlock x:Name="DegreeSymbol"
+                                          Text="°C"
+                                          Opacity="0.3"
+                                          IsHitTestVisible="False"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Right"
+                                          Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                           <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -88,7 +166,7 @@
 
         <!-- Верхняя 1 часть с вертикальными разделами -->
         <Border Grid.Row="1" Grid.Column="0" Background="Gray" Margin="5" Grid.ColumnSpan="2">
-            <TreeView FontSize="22" x:Name="PipeLinesTree" >
+            <TreeView x:Name="PipeLinesTree" >
                 <!--<TreeView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Добавить новую трубу" Click="AddNewPipe_Click">
@@ -119,14 +197,14 @@
 
         <!-- Верхняя 2 часть с вертикальными разделами -->
         <TabControl x:Name="MyTabControl" Grid.Row="1" Grid.Column="2" Margin="5">
-            <TabItem Header="Исходные данные для расчета нагревательной секции из кабеля нагревостойкого с минеральной изоляцией" FontSize="15" FontWeight="Bold" Grid.Row="1" Grid.Column="2" >
+            <TabItem Header="Исходные данные для расчета нагревательной секции из кабеля нагревостойкого с минеральной изоляцией" Grid.Row="1" Grid.Column="2" >
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                    
+
                     <StackPanel Orientation="Horizontal" Margin="10" >
 
                         <StackPanel Orientation="Vertical">
 
-                            <GroupBox Header="Труба" Margin="5" FontSize="15" FontWeight="Bold">
+                            <GroupBox Header="Труба" Margin="5">
                                 <StackPanel Orientation="Vertical" Margin="15">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип:" />
@@ -154,13 +232,13 @@
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
-                                        <Button Content="Задвижки, опоры..."  Width="170" Height="25" BorderThickness="2" x:Name="ValvesAndSupports"/>
+                                        <Button Content="Задвижки, фланцы, опоры"  Width="170" Height="25" BorderThickness="2" x:Name="ValvesAndSupports"/>
                                     </StackPanel>
 
                                 </StackPanel>
                             </GroupBox>
 
-                            <GroupBox Header="Теплоизоляция 1 слой" Margin="5" FontSize="15" FontWeight="Bold">
+                            <GroupBox Header="Теплоизоляция 1 слой" Margin="5" >
 
                                 <StackPanel Orientation="Vertical" Margin="15">
 
@@ -180,7 +258,7 @@
                                 </StackPanel>
                             </GroupBox>
 
-                            <GroupBox Header="Теплоизоляция 2 слой" Margin="5" FontSize="15" FontWeight="Bold">
+                            <GroupBox Header="Теплоизоляция 2 слой" Margin="5">
 
                                 <StackPanel Orientation="Vertical" Margin="15">
 
@@ -204,58 +282,58 @@
 
                         <StackPanel Orientation="Vertical">
 
-                            <GroupBox Header="Окружающая среда" Margin="5" FontSize="15" FontWeight="Bold">
+                            <GroupBox Header="Окружающая среда" Margin="5">
                                 <StackPanel Orientation="Vertical" Margin="15">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Мин. температура окр. среды:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="°C"/>
+                                        <TextBox Width="70" Height="25" Style="{StaticResource TemperatureTextBoxStyle}">
+                                        </TextBox>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Макс. температура окр. среды:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="°C"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Размещение трубопровода:"/>
-                                        <TextBox Width="100" Height="25"/>
+                                        <ComboBox Width="100" Height="25"/>
                                     </StackPanel>
 
                                 </StackPanel>
                             </GroupBox>
 
-                            <GroupBox Header="Технологический процесс" Margin="5" FontSize="15" FontWeight="Bold">
-                                
+                            <GroupBox Header="Технологический процесс" Margin="5">
+
                                 <StackPanel Orientation="Vertical" Margin="15">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Поддерживаемая температура:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="°C"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Label Content="Макс. тех. температура продукта:"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Макс. доп. температура продукта:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="°C"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Пропарка:"/>
-                                        <TextBox Width="30" Height="25"/>
+                                        <ComboBox Width="30" Height="25"/>
                                         <Label Content="Темп. пропарки:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="°C"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Темп. класс ВЗЭО:"/>
                                         <ComboBox Width="50" Height="25" Margin="0,0,10,0"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="°C"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -271,9 +349,9 @@
 
                         <StackPanel Orientation="Vertical">
 
-                            <GroupBox Header="Параметры питающей сети" Margin="5" FontSize="15" FontWeight="Bold">
+                            <GroupBox Header="Параметры питающей сети" Margin="5">
                                 <StackPanel Orientation="Vertical" Margin="15">
-                                    
+
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение фазное:"/>
                                         <TextBox Width="50" Height="25"/>
@@ -295,39 +373,42 @@
                                 </StackPanel>
                             </GroupBox>
 
-                            <GroupBox Header="Параметры КСЭО" Margin="5" FontSize="15" FontWeight="Bold">
+                            <GroupBox Header="Параметры КСЭО" Margin="5">
                                 <StackPanel Orientation="Vertical" Margin="15">
-                                    
+
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Питание:"/>
-                                        <TextBox Width="100" Height="25" Margin="0,0,10,0"/>
+                                        <ComboBox Width="100" Height="25" Margin="0,0,10,0"/>
                                         <TextBox Width="50" Height="25"/>
                                         <Label Content="В"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Схема соединения:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <ComboBox Width="50" Height="25"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Мин. темп. включения:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="°C"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип кабеля:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <ComboBox Width="50" Height="25"/>
+                                        <Button Width="25" Height="25" Margin="5,0,0,0" 
+                                            Style="{StaticResource CircleButtonStyle}">
+                                            <Image Source="/Images/info.png" Width="25" Height="25"/>
+                                        </Button>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Кол-во жил:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <ComboBox Width="50" Height="25"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина устан. части секции:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <TextBox Width="50" Height="25" Tag="123"/>
                                         <Label Content="м"/>
                                     </StackPanel>
 
@@ -338,7 +419,7 @@
 
                         <StackPanel Orientation="Vertical">
 
-                            <GroupBox Header="Допполнительные функции" Margin="5" FontSize="15" FontWeight="Bold">
+                            <GroupBox Header="Допполнительные функции" Margin="5">
                             </GroupBox>
 
                         </StackPanel>

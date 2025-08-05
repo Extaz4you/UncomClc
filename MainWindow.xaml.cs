@@ -25,6 +25,7 @@ namespace UncomClc
         {
             InitializeComponent();
             this.DataContext = new ProcessView();
+            this.DataContext = new EnvironmentView();
         }
     }
 }

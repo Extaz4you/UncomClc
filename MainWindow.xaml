@@ -490,21 +490,18 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Мин. температура окр. среды:"/>
-                                        <TextBox Width="70" Height="25" Style="{StaticResource TemperatureTextBoxStyle}">
+                                        <TextBox x:Name="MinEnvironmentTemp" Width="70" Height="25" Text="{Binding MinEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}">
                                         </TextBox>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Макс. температура окр. среды:"/>
-                                        <TextBox Width="70" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="MaxEnvironmentTemp" Width="70" Height="25" Text="{Binding MaxEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Размещение трубопровода:"/>
-                                        <ComboBox Width="100" Height="25">
-                                            <ComboBoxItem Content="Открытый воздух"/>
-                                            <ComboBoxItem Content="В помещении"/>
-                                        </ComboBox>
+                                        <ComboBox x:Name="PipelinePlacement" Width="130" Height="25" ItemsSource="{Binding PipelinePlacementOptions}" SelectedItem="{Binding PipelinePlacement}"/>
                                     </StackPanel>
 
                                 </StackPanel>

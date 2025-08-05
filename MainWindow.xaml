@@ -31,7 +31,7 @@
             <Setter Property="Height" Value="20"/>
         </Style>
         <!-- Стиль для TextBox с подсказкой "°C" -->
-        <!-- Стиль для TextBox с подсказкой "°C" -->
+        <!-- Стиль для TextBox с подсказкой "В" -->
         <Style x:Key="TemperatureTextBoxStyle" TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>
@@ -65,7 +65,159 @@
                         </Grid>
 
                         <ControlTemplate.Triggers>
-                           <!-- Стандартные триггеры для TextBox -->
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+        <Style x:Key="VoltageTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                    Focusable="False"
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    VerticalScrollBarVisibility="Hidden"  
+                                    />
+
+                                    <!-- Подсказка "°C" -->
+                                    <TextBlock x:Name="DegreeSymbol"
+                                  Text="В"
+                                  Opacity="0.3"
+                                  IsHitTestVisible="False"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Right"
+                                  Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+        <Style x:Key="CurrnetTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                        Focusable="False"
+                                        HorizontalScrollBarVisibility="Hidden"
+                                        VerticalScrollBarVisibility="Hidden"/>
+
+                                    <!-- Подсказка "°C" -->
+                                    <TextBlock x:Name="DegreeSymbol"
+                                    Text="A"
+                                    Opacity="0.3"
+                                    IsHitTestVisible="False"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+        <Style x:Key="MetersTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                            Focusable="False"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            VerticalScrollBarVisibility="Hidden"  
+                                            />
+
+                                    <!-- Подсказка "°C" -->
+                                    <TextBlock x:Name="DegreeSymbol"
+                                          Text="м"
+                                          Opacity="0.3"
+                                          IsHitTestVisible="False"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Right"
+                                          Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
                             </Trigger>
@@ -354,20 +506,17 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение фазное:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="В"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение линейное:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="В"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Номинальный ток АВ:"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="А"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -379,8 +528,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Питание:"/>
                                         <ComboBox Width="100" Height="25" Margin="0,0,10,0"/>
-                                        <TextBox Width="50" Height="25"/>
-                                        <Label Content="В"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -408,8 +556,7 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина устан. части секции:"/>
-                                        <TextBox Width="50" Height="25" Tag="123"/>
-                                        <Label Content="м"/>
+                                        <TextBox Width="50" Height="25" Tag="123" Style="{StaticResource MetersTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>

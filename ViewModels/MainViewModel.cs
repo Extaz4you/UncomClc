@@ -11,6 +11,8 @@ namespace UncomClc.ViewModels
     {
         public ProcessView ProcessVM { get; } = new ProcessView();
         public EnvironmentView EnvironmentVM { get; } = new EnvironmentView();
+        public PowerSupplyParametersView PowerSupplyParametersVM { get; } = new PowerSupplyParametersView();
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

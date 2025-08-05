@@ -530,7 +530,7 @@
                                         <Label Content="Пропарка:"/>
                                         <ComboBox x:Name="StreamingStatus" Width="50" Height="25" ItemsSource="{Binding ProcessVM.SteamingOptions}" SelectedItem="{Binding ProcessVM.SteamingStatus}"/>
                                         <Label Content="Темп. пропарки:"/>
-                                        <TextBox x:Name="StreamingTemperature" Width="50" Height="25" Text="{Binding ProcessVM.StreamingTemperature, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="StreamingTemperature" Width="50" Height="25" Text="{Binding ProcessVM.StreamingTemperature, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ProcessVM.IsSteamingTemperatureEnabled}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -557,17 +557,17 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение фазное:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <TextBox x:Name="PhaseVoltage" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.PhaseVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение линейное:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <TextBox x:Name="LineVoltage" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.LineVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Номинальный ток АВ:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
+                                        <TextBox x:Name="Currrent" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.Current, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CurrnetTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>

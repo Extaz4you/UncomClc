@@ -10,8 +10,8 @@ namespace UncomClc.ViewModels
 {
     public class EnvironmentView : INotifyPropertyChanged
     {
-        private int maxEnvironmentTemp = -20;
-        private int minEnvironmentTemp = 30;
+        private int minEnvironmentTemp = -20;
+        private int maxEnvironmentTemp = 30;
         private string pipelinePlacement = "открытый воздух";
 
         public int MaxEnvironmentTemp

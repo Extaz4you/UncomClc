@@ -24,8 +24,7 @@ namespace UncomClc
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new ProcessView();
-            this.DataContext = new EnvironmentView();
+            this.DataContext = new MainViewModel();
         }
     }
 }

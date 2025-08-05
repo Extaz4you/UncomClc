@@ -490,18 +490,18 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Мин. температура окр. среды:"/>
-                                        <TextBox x:Name="MinEnvironmentTemp" Width="70" Height="25" Text="{Binding MinEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}">
+                                        <TextBox x:Name="MinEnvironmentTemp" Width="70" Height="25" Text="{Binding EnvironmentVM.MinEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}">
                                         </TextBox>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Макс. температура окр. среды:"/>
-                                        <TextBox x:Name="MaxEnvironmentTemp" Width="70" Height="25" Text="{Binding MaxEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="MaxEnvironmentTemp" Width="70" Height="25" Text="{Binding EnvironmentVM.MaxEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Размещение трубопровода:"/>
-                                        <ComboBox x:Name="PipelinePlacement" Width="130" Height="25" ItemsSource="{Binding PipelinePlacementOptions}" SelectedItem="{Binding PipelinePlacement}"/>
+                                        <ComboBox x:Name="PipelinePlacement" Width="130" Height="25" ItemsSource="{Binding EnvironmentVM.PipelinePlacementOptions}" SelectedItem="{Binding EnvironmentVM.PipelinePlacement}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -513,35 +513,35 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="SupportedTemp" Content="Поддерживаемая температура:"/>
-                                        <TextBox Width="50" Height="25" Text="{Binding SupportedTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox Width="50" Height="25" Text="{Binding ProcessVM.SupportedTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="MaxTechProductTemp" Content="Макс. техн. температура продукта:"/>
-                                        <TextBox Width="50" Height="25" Text="{Binding MaxTechProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox Width="50" Height="25" Text="{Binding ProcessVM.MaxTechProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="MaxAddProductTemp"  Content="Макс. доп. температура продукта:"/>
-                                        <TextBox Width="50" Height="25" Text="{Binding MaxAddProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox Width="50" Height="25" Text="{Binding ProcessVM.MaxAddProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Пропарка:"/>
-                                        <ComboBox x:Name="StreamingStatus" Width="50" Height="25" ItemsSource="{Binding SteamingOptions}" SelectedItem="{Binding SteamingStatus}"/>
+                                        <ComboBox x:Name="StreamingStatus" Width="50" Height="25" ItemsSource="{Binding ProcessVM.SteamingOptions}" SelectedItem="{Binding ProcessVM.SteamingStatus}"/>
                                         <Label Content="Темп. пропарки:"/>
-                                        <TextBox x:Name="StreamingTemperature" Width="50" Height="25" Text="{Binding StreamingTemperature, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="StreamingTemperature" Width="50" Height="25" Text="{Binding ProcessVM.StreamingTemperature, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Темп. класс ВЗЭО:"/>
-                                        <ComboBox x:Name="TemperatureClass" Width="50" Height="25" Margin="0,0,10,0" ItemsSource="{Binding TemperatureClassOptions}" SelectedItem="{Binding TemperatureClass}"/>
-                                        <TextBox x:Name="TemperatureClassValue" Width="50" Height="25" Text="{Binding TemperatureClassValue}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <ComboBox x:Name="TemperatureClass" Width="50" Height="25" Margin="0,0,10,0" ItemsSource="{Binding ProcessVM.TemperatureClassOptions}" SelectedItem="{Binding ProcessVM.TemperatureClass}"/>
+                                        <TextBox x:Name="TemperatureClassValue" Width="50" Height="25" Text="{Binding ProcessVM.TemperatureClassValue}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Рабочая среда:"/>
-                                        <ComboBox x:Name="WorkEnvironment" Width="150" Height="25" ItemsSource="{Binding WorkEnvironmentOptions}" SelectedItem="{Binding WorkEnvironment}"/>
+                                        <ComboBox x:Name="WorkEnvironment" Width="150" Height="25" ItemsSource="{Binding ProcessVM.WorkEnvironmentOptions}" SelectedItem="{Binding ProcessVM.WorkEnvironment}"/>
                                     </StackPanel>
 
 

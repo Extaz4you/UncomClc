@@ -235,6 +235,57 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#FF000000"/>
         </Style>
+        <Style x:Key="MMTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                            Focusable="False"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            VerticalScrollBarVisibility="Hidden"  
+                                            />
+
+                                    <!-- Подсказка "°C" -->
+                                    <TextBlock x:Name="DegreeSymbol"
+                                          Text="мм"
+                                          Opacity="0.3"
+                                          IsHitTestVisible="False"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Right"
+                                          Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -368,17 +419,17 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Наружный диаметр:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина стенки:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         <Label Content="Коэф. запаса:"/>
                                         <TextBox Width="50" Height="25"/>
                                     </StackPanel>
@@ -404,7 +455,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина:"/>
-                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation"/>
+                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -424,7 +475,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина:"/>
-                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation2"/>
+                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation2" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -445,7 +496,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Макс. температура окр. среды:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox Width="70" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -466,7 +517,7 @@
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Label Content="Макс. тех. температура продукта:"/>
+                                        <Label Content="Макс. техн. температура продукта:"/>
                                         <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 

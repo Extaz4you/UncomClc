@@ -615,15 +615,11 @@
 
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical">
-
-                            <GroupBox Header="Допполнительные функции" Margin="5">
-                            </GroupBox>
-
-                        </StackPanel>
-
                     </StackPanel>
                 </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Дополнительные функции">
+                
             </TabItem>
         </TabControl>
 

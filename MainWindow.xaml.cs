@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UncomClc.ViewModels;
 
 namespace UncomClc
 {
@@ -23,6 +24,7 @@ namespace UncomClc
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new ProcessView();
         }
     }
 }

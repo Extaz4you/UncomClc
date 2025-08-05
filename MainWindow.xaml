@@ -501,7 +501,10 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Размещение трубопровода:"/>
-                                        <ComboBox Width="100" Height="25"/>
+                                        <ComboBox Width="100" Height="25">
+                                            <ComboBoxItem Content="Открытый воздух"/>
+                                            <ComboBoxItem Content="В помещении"/>
+                                        </ComboBox>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -512,36 +515,36 @@
                                 <StackPanel Orientation="Vertical" Margin="15">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Label Content="Поддерживаемая температура:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <Label x:Name="SupportedTemp" Content="Поддерживаемая температура:"/>
+                                        <TextBox Width="50" Height="25" Text="{Binding SupportedTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Label Content="Макс. техн. температура продукта:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <Label x:Name="MaxTechProductTemp" Content="Макс. техн. температура продукта:"/>
+                                        <TextBox Width="50" Height="25" Text="{Binding MaxTechProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Label Content="Макс. доп. температура продукта:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <Label x:Name="MaxAddProductTemp"  Content="Макс. доп. температура продукта:"/>
+                                        <TextBox Width="50" Height="25" Text="{Binding MaxAddProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Пропарка:"/>
-                                        <ComboBox Width="30" Height="25"/>
+                                        <ComboBox x:Name="StreamingStatus" Width="50" Height="25" ItemsSource="{Binding SteamingOptions}" SelectedItem="{Binding SteamingStatus}"/>
                                         <Label Content="Темп. пропарки:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="StreamingTemperature" Width="50" Height="25" Text="{Binding StreamingTemperature, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Темп. класс ВЗЭО:"/>
-                                        <ComboBox Width="50" Height="25" Margin="0,0,10,0"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <ComboBox x:Name="TemperatureClass" Width="50" Height="25" Margin="0,0,10,0" ItemsSource="{Binding TemperatureClassOptions}" SelectedItem="{Binding TemperatureClass}"/>
+                                        <TextBox x:Name="TemperatureClassValue" Width="50" Height="25" Text="{Binding TemperatureClassValue}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Рабочая среда:"/>
-                                        <ComboBox Width="150" Height="25"/>
+                                        <ComboBox x:Name="WorkEnvironment" Width="150" Height="25" ItemsSource="{Binding WorkEnvironmentOptions}" SelectedItem="{Binding WorkEnvironment}"/>
                                     </StackPanel>
 
 

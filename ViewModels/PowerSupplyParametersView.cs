@@ -76,12 +76,23 @@ namespace UncomClc.ViewModels
             {
                 current = value;
                 OnPropertyChanged(nameof(Current));
+
+            }
+        }
+
+        public int NumberCores
+        {
+            get => numberCores;
+            set
+            {
+                numberCores = value;
+                OnPropertyChanged(nameof(NumberCores));
                 PhaseVoltage = phaseVoltage;
                 LineVoltage = lineVoltage;
             }
         }
 
-        public List<int> NumberCoresOprions { get; } = new List<int>() { 1, 2};
+        public List<int> NumberCoresOptions { get; } = new List<int>() { 1, 2};
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string property)
         {

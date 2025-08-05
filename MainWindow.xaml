@@ -603,7 +603,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Кол-во жил:"/>
-                                        <ComboBox Width="50" Height="25"/>
+                                        <ComboBox x:Name="NumberCores" Width="50" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.NumberCoresOptions}" SelectedItem="{Binding PowerSupplyParametersVM.NumberCores}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина устан. части секции:"/>

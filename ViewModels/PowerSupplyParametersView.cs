@@ -185,6 +185,7 @@ namespace UncomClc.ViewModels
         public List<string> NutritionOptions { get; private set; } = new List<string>() { "однофазное", "двухфазное", "трехфазное" };
         public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() { "линия", "петля",  "две петли",  "три петли",  };
         public List<int> NumberCoresOptions { get; private set; } = new List<int>() { 1, 2};
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string property)
         {
@@ -220,7 +221,7 @@ namespace UncomClc.ViewModels
 
             if (phaseVoltage > 600 || connectionScheme == "линия")
             {
-                newOptions.Add(1);
+                newOptions.Add(2);
             }
             else
             {

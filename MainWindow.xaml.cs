@@ -26,5 +26,22 @@ namespace UncomClc
             InitializeComponent();
             this.DataContext = new MainViewModel();
         }
+
+        private void InfoButton(object sender, RoutedEventArgs e)
+        {
+            Window imageWindow = new Window
+            {
+                Title = "Информация",
+                Width = 600,
+                Height = 500,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+
+            Image image = new Image();
+            image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/infobutton.png"));
+
+            imageWindow.Content = image;
+            imageWindow.ShowDialog();
+        }
     }
 }

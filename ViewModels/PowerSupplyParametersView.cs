@@ -17,17 +17,17 @@ namespace UncomClc.ViewModels
         private int numberCores = 1;
         private bool isRecalculating = false;
 
-        public double PhaseVoltage
+        public int PhaseVoltage
         {
-            get => phaseVoltage;
+            get => Convert.ToInt32(phaseVoltage);
             set
             {
-                if(numberCores == 1 && (value < 1 || value > 660))
+                if(numberCores == 1 && (value < 0 || value > 660))
                 {
                     MessageBox.Show("Фазовое напряжение должно быть в диапазоне от 1 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                else if (numberCores == 2 && (value < 1 || value > 600))
+                else if (numberCores == 2 && (value < 0 || value > 600))
                 {
                     MessageBox.Show("Фазовое напряжение должно быть в диапазоне от 1 до 600", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
@@ -37,15 +37,15 @@ namespace UncomClc.ViewModels
                 if (!isRecalculating)
                 {
                     isRecalculating = true;
-                    LineVoltage = value * Sqrt3;
+                    LineVoltage = Convert.ToInt32(value * Sqrt3);
                     isRecalculating = false;
                 }
             }
         }
 
-        public double LineVoltage
+        public int LineVoltage
         {
-            get => lineVoltage;
+            get => Convert.ToInt32(lineVoltage);
             set
             {
                 if (numberCores == 1 && (value < 1 || value > 1143))
@@ -63,7 +63,7 @@ namespace UncomClc.ViewModels
                 if (!isRecalculating)
                 {
                     isRecalculating = true;
-                    PhaseVoltage = value / Sqrt3;
+                    PhaseVoltage = Convert.ToInt32(value / Sqrt3);
                     isRecalculating = false;
                 }
             }
@@ -87,8 +87,8 @@ namespace UncomClc.ViewModels
             {
                 numberCores = value;
                 OnPropertyChanged(nameof(NumberCores));
-                PhaseVoltage = phaseVoltage;
-                LineVoltage = lineVoltage;
+                PhaseVoltage = Convert.ToInt32(phaseVoltage);
+                LineVoltage = Convert.ToInt32(lineVoltage);
             }
         }
 

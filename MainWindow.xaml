@@ -72,6 +72,9 @@
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
                             </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -536,7 +539,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Темп. класс ВЗЭО:"/>
                                         <ComboBox x:Name="TemperatureClass" Width="50" Height="25" Margin="0,0,10,0" ItemsSource="{Binding ProcessVM.TemperatureClassOptions}" SelectedItem="{Binding ProcessVM.TemperatureClass}"/>
-                                        <TextBox x:Name="TemperatureClassValue" Width="50" Height="25" Text="{Binding ProcessVM.TemperatureClassValue}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="TemperatureClassValue" Width="50" Height="25" Text="{Binding ProcessVM.TemperatureClassValue}" IsEnabled="{Binding ProcessVM.IsTemperatureClassEnabled}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -596,7 +599,7 @@
                                         <Label Content="Тип кабеля:"/>
                                         <ComboBox Width="50" Height="25"/>
                                         <Button Width="25" Height="25" Margin="5,0,0,0" 
-                                            Style="{StaticResource CircleButtonStyle}">
+                                            Style="{StaticResource CircleButtonStyle}" Click="InfoButton">
                                             <Image Source="/Images/info.png" Width="25" Height="25"/>
                                         </Button>
                                     </StackPanel>

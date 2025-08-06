@@ -581,23 +581,23 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Питание:"/>
-                                        <ComboBox Width="100" Height="25" Margin="0,0,10,0"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <ComboBox x:Name="Nutrition" Width="100" Height="25" Margin="0,0,10,0" ItemsSource="{Binding PowerSupplyParametersVM.NutritionOptions}" SelectedItem="{Binding PowerSupplyParametersVM.Nutrition}"/>
+                                        <TextBox x:Name="WorkLoad"  Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.WorkLoad, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Схема соединения:"/>
-                                        <ComboBox Width="50" Height="25"/>
+                                        <ComboBox x:Name="ConnectionScheme" Width="80" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.ConnectionSchemeOptions}" SelectedItem="{Binding PowerSupplyParametersVM.ConnectionScheme}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Мин. темп. включения:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="MinTempOn" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.MinTempOn, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип кабеля:"/>
-                                        <ComboBox Width="50" Height="25"/>
+                                        <ComboBox x:Name="CableType" Width="90" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.CableTypeOptions}" SelectedItem="{Binding PowerSupplyParametersVM.CableType}"/>
                                         <Button Width="25" Height="25" Margin="5,0,0,0" 
                                             Style="{StaticResource CircleButtonStyle}" Click="InfoButton">
                                             <Image Source="/Images/info.png" Width="25" Height="25"/>
@@ -610,7 +610,7 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина устан. части секции:"/>
-                                        <TextBox Width="50" Height="25" Tag="123" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        <TextBox x:Name="LenghtSection" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.LenghtSection, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -621,7 +621,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Дополнительные функции">
+            <TabItem Header="Дополнительные функции" IsEnabled="False">
                 
             </TabItem>
         </TabControl>

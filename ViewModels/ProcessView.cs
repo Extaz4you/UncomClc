@@ -121,6 +121,7 @@ namespace UncomClc.ViewModels
             }
         }
 
+
         public List<string> SteamingOptions { get; } = new List<string> { "Есть", "Нет" };
         public List<string> TemperatureClassOptions { get; } = new List<string> { "T1", "T2", "T3", "T4", "T5", "T6", "-" };
         public List<string> WorkEnvironmentOptions { get; } = new List<string> { "серная кислота" , "соляная кислота" , "плавиковая кислота" , "фосфорная кислота" , "азотная кислота" , "органические кислоты" , "щелочи" , "соли" , "морская вода", "хлориды", "-" };

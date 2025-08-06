@@ -24,12 +24,12 @@ namespace UncomClc.ViewModels
             {
                 if(numberCores == 1 && (value < 0 || value > 660))
                 {
-                    MessageBox.Show("Фазовое напряжение должно быть в диапазоне от 1 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Фазное напряжение должно быть в диапазоне от 1 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 else if (numberCores == 2 && (value < 0 || value > 600))
                 {
-                    MessageBox.Show("Фазовое напряжение должно быть в диапазоне от 1 до 600", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Фазное напряжение должно быть в диапазоне от 1 до 600", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 phaseVoltage = value;
@@ -48,14 +48,14 @@ namespace UncomClc.ViewModels
             get => Convert.ToInt32(lineVoltage);
             set
             {
-                if (numberCores == 1 && (value < 1 || value > 1143))
+                if (numberCores == 1 && (value < 0 || value > 1143))
                 {
-                    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 1 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 1 до 1143", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                else if (numberCores == 2 && (value < 1 || value > 1139))
+                else if (numberCores == 2 && (value < 0 || value > 1039))
                 {
-                    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 1 до 600", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 1 до 1039", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 lineVoltage = value;

@@ -560,12 +560,12 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение фазное:"/>
-                                        <TextBox x:Name="PhaseVoltage" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.PhaseVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <TextBox x:Name="PhaseVoltage" Width="70" Height="25" Text="{Binding PowerSupplyParametersVM.PhaseVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение линейное:"/>
-                                        <TextBox x:Name="LineVoltage" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.LineVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <TextBox x:Name="LineVoltage" Width="70" Height="25" Text="{Binding PowerSupplyParametersVM.LineVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

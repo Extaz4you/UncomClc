@@ -31,14 +31,14 @@ namespace UncomClc
         {
             Window imageWindow = new Window
             {
-                Title = "Информация",
-                Width = 600,
-                Height = 500,
+                Title = "Информация по выбору типа кабеля",
+                Width = 800,
+                Height = 700,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
 
             Image image = new Image();
-            image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/infobutton.png"));
+            image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/infobutton.jpg"));
 
             imageWindow.Content = image;
             imageWindow.ShowDialog();

@@ -20,7 +20,6 @@ namespace UncomClc.ViewModels
         private int steamingTemperature = 200;
         private string temperatureClass = "-";
         private int temperatureClassValue = 0;
-        private string workEnvironment = "-";
 
         public int SupportedTemp
         {
@@ -111,20 +110,11 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(TemperatureClassValue));
             }
         }
-        public string WorkEnvironment
-        {
-            get => workEnvironment;
-            set
-            {
-                workEnvironment = value;
-                OnPropertyChanged(nameof(WorkEnvironment));
-            }
-        }
+
 
 
         public List<string> SteamingOptions { get; } = new List<string> { "Есть", "Нет" };
         public List<string> TemperatureClassOptions { get; } = new List<string> { "T1", "T2", "T3", "T4", "T5", "T6", "-" };
-        public List<string> WorkEnvironmentOptions { get; } = new List<string> { "серная кислота" , "соляная кислота" , "плавиковая кислота" , "фосфорная кислота" , "азотная кислота" , "органические кислоты" , "щелочи" , "соли" , "морская вода", "хлориды", "-" };
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

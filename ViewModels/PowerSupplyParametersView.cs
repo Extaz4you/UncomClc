@@ -23,7 +23,9 @@ namespace UncomClc.ViewModels
         private string connectionScheme = "петля";
         private string nutrition = "однофазное";
         private int workLoad = 0;
-
+        private string workEnvironment = "-";
+        public List<string> _allCableTypes = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
+        private List<string> _cableTypeOptions;
 
 
         public int PhaseVoltage
@@ -179,9 +181,30 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(WorkLoad));
             }
         }
+        public string WorkEnvironment
+        {
+            get => workEnvironment;
+            set
+            {
+                workEnvironment = value;
+                OnPropertyChanged(nameof(WorkEnvironment));
+                UpdateCableTypeOptions();
+            }
+        }
+        public List<string> CableTypeOptions
+        {
+            get => _cableTypeOptions ?? _allCableTypes;
+            private set
+            {
+                _cableTypeOptions = value;
+                OnPropertyChanged(nameof(CableTypeOptions));
+                UpdateCableSelection();
+            }
+        }
 
 
-        public List<string> CableTypeOptions { get; } = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
+        public List<string> WorkEnvironmentOptions { get; } = new List<string> { "серная кислота", "соляная кислота", "плавиковая кислота", "фосфорная кислота", "азотная кислота", "органические кислоты", "щелочи", "соли", "морская вода", "хлориды", "-" };
+        //public List<string> CableTypeOptions { get; } = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
         public List<string> NutritionOptions { get; private set; } = new List<string>() { "однофазное", "двухфазное", "трехфазное" };
         public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() { "линия", "петля",  "две петли",  "три петли",  };
         public List<int> NumberCoresOptions { get; private set; } = new List<int>() { 1, 2};
@@ -238,6 +261,68 @@ namespace UncomClc.ViewModels
                     numberCores = NumberCoresOptions.FirstOrDefault();
                     OnPropertyChanged(nameof(NumberCores));
                 }
+            }
+        }
+
+        private void UpdateCableTypeOptions()
+        {
+            switch (WorkEnvironment)
+            {
+                case "серная кислота":
+                    CableTypeOptions = _allCableTypes
+                        .Where(t => t == "КНМСин" || t == "КНМС825")
+                        .ToList();
+                    break;
+
+                case "соляная кислота":
+                    CableTypeOptions = _allCableTypes
+                        .Where(t => t == "КНММН" || t == "КНМСин" || t == "КНМС825")
+                        .ToList();
+                    break;
+
+                case "плавиковая кислота":
+                case "фосфорная кислота":
+                    CableTypeOptions = _allCableTypes
+                        .Where(t => t != "КНМС")
+                        .ToList();
+                    break;
+
+                case "азотная кислота":
+                    CableTypeOptions = _allCableTypes
+                        .Where(t => t != "КНММ")
+                        .ToList();
+                    break;
+
+                case "органические кислоты":
+
+                case "щелочи":
+                case "соли":
+                    CableTypeOptions = new List<string>(_allCableTypes);
+                    break;
+
+                case "морская вода":
+                    CableTypeOptions = _allCableTypes
+                        .Where(t => t != "КНММ" && t != "КНМС")
+                        .ToList();
+                    break;
+
+                case "хлориды":
+                    CableTypeOptions = _allCableTypes
+                        .Where(t => t != "КНМС")
+                        .ToList();
+                    break;
+
+                default:
+                    CableTypeOptions = new List<string>(_allCableTypes);
+                    break;
+            }
+        }
+
+        private void UpdateCableSelection()
+        {
+            if (!CableTypeOptions.Contains(CableType))
+            {
+                CableType = CableTypeOptions.FirstOrDefault();
             }
         }
     }

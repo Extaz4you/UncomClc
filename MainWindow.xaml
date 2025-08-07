@@ -544,7 +544,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Рабочая среда:"/>
-                                        <ComboBox x:Name="WorkEnvironment" Width="150" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.WorkEnvironmentOptions}" SelectedItem="{Binding PowerSupplyParametersVM.WorkEnvironment}"/>
+                                        <ComboBox x:Name="WorkEnvironment" Width="150" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.AvailableWorkEnvironments}" SelectedItem="{Binding PowerSupplyParametersVM.WorkEnvironment}"/>
                                     </StackPanel>
 
 

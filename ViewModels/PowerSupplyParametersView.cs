@@ -26,7 +26,8 @@ namespace UncomClc.ViewModels
         private string workEnvironment = "-";
         public List<string> _allCableTypes = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
         private List<string> _cableTypeOptions;
-
+        private List<string> _availableWorkEnvironments;
+        private List<string> _allWorkEnvironmentOptions = new List<string> { "серная кислота", "соляная кислота", "плавиковая кислота", "фосфорная кислота", "азотная кислота", "органические кислоты", "щелочи", "соли", "морская вода", "хлориды", "-" };
 
         public int PhaseVoltage
         {
@@ -136,6 +137,7 @@ namespace UncomClc.ViewModels
             {
                 cableType = value;
                 OnPropertyChanged(nameof(CableType));
+                UpdateWorkEnvironmentOptions();
             }
         }
 
@@ -201,9 +203,18 @@ namespace UncomClc.ViewModels
                 UpdateCableSelection();
             }
         }
+        public List<string> AvailableWorkEnvironments
+        {
+            get => _availableWorkEnvironments ?? _allWorkEnvironmentOptions;
+            private set
+            {
+                _availableWorkEnvironments = value;
+                OnPropertyChanged(nameof(AvailableWorkEnvironments));
+            }
+        }
 
 
-        public List<string> WorkEnvironmentOptions { get; } = new List<string> { "серная кислота", "соляная кислота", "плавиковая кислота", "фосфорная кислота", "азотная кислота", "органические кислоты", "щелочи", "соли", "морская вода", "хлориды", "-" };
+        public List<string> WorkEnvironmentOptions => _allWorkEnvironmentOptions;
         //public List<string> CableTypeOptions { get; } = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
         public List<string> NutritionOptions { get; private set; } = new List<string>() { "однофазное", "двухфазное", "трехфазное" };
         public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() { "линия", "петля",  "две петли",  "три петли",  };
@@ -315,6 +326,61 @@ namespace UncomClc.ViewModels
                 default:
                     CableTypeOptions = new List<string>(_allCableTypes);
                     break;
+            }
+        }
+
+        private void UpdateWorkEnvironmentOptions()
+        {
+            var newOptions = new List<string>();
+
+            switch (CableType)
+            {
+                case "КНММ":
+                    newOptions = WorkEnvironmentOptions
+                        .Where(e => e != "серная кислота" &&
+                                   e != "соляная кислота" &&
+                                   e != "плавиковая кислота" &&
+                                   e != "фосфорная кислота" &&
+                                   e != "азотная кислота" &&
+                                   e != "морская вода" &&
+                                   e != "хлориды")
+                        .ToList();
+                    break;
+
+                case "КНММН":
+                    newOptions = WorkEnvironmentOptions
+                        .Where(e => e != "серная кислота" &&
+                                   e != "плавиковая кислота" &&
+                                   e != "фосфорная кислота" &&
+                                   e != "азотная кислота")
+                        .ToList();
+                    break;
+
+                case "КНМС":
+                    newOptions = WorkEnvironmentOptions
+                        .Where(e => e != "серная кислота" &&
+                                   e != "соляная кислота" &&
+                                   e != "плавиковая кислота" &&
+                                   e != "фосфорная кислота" &&
+                                   e != "хлориды" &&
+                                   e != "морская вода")
+                        .ToList();
+                    break;
+
+                case "КНМСин":
+                case "КНМС825":
+                    newOptions = new List<string>(WorkEnvironmentOptions);
+                    break;
+
+                default:
+                    newOptions = new List<string>(WorkEnvironmentOptions);
+                    break;
+            }
+            AvailableWorkEnvironments = newOptions;
+
+            if (!newOptions.Contains(workEnvironment))
+            {
+                WorkEnvironment = newOptions.FirstOrDefault() ?? "-";
             }
         }
 

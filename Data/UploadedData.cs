@@ -14,6 +14,8 @@ namespace UncomClc.Data
     public class UploadedData
     {
         private static UploadedData instance;
+        private const string DataPath = @"Data\data.json";
+        public List<Pipe> Pipes { get; private set; }
 
         public UploadedData()
         {
@@ -29,11 +31,10 @@ namespace UncomClc.Data
             }
         }
 
-        public List<Pipe> Pipes { get; set; }
 
         private void Load()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "data.json");
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DataPath);
             if (!File.Exists(path))
             {
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
@@ -49,7 +50,21 @@ namespace UncomClc.Data
             Pipes = loadedData?.Pipes ?? new List<Pipe>();
         }
 
+        public void Save()
+        {
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DataPath);
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
 
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+
+            var db = new Db { Pipes = this.Pipes };
+            string json = JsonSerializer.Serialize(db, options);
+            File.WriteAllText(path, json);
+        }
 
         private class Db
         {

@@ -87,12 +87,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\UploadedData.cs" />
-    <Compile Include="Models\Pipe.cs" />
+    <Compile Include="Models\GeneralStructure.cs" />
+    <Compile Include="Models\Pipe\Pipe.cs" />
     <Compile Include="ViewModels\EnvironmentView.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PowerSupplyParametersView.cs" />
     <Compile Include="ViewModels\ProcessView.cs" />
-    <Compile Include="Views\EditPipes.xaml.cs">
+    <Compile Include="Views\PipeViews\Add_Pipe.xaml.cs">
+      <DependentUpon>Add_Pipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PipeViews\Change_Pipe.xaml.cs">
+      <DependentUpon>Change_Pipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PipeViews\EditPipes.xaml.cs">
       <DependentUpon>EditPipes.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -107,13 +114,20 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\EditPipes.xaml">
+    <Page Include="Views\PipeViews\Add_Pipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PipeViews\Change_Pipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PipeViews\EditPipes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -131,9 +145,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Data\data.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

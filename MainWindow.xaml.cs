@@ -68,7 +68,13 @@ namespace UncomClc
         private void EditPipes_Click(object sender, RoutedEventArgs e)
         {
             EditPipes editPipes = new EditPipes();
-
+            editPipes.MainEditPipe += () =>
+            {
+                Pipes.Items.Clear();
+                Pipes.ItemsSource = null;
+                AddItemsToComboBox(Pipes, Data.UploadedData.Instance.Pipes.Select(pipe => $"{pipe.Name}"));
+                Pipes.Items.Refresh();
+            };
             if (editPipes.ShowDialog() == true)
             {
 

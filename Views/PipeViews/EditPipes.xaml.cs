@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml;
+using UncomClc.Views.PipeViews;
 
 namespace UncomClc.Views
 {
@@ -34,7 +35,17 @@ namespace UncomClc.Views
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            var pipePropertiesWindow = new Add_Pipe();
+            if (pipePropertiesWindow.ShowDialog() == true)
+            {
+                var newPipe = pipePropertiesWindow.NewPipe;
+                if (newPipe != null)
+                {
+                    MainEditPipe?.Invoke();
+                    PipesDataGrid.Items.Refresh();
+                }
 
+            }
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)

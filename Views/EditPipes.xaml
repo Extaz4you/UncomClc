@@ -1,0 +1,32 @@
+﻿<Window x:Class="UncomClc.Views.EditPipes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UncomClc.Views"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow"
+        Title="Типы труб" Height="400" Width="620">
+    <Grid>
+        <Grid>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Width="500">
+                    <DataGrid x:Name="PipesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10" Width="500" IsReadOnly="True" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Коэффициент" Binding="{Binding Koef}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10">
+                    <Button Content="Добавить" Width="75" Margin="5" Click="AddButton_Click"/>
+                    <Button Content="Изменить" Width="75" Margin="5" Click="EditButton_Click"/>
+                    <Button Content="Удалить" Width="75" Margin="5" Click="DeleteButton_Click"/>
+                    <Button Content="Закрыть" Width="75" Margin="5" Click="CloseButton_Click" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Window>

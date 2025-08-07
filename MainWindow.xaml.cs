@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UncomClc.ViewModels;
+using UncomClc.Views;
 
 namespace UncomClc
 {
@@ -25,6 +26,26 @@ namespace UncomClc
         {
             InitializeComponent();
             this.DataContext = new MainViewModel();
+            Load();
+        }
+        private void Load()
+        {
+            var config = Data.UploadedData.Instance;
+            ClearComboBoxes();
+
+            AddItemsToComboBox(Pipes, config.Pipes.Select(pipe => pipe.Name));
+
+        }
+        private void AddItemsToComboBox(ComboBox comboBox, IEnumerable<string> items)
+        {
+            foreach (var item in items)
+            {
+                comboBox.Items.Add(item);
+            }
+        }
+        private void ClearComboBoxes()
+        {
+            Pipes.Items.Clear();
         }
 
         private void InfoButton(object sender, RoutedEventArgs e)
@@ -42,6 +63,16 @@ namespace UncomClc
 
             imageWindow.Content = image;
             imageWindow.ShowDialog();
+        }
+
+        private void EditPipes_Click(object sender, RoutedEventArgs e)
+        {
+            EditPipes editPipes = new EditPipes();
+
+            if (editPipes.ShowDialog() == true)
+            {
+
+            }
         }
     }
 }

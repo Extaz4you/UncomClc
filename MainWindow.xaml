@@ -417,7 +417,7 @@
                                         <ComboBox Width="160"  x:Name="Pipes" Height="25">
                                             <ComboBoxItem Content=""/>
                                         </ComboBox>
-                                        <Button x:Name="EditPipes" Content="..." Width="50" Height="25" Margin="10,0,0,0"/>
+                                        <Button x:Name="EditPipes" Content="..." Width="50" Height="25" Margin="10,0,0,0" Click="EditPipes_Click"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

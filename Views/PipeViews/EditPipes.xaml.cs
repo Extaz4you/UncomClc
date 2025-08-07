@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml;
+using UncomClc.Data;
+using UncomClc.Models;
 using UncomClc.Views.PipeViews;
 
 namespace UncomClc.Views
@@ -50,22 +52,72 @@ namespace UncomClc.Views
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            var selectedItem = PipesDataGrid.SelectedItem;
+            if (selectedItem != null)
+            {
+                var pipeItem = selectedItem as Models.Pipe;
 
+                var editWindow = new Change_Pipe(pipeItem);
+                if (editWindow.ShowDialog() == true)
+                {
+                    PipesDataGrid.ItemsSource = null;
+                    PipesDataGrid.ItemsSource = UploadedData.Instance.Pipes;
+                    PipesDataGrid.Items.Refresh();
+                    MainEditPipe?.Invoke();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите строку для редактирования.");
+                return;
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            var selectedItem = PipesDataGrid.SelectedItem;
+            if (selectedItem != null)
+            {
+                var pipeToRemove = selectedItem as Models.Pipe;
 
+                var result = MessageBox.Show(
+                    $"Вы уверены, что хотите удалить трубу '{pipeToRemove.Name}'?",
+                    "Подтверждение удаления",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        UploadedData.Instance.Pipes.Remove(pipeToRemove);
+
+                        UploadedData.Instance.Save();
+
+                        PipesDataGrid.ItemsSource = null;
+                        PipesDataGrid.ItemsSource = UploadedData.Instance.Pipes;
+
+                        MainEditPipe?.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите строку для удаления.",
+                    "Информация",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void DeleteSelectedRow(Pipe pipe)
-        {
-
         }
     }
 }

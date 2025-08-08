@@ -92,8 +92,12 @@ namespace UncomClc
             {
                 ThermalIsolationCombobox.Items.Clear();
                 ThermalIsolationCombobox.ItemsSource = null;
+                ThermalIsolationCombobox2.Items.Clear();
+                ThermalIsolationCombobox2.ItemsSource = null;
                 AddItemsToComboBox(ThermalIsolationCombobox, Data.UploadedData.Instance.Insulations.Select(insulation => insulation.Name));
+                AddItemsToComboBox(ThermalIsolationCombobox2, Data.UploadedData.Instance.Insulations.Select(insulation => insulation.Name));
                 ThermalIsolationCombobox.Items.Refresh();
+                ThermalIsolationCombobox2.Items.Refresh();
             };
             if (editWindow.ShowDialog() == true)
             {

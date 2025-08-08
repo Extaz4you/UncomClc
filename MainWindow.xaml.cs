@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UncomClc.ViewModels;
 using UncomClc.Views;
+using UncomClc.Views.InsulationsView;
 
 namespace UncomClc
 {
@@ -34,6 +35,8 @@ namespace UncomClc
             ClearComboBoxes();
 
             AddItemsToComboBox(Pipes, config.Pipes.Select(pipe => pipe.Name));
+            AddItemsToComboBox(ThermalIsolationCombobox, config.Insulations.Select(ins => ins.Name));
+            AddItemsToComboBox(ThermalIsolationCombobox2, config.Insulations.Select(ins => ins.Name));
 
         }
         private void AddItemsToComboBox(ComboBox comboBox, IEnumerable<string> items)
@@ -76,6 +79,23 @@ namespace UncomClc
                 Pipes.Items.Refresh();
             };
             if (editPipes.ShowDialog() == true)
+            {
+
+            }
+        }
+
+
+        private void ThermalIsolationEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var editWindow = new EditInsulation();
+            editWindow.InsulationUpdated += () =>
+            {
+                ThermalIsolationCombobox.Items.Clear();
+                ThermalIsolationCombobox.ItemsSource = null;
+                AddItemsToComboBox(ThermalIsolationCombobox, Data.UploadedData.Instance.Insulations.Select(insulation => insulation.Name));
+                ThermalIsolationCombobox.Items.Refresh();
+            };
+            if (editWindow.ShowDialog() == true)
             {
 
             }

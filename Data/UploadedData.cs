@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
 using UncomClc.Models;
+using UncomClc.Models.Insulation;
 
 namespace UncomClc.Data
 {
@@ -15,6 +16,7 @@ namespace UncomClc.Data
     {
         private static UploadedData instance;
         public List<Pipe> Pipes { get; private set; }
+        public List<Insulation> Insulations { get; private set; }
 
         public UploadedData()
         {
@@ -47,6 +49,7 @@ namespace UncomClc.Data
             string jsonContent = File.ReadAllText(path);
             var loadedData = JsonSerializer.Deserialize<Db>(jsonContent);
             Pipes = loadedData?.Pipes ?? new List<Pipe>();
+            Insulations = loadedData?.Insulations ?? new List<Insulation>();
         }
 
         public void Save()
@@ -60,7 +63,7 @@ namespace UncomClc.Data
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
 
-            var db = new Db { Pipes = this.Pipes };
+            var db = new Db { Pipes = this.Pipes, Insulations = this.Insulations };
             string json = JsonSerializer.Serialize(db, options);
             File.WriteAllText(path, json);
         }
@@ -68,6 +71,7 @@ namespace UncomClc.Data
         private class Db
         {
             public List<Pipe> Pipes { get; set; }
+            public List<Insulation> Insulations { get; set; }
         }
     }
 

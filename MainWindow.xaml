@@ -453,7 +453,7 @@
                                         <ComboBox Width="150" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox">
                                             <ComboBoxItem Content=" "/>
                                         </ComboBox>
-                                        <Button x:Name="ThermalIsolationEditButton" Content="..." Height="25" Width="50"  HorizontalAlignment="Center"/>
+                                        <Button x:Name="ThermalIsolationEditButton" Content="..." Height="25" Width="50" Click="ThermalIsolationEditButton_Click"  HorizontalAlignment="Center"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -473,7 +473,7 @@
                                         <ComboBox Width="150" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2">
                                             <ComboBoxItem Content=" "/>
                                         </ComboBox>
-                                        <Button x:Name="ThermalIsolationEditButton2" Content="..." Height="25" Width="50"  HorizontalAlignment="Center"/>
+                                        <Button x:Name="ThermalIsolationEditButton2" Content="..." Height="25" Width="50" Click="ThermalIsolationEditButton_Click" HorizontalAlignment="Center"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

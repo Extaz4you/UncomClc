@@ -88,11 +88,21 @@
     </ApplicationDefinition>
     <Compile Include="Data\UploadedData.cs" />
     <Compile Include="Models\GeneralStructure.cs" />
+    <Compile Include="Models\Insulation\Insulation.cs" />
     <Compile Include="Models\Pipe\Pipe.cs" />
     <Compile Include="ViewModels\EnvironmentView.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PowerSupplyParametersView.cs" />
     <Compile Include="ViewModels\ProcessView.cs" />
+    <Compile Include="Views\InsulationsView\Add_Insulation.xaml.cs">
+      <DependentUpon>Add_Insulation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InsulationsView\Change_Insulation.xaml.cs">
+      <DependentUpon>Change_Insulation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InsulationsView\EditInsulation.xaml.cs">
+      <DependentUpon>EditInsulation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PipeViews\Add_Pipe.xaml.cs">
       <DependentUpon>Add_Pipe.xaml</DependentUpon>
     </Compile>
@@ -114,6 +124,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\InsulationsView\Add_Insulation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InsulationsView\Change_Insulation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InsulationsView\EditInsulation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PipeViews\Add_Pipe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

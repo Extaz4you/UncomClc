@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,13 +29,47 @@ namespace UncomClc.ViewModels
         private List<string> _cableTypeOptions;
         private List<string> _availableWorkEnvironments;
         private List<string> _allWorkEnvironmentOptions = new List<string> { "серная кислота", "соляная кислота", "плавиковая кислота", "фосфорная кислота", "азотная кислота", "органические кислоты", "щелочи", "соли", "морская вода", "хлориды", "-" };
+        private int supportedTemp = 5;
+        private int maxTechProductTemp = 20;
+
+
+        public int SupportedTemp
+        {
+            get => supportedTemp;
+            set
+            {
+                if (value < -60 || value > 650)
+                {
+                    MessageBox.Show("Поддерживаемая температура должна быть в диапазоне от -60 до 650", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                supportedTemp = value;
+                OnPropertyChanged(nameof(SupportedTemp));
+                UpdateCableTypeOptions();
+            }
+        }
+        public int MaxTechProductTemp
+        {
+            get => maxTechProductTemp;
+            set
+            {
+                if (value < -60 || value > 1000)
+                {
+                    MessageBox.Show("Макс. техн. температура продукта должна быть в диапазоне от -60 до 1000", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                maxTechProductTemp = value;
+                OnPropertyChanged(nameof(MaxTechProductTemp));
+                UpdateCableTypeOptions();
+            }
+        }
 
         public int PhaseVoltage
         {
             get => Convert.ToInt32(phaseVoltage);
             set
             {
-                if(numberCores == 1 && (value < 0 || value > 660))
+                if (numberCores == 1 && (value < 0 || value > 660))
                 {
                     MessageBox.Show("Фазное напряжение должно быть в диапазоне от 0 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
@@ -217,8 +252,8 @@ namespace UncomClc.ViewModels
         public List<string> WorkEnvironmentOptions => _allWorkEnvironmentOptions;
         //public List<string> CableTypeOptions { get; } = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
         public List<string> NutritionOptions { get; private set; } = new List<string>() { "однофазное", "двухфазное", "трехфазное" };
-        public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() { "линия", "петля",  "две петли",  "три петли",  };
-        public List<int> NumberCoresOptions { get; private set; } = new List<int>() { 1, 2};
+        public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() { "линия", "петля", "две петли", "три петли", };
+        public List<int> NumberCoresOptions { get; private set; } = new List<int>() { 1, 2 };
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string property)
@@ -234,7 +269,7 @@ namespace UncomClc.ViewModels
 
                 ConnectionSchemeOptions = new List<string>(_allConnectionSchemeOptions.Where(x => x.Contains("звезда") || x.Contains("звезды")));
             }
-            else 
+            else
             {
 
                 ConnectionSchemeOptions = new List<string>(_allConnectionSchemeOptions.Where(x => !x.Contains("звезда") && !x.Contains("звезды")));
@@ -242,7 +277,7 @@ namespace UncomClc.ViewModels
 
             OnPropertyChanged(nameof(ConnectionSchemeOptions));
 
-            
+
             if (!ConnectionSchemeOptions.Contains(connectionScheme))
             {
                 ConnectionScheme = ConnectionSchemeOptions.FirstOrDefault();
@@ -277,29 +312,30 @@ namespace UncomClc.ViewModels
 
         private void UpdateCableTypeOptions()
         {
+            var filteredCables = new List<string>();
             switch (WorkEnvironment)
             {
                 case "серная кислота":
-                    CableTypeOptions = _allCableTypes
+                    filteredCables = _allCableTypes
                         .Where(t => t == "КНМСин" || t == "КНМС825")
                         .ToList();
                     break;
 
                 case "соляная кислота":
-                    CableTypeOptions = _allCableTypes
+                    filteredCables = _allCableTypes
                         .Where(t => t == "КНММН" || t == "КНМСин" || t == "КНМС825")
                         .ToList();
                     break;
 
                 case "плавиковая кислота":
                 case "фосфорная кислота":
-                    CableTypeOptions = _allCableTypes
+                    filteredCables = _allCableTypes
                         .Where(t => t != "КНМС")
                         .ToList();
                     break;
 
                 case "азотная кислота":
-                    CableTypeOptions = _allCableTypes
+                    filteredCables = _allCableTypes
                         .Where(t => t != "КНММ")
                         .ToList();
                     break;
@@ -308,25 +344,52 @@ namespace UncomClc.ViewModels
 
                 case "щелочи":
                 case "соли":
-                    CableTypeOptions = new List<string>(_allCableTypes);
+                    filteredCables = new List<string>(_allCableTypes);
                     break;
 
                 case "морская вода":
-                    CableTypeOptions = _allCableTypes
+                    filteredCables = _allCableTypes
                         .Where(t => t != "КНММ" && t != "КНМС")
                         .ToList();
                     break;
 
                 case "хлориды":
-                    CableTypeOptions = _allCableTypes
+                    filteredCables = _allCableTypes
                         .Where(t => t != "КНМС")
                         .ToList();
                     break;
 
                 default:
-                    CableTypeOptions = new List<string>(_allCableTypes);
+                    filteredCables = new List<string>(_allCableTypes);
                     break;
             }
+
+            if (SupportedTemp > 200 && MaxTechProductTemp > 250)
+            {
+                filteredCables.Remove("КНММ");
+            }
+
+            if (SupportedTemp > 400 && MaxTechProductTemp > 600)
+            {
+                filteredCables.Remove("КНММН");
+            }
+
+            if (SupportedTemp > 600 && MaxTechProductTemp > 800)
+            {
+                filteredCables.Remove("КНМС");
+            }
+
+            if (SupportedTemp > 600 && MaxTechProductTemp > 1000)
+            {
+                filteredCables.Remove("КНМСин");
+            }
+
+            if (SupportedTemp > 650 && MaxTechProductTemp > 800)
+            {
+                filteredCables.Remove("КНМС825");
+            }
+
+            CableTypeOptions = filteredCables;
         }
 
         private void UpdateWorkEnvironmentOptions()
@@ -391,5 +454,24 @@ namespace UncomClc.ViewModels
                 CableType = CableTypeOptions.FirstOrDefault();
             }
         }
+
+        private bool IsTemperatureInRange(string currentClass, string minClass, string maxClass)
+        {
+            if (string.IsNullOrEmpty(currentClass)) return false;
+
+            try
+            {
+                int current = int.Parse(currentClass.Substring(1));
+                int min = int.Parse(minClass.Substring(1));
+                int max = int.Parse(maxClass.Substring(1));
+
+                return current >= min && current <= max;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }

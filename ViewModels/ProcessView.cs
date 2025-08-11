@@ -6,13 +6,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace UncomClc.ViewModels
 {
     public class ProcessView : INotifyPropertyChanged
     {
-        private int supportedTemp = 5;
-        private int maxTechProductTemp = 20;
+
         private int maxAddProductTemp = 100;
         private string steamingStatus = "Нет";
         public bool IsSteamingTemperatureEnabled => SteamingStatus == "Есть";
@@ -20,35 +20,10 @@ namespace UncomClc.ViewModels
         private int steamingTemperature = 200;
         private string temperatureClass = "-";
         private int temperatureClassValue = 0;
+        public PowerSupplyParametersView PowerSupplyParameters { get; set; }
 
-        public int SupportedTemp
-        {
-            get => supportedTemp;
-            set
-            {
-                if (value < -60 || value > 650)
-                {
-                    MessageBox.Show("Поддерживаемая температура должна быть в диапазоне от -60 до 650", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                supportedTemp = value;
-                OnPropertyChanged(nameof(SupportedTemp));
-            }
-        }
-        public int MaxTechProductTemp
-        {
-            get => maxTechProductTemp;
-            set
-            {
-                if (value < -60 || value > 1000)
-                {
-                    MessageBox.Show("Макс. техн. температура продукта должна быть в диапазоне от -60 до 1000", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                maxTechProductTemp = value;
-                OnPropertyChanged(nameof(SupportedTemp));
-            }
-        }
+
+
         public int MaxAddProductTemp
         {
             get => maxAddProductTemp;
@@ -60,7 +35,7 @@ namespace UncomClc.ViewModels
                     return;
                 }
                 maxAddProductTemp = value;
-                OnPropertyChanged(nameof(SupportedTemp));
+                OnPropertyChanged(nameof(MaxAddProductTemp));
             }
         }
         public string SteamingStatus

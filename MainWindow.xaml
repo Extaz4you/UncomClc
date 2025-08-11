@@ -417,28 +417,28 @@
                                         <ComboBox Width="160"  x:Name="Pipes" Height="25">
                                             <ComboBoxItem Content=""/>
                                         </ComboBox>
-                                        <Button x:Name="EditPipes" Content="..." Width="50" Height="25" Margin="10,0,0,0" Click="EditPipes_Click"/>
+                                        <Button x:Name="EditPipes" Content="..." Width="60" Height="25" Margin="10,0,0,0" Click="EditPipes_Click"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Наружный диаметр:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox Width="60" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина стенки:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox Width="60" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина:"/>
-                                        <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        <TextBox Width="60" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         <Label Content="Коэф. запаса:"/>
-                                        <TextBox Width="50" Height="25"/>
+                                        <TextBox Width="60" Height="25"/>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
-                                        <Button Content="Задвижки, фланцы, опоры"  Width="170" Height="25" BorderThickness="2" x:Name="ValvesAndSupports"/>
+                                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
+                                        <Button Content="Задвижки, фланцы, опоры" Margin="30,0,0,0"  Width="160" Height="25" BorderThickness="2" x:Name="ValvesAndSupports"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -450,15 +450,15 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип:"/>
-                                        <ComboBox Width="150" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox">
+                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox">
                                             <ComboBoxItem Content=" "/>
                                         </ComboBox>
-                                        <Button x:Name="ThermalIsolationEditButton" Content="..." Height="25" Width="50" Click="ThermalIsolationEditButton_Click"  HorizontalAlignment="Center"/>
+                                        <Button x:Name="ThermalIsolationEditButton" Content="..." Height="25" Width="60" Click="ThermalIsolationEditButton_Click"  HorizontalAlignment="Center"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина:"/>
-                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox Height="25" Width="60" x:Name="ThicknessIsolation" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -470,15 +470,15 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип:"/>
-                                        <ComboBox Width="150" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2">
+                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2">
                                             <ComboBoxItem Content=" "/>
                                         </ComboBox>
-                                        <Button x:Name="ThermalIsolationEditButton2" Content="..." Height="25" Width="50" Click="ThermalIsolationEditButton_Click" HorizontalAlignment="Center"/>
+                                        <Button x:Name="ThermalIsolationEditButton2" Content="..." Height="25" Width="60" Click="ThermalIsolationEditButton_Click" HorizontalAlignment="Center"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина:"/>
-                                        <TextBox Height="25" Width="50" x:Name="ThicknessIsolation2" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox Height="25" Width="60" x:Name="ThicknessIsolation2" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -493,13 +493,13 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Мин. температура окр. среды:"/>
-                                        <TextBox x:Name="MinEnvironmentTemp" Width="70" Height="25" Text="{Binding EnvironmentVM.MinEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}">
+                                        <TextBox x:Name="MinEnvironmentTemp" Width="60" Height="25" Text="{Binding EnvironmentVM.MinEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}">
                                         </TextBox>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Макс. температура окр. среды:"/>
-                                        <TextBox x:Name="MaxEnvironmentTemp" Width="70" Height="25" Text="{Binding EnvironmentVM.MaxEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="MaxEnvironmentTemp" Width="60" Height="25" Text="{Binding EnvironmentVM.MaxEnvironmentTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -516,30 +516,30 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="SupportedTemp" Content="Поддерживаемая температура:"/>
-                                        <TextBox Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.SupportedTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.SupportedTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="MaxTechProductTemp" Content="Макс. техн. температура продукта:"/>
-                                        <TextBox Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.MaxTechProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.MaxTechProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="MaxAddProductTemp"  Content="Макс. доп. температура продукта:"/>
-                                        <TextBox Width="50" Height="25" Text="{Binding ProcessVM.MaxAddProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox Width="60" Height="25" Text="{Binding ProcessVM.MaxAddProductTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Пропарка:"/>
                                         <ComboBox x:Name="StreamingStatus" Width="50" Height="25" ItemsSource="{Binding ProcessVM.SteamingOptions}" SelectedItem="{Binding ProcessVM.SteamingStatus}"/>
                                         <Label Content="Темп. пропарки:"/>
-                                        <TextBox x:Name="StreamingTemperature" Width="50" Height="25" Text="{Binding ProcessVM.StreamingTemperature, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ProcessVM.IsSteamingTemperatureEnabled}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="StreamingTemperature" Width="60" Height="25" Text="{Binding ProcessVM.StreamingTemperature, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ProcessVM.IsSteamingTemperatureEnabled}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Темп. класс ВЗЭО:"/>
                                         <ComboBox x:Name="TemperatureClass" Width="50" Height="25" Margin="0,0,10,0" ItemsSource="{Binding ProcessVM.TemperatureClassOptions}" SelectedItem="{Binding ProcessVM.TemperatureClass}"/>
-                                        <TextBox x:Name="TemperatureClassValue" Width="50" Height="25" Text="{Binding ProcessVM.TemperatureClassValue}" IsEnabled="{Binding ProcessVM.IsTemperatureClassEnabled}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="TemperatureClassValue" Width="60" Height="25" Text="{Binding ProcessVM.TemperatureClassValue}" IsEnabled="{Binding ProcessVM.IsTemperatureClassEnabled}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -560,17 +560,17 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение фазное:"/>
-                                        <TextBox x:Name="PhaseVoltage" Width="70" Height="25" Text="{Binding PowerSupplyParametersVM.PhaseVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <TextBox x:Name="PhaseVoltage" Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.PhaseVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Напряжение линейное:"/>
-                                        <TextBox x:Name="LineVoltage" Width="70" Height="25" Text="{Binding PowerSupplyParametersVM.LineVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <TextBox x:Name="LineVoltage" Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.LineVoltage, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Номинальный ток АВ:"/>
-                                        <TextBox x:Name="Currrent" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.Current, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CurrnetTextBoxStyle}"/>
+                                        <TextBox x:Name="Currrent" Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.Current, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CurrnetTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -582,7 +582,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Питание:"/>
                                         <ComboBox x:Name="Nutrition" Width="100" Height="25" Margin="0,0,10,0" ItemsSource="{Binding PowerSupplyParametersVM.NutritionOptions}" SelectedItem="{Binding PowerSupplyParametersVM.Nutrition}"/>
-                                        <TextBox x:Name="WorkLoad"  Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.WorkLoad, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        <TextBox x:Name="WorkLoad"  Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.WorkLoad, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -592,7 +592,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Мин. темп. включения:"/>
-                                        <TextBox x:Name="MinTempOn" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.MinTempOn, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        <TextBox x:Name="MinTempOn" Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.MinTempOn, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -606,11 +606,11 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Кол-во жил:"/>
-                                        <ComboBox x:Name="NumberCores" Width="50" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.NumberCoresOptions}" SelectedItem="{Binding PowerSupplyParametersVM.NumberCores}"/>
+                                        <ComboBox x:Name="NumberCores" Width="60" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.NumberCoresOptions}" SelectedItem="{Binding PowerSupplyParametersVM.NumberCores}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина устан. части секции:"/>
-                                        <TextBox x:Name="LenghtSection" Width="50" Height="25" Text="{Binding PowerSupplyParametersVM.LenghtSection, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        <TextBox x:Name="LenghtSection" Width="60" Height="25" Text="{Binding PowerSupplyParametersVM.LenghtSection, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>

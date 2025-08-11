@@ -278,6 +278,9 @@
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
                             </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -414,27 +417,25 @@
                                 <StackPanel Orientation="Vertical" Margin="15">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип:" />
-                                        <ComboBox Width="160"  x:Name="Pipes" Height="25">
-                                            <ComboBoxItem Content=""/>
-                                        </ComboBox>
+                                        <ComboBox Width="160"  x:Name="Pipes" Height="25" SelectedItem="{Binding ProcessVM.Pipe}"/>
                                         <Button x:Name="EditPipes" Content="..." Width="60" Height="25" Margin="10,0,0,0" Click="EditPipes_Click"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Наружный диаметр:"/>
-                                        <TextBox Width="60" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox x:Name="Diam" Width="60" Height="25" Text="{Binding ProcessVM.Diam, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Label Content="Толщина стенки:"/>
-                                        <TextBox Width="60" Height="25" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <Label x:Name="Thickness" Content="Толщина стенки:"/>
+                                        <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Thickness, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Label Content="Длина:"/>
-                                        <TextBox Width="60" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        <Label x:Name="Lenght" Content="Длина:"/>
+                                        <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Lenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         <Label Content="Коэф. запаса:"/>
-                                        <TextBox Width="60" Height="25"/>
+                                        <TextBox x:Name="PipeKoef" Width="60"  Height="25" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
@@ -450,15 +451,13 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип:"/>
-                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox">
-                                            <ComboBoxItem Content=" "/>
-                                        </ComboBox>
+                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox" SelectedItem="{Binding ProcessVM.ThermalIsolation}"/>
                                         <Button x:Name="ThermalIsolationEditButton" Content="..." Height="25" Width="60" Click="ThermalIsolationEditButton_Click"  HorizontalAlignment="Center"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина:"/>
-                                        <TextBox Height="25" Width="60" x:Name="ThicknessIsolation" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox Height="25" Width="60" x:Name="ThicknessIsolation" Text="{Binding ProcessVM.IsolationThickness, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -470,15 +469,13 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип:"/>
-                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2">
-                                            <ComboBoxItem Content=" "/>
-                                        </ComboBox>
+                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2" SelectedItem="{Binding ProcessVM.ThermalIsolation2}"/>
                                         <Button x:Name="ThermalIsolationEditButton2" Content="..." Height="25" Width="60" Click="ThermalIsolationEditButton_Click" HorizontalAlignment="Center"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Толщина:"/>
-                                        <TextBox Height="25" Width="60" x:Name="ThicknessIsolation2" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox Height="25" Width="60" x:Name="ThicknessIsolation2" Text="{Binding ProcessVM.IsolationThickness2, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ProcessVM.IsIsolationThicknessEnabled}"  Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                 </StackPanel>

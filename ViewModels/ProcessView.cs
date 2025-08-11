@@ -17,12 +17,106 @@ namespace UncomClc.ViewModels
         private string steamingStatus = "Нет";
         public bool IsSteamingTemperatureEnabled => SteamingStatus == "Есть";
         public bool IsTemperatureClassEnabled => TemperatureClass != "-";
+        public bool IsIsolationThicknessEnabled => ThermalIsolation2 != "-";
         private int steamingTemperature = 200;
         private string temperatureClass = "-";
         private int temperatureClassValue = 0;
-        public PowerSupplyParametersView PowerSupplyParameters { get; set; }
+        private string pipe = "сталь углеродистая";
+        private int diam = 57;
+        private int thickness = 3;
+        private float pipeKoef = 1.01f;
+        private int lenght = 10;
+        private string thermalIsolation = "минеральная вата";
+        private string thermalIsolation2 = "-";
+        private int isolationThickness = 50;
+        private int isolationThickness2 = 50;
 
 
+        public string Pipe
+        {
+            get => pipe;
+            set
+            {
+                pipe = value;
+                OnPropertyChanged(nameof(Pipe));
+            }
+        }
+        public int Diam
+        {
+            get => diam;
+            set
+            {
+                diam = value;
+                OnPropertyChanged(nameof(Diam));
+            }
+        }
+        public int Thickness
+        {
+            get => thickness;
+            set
+            {
+                thickness = value;
+                OnPropertyChanged(nameof(Thickness));
+            }
+        }
+        public float PipeKoef
+        {
+            get => pipeKoef;
+            set
+            {
+                pipeKoef = value;
+                OnPropertyChanged(nameof(PipeKoef));
+            }
+        }
+        public int Lenght
+        {
+            get => lenght;
+            set
+            {
+                lenght = value;
+                OnPropertyChanged(nameof(Lenght));
+            }
+        }
+
+
+        public string ThermalIsolation
+        {
+            get => thermalIsolation;
+            set
+            {
+                thermalIsolation = value;
+                OnPropertyChanged(nameof(ThermalIsolation));
+            }
+        }
+        public string ThermalIsolation2
+        {
+            get => thermalIsolation2;
+            set
+            {
+                thermalIsolation2 = value;
+                OnPropertyChanged(nameof(ThermalIsolation2));
+                OnPropertyChanged(nameof(IsIsolationThicknessEnabled));
+            }
+        }
+
+        public int IsolationThickness
+        {
+            get => isolationThickness;
+            set
+            {
+                isolationThickness = value;
+                OnPropertyChanged(nameof(IsolationThickness));
+            }
+        }
+        public int IsolationThickness2
+        {
+            get => isolationThickness2;
+            set
+            {
+                isolationThickness2 = value;
+                OnPropertyChanged(nameof(IsolationThickness2));
+            }
+        }
 
         public int MaxAddProductTemp
         {

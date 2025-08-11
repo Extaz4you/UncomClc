@@ -17,7 +17,7 @@ namespace UncomClc.ViewModels
         private string steamingStatus = "Нет";
         public bool IsSteamingTemperatureEnabled => SteamingStatus == "Есть";
         public bool IsTemperatureClassEnabled => TemperatureClass != "-";
-        public bool IsIsolationThicknessEnabled => ThermalIsolation2 != "-";
+        public bool IsIsolationThicknessEnabled => ThermalIsolation2 != "- не выбрано -";
         private int steamingTemperature = 200;
         private string temperatureClass = "-";
         private int temperatureClassValue = 0;
@@ -27,9 +27,9 @@ namespace UncomClc.ViewModels
         private float pipeKoef = 1.01f;
         private int lenght = 10;
         private string thermalIsolation = "минеральная вата";
-        private string thermalIsolation2 = "-";
+        private string thermalIsolation2 = "- не выбрано -";
         private int isolationThickness = 50;
-        private int isolationThickness2 = 50;
+        private int isolationThickness2 = 0;
 
 
         public string Pipe
@@ -93,9 +93,12 @@ namespace UncomClc.ViewModels
             get => thermalIsolation2;
             set
             {
-                thermalIsolation2 = value;
-                OnPropertyChanged(nameof(ThermalIsolation2));
-                OnPropertyChanged(nameof(IsIsolationThicknessEnabled));
+                if (thermalIsolation2 != value)
+                {
+                    thermalIsolation2 = value;
+                    OnPropertyChanged(nameof(ThermalIsolation2));
+                    OnPropertyChanged(nameof(IsIsolationThicknessEnabled));
+                }
             }
         }
 
@@ -123,11 +126,6 @@ namespace UncomClc.ViewModels
             get => maxAddProductTemp;
             set
             {
-                if (value < -60 || value > 1000)
-                {
-                    MessageBox.Show("Макс. допус. температура продукта должна быть в диапазоне от -60 до 650", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
                 maxAddProductTemp = value;
                 OnPropertyChanged(nameof(MaxAddProductTemp));
             }
@@ -161,7 +159,7 @@ namespace UncomClc.ViewModels
             get => temperatureClass;
             set
             {
-                if(temperatureClass != value)
+                if (temperatureClass != value)
                 {
                     temperatureClass = value;
                     TemperatureClassValue = GetTemperatureForClass(value);

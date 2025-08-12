@@ -37,14 +37,15 @@ namespace UncomClc.ViewModels
             get => supportedTemp;
             set
             {
-                if (!CheckAllParam(WorkEnvironment, CableType, value, MaxTechProductTemp))
+                if (value < -60 || value > 650)
                 {
+                    MessageBox.Show("Поддерживаемая температура должна быть в диапазоне от -60 до 650", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+
                 supportedTemp = value;
                 OnPropertyChanged(nameof(SupportedTemp));
-                UpdateCableTypeOptions();
-                CheckTemp(value, SupportedTemp);
+                UpdateCableTypeOptionsWithValidation();
             }
         }
         public int MaxTechProductTemp
@@ -52,14 +53,14 @@ namespace UncomClc.ViewModels
             get => maxTechProductTemp;
             set
             {
-                if (!CheckAllParam(WorkEnvironment, CableType, SupportedTemp, value))
+                if (value < -60 || value > 1000)
                 {
+                    MessageBox.Show("Макс. техн. температура продукта должна быть в диапазоне от -60 до 1000", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 maxTechProductTemp = value;
                 OnPropertyChanged(nameof(MaxTechProductTemp));
-                UpdateCableTypeOptions();
-                CheckTemp(SupportedTemp, value);
+                UpdateCableTypeOptionsWithValidation();
             }
         }
 
@@ -169,6 +170,14 @@ namespace UncomClc.ViewModels
             get => cableType;
             set
             {
+                if (cableType == value) return;
+
+                if (!ValidateCableForCurrentParameters(value))
+                {
+                    MessageBox.Show("Выбранный кабель недопустим при текущих параметрах", "Ошибка выбора", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 cableType = value;
                 OnPropertyChanged(nameof(CableType));
             }
@@ -225,22 +234,11 @@ namespace UncomClc.ViewModels
                     return;
 
                 _isUpdatingWorkEnvironment = true;
-
                 try
                 {
-                    if (!CheckAllParam(value, CableType, SupportedTemp, MaxTechProductTemp))
-                    {
-                        // Возвращаем предыдущее значение в UI
-                        Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            OnPropertyChanged(nameof(WorkEnvironment));
-                        }), System.Windows.Threading.DispatcherPriority.Background);
-                        return;
-                    }
-
                     _workEnvironment = value;
                     OnPropertyChanged(nameof(WorkEnvironment));
-                    UpdateCableTypeOptions();
+                    UpdateCableTypeOptionsWithValidation();
                 }
                 finally
                 {
@@ -255,7 +253,6 @@ namespace UncomClc.ViewModels
             {
                 _cableTypeOptions = value;
                 OnPropertyChanged(nameof(CableTypeOptions));
-                UpdateCableSelection();
             }
         }
 
@@ -383,124 +380,109 @@ namespace UncomClc.ViewModels
                 CableType = CableTypeOptions.FirstOrDefault();
             }
         }
-        private bool CheckAllParam(string environment, string cable, int supportedTemp, int maxTechTemp)
+
+
+        private void UpdateCableTypeOptionsWithValidation()
         {
-            if (environment == "серная кислота" && cable != "КНМСин" && cable != "КНМС825")
+            var newOptions = FilterCablesByEnvironment(WorkEnvironment);
+            newOptions = FilterCablesByTemperature(newOptions, SupportedTemp, MaxTechProductTemp);
+
+            CableTypeOptions = newOptions;
+
+            // Проверяем, что текущий выбранный кабель допустим
+            if (!newOptions.Contains(CableType))
             {
-                MessageBox.Show("Серная кислота допустима только для кабелей КНМСин или КНМС825",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                if (newOptions.Count > 0)
+                {
+                    CableType = newOptions.First();
+                }
+                else
+                {
+                    MessageBox.Show("Нет допустимых кабелей для указанных параметров", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private List<string> FilterCablesByEnvironment(string environment)
+        {
+            switch (environment)
+            {
+                case "серная кислота":
+                    return new List<string> { "КНМСин", "КНМС825" };
+                case "соляная кислота":
+                    return new List<string> { "КНММН", "КНМСин", "КНМС825" };
+                case "плавиковая кислота":
+                case "фосфорная кислота":
+                    return _allCableTypes.Where(t => t != "КНМС").ToList();
+                case "азотная кислота":
+                    return _allCableTypes.Where(t => t != "КНММ").ToList();
+                case "морская вода":
+                    return _allCableTypes.Where(t => t != "КНММ" && t != "КНМС").ToList();
+                case "хлориды":
+                    return _allCableTypes.Where(t => t != "КНМС").ToList();
+                default:
+                    return new List<string>(_allCableTypes);
+            }
+        }
+        private List<string> FilterCablesByTemperature(List<string> cables, int supportedTemp, int maxTechTemp)
+        {
+            var result = new List<string>();
+
+            foreach (var cable in cables)
+            {
+                if (ValidateCableTemperature(cable, supportedTemp, maxTechTemp))
+                {
+                    result.Add(cable);
+                }
             }
 
-            if (environment == "соляная кислота" && cable != "КНМСин" && cable != "КНМС825" && cable != "КНММН")
-            {
-                MessageBox.Show("Соляная кислота допустима только для кабелей КНМСин, КНМС825 или КНММН",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
+            return result;
+        }
+        private bool ValidateCableForCurrentParameters(string cable)
+        {
+            if (!ValidateCableEnvironment(cable, WorkEnvironment))
                 return false;
-            }
 
-            if (environment == "плавиковая кислота" && cable == "КНМС")
+            return ValidateCableTemperature(cable, SupportedTemp, MaxTechProductTemp);
+        }
+        private bool ValidateCableEnvironment(string cable, string environment)
+        {
+            switch (environment)
             {
-                MessageBox.Show("Плавиковая кислота недопустима для кабеля КНМС",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                case "серная кислота":
+                    return cable == "КНМСин" || cable == "КНМС825";
+                case "соляная кислота":
+                    return cable == "КНММН" || cable == "КНМСин" || cable == "КНМС825";
+                case "плавиковая кислота":
+                case "фосфорная кислота":
+                    return cable != "КНМС";
+                case "азотная кислота":
+                    return cable != "КНММ";
+                case "морская вода":
+                    return cable != "КНММ" && cable != "КНМС";
+                case "хлориды":
+                    return cable != "КНМС";
+                default:
+                    return true;
             }
-
-            if (environment == "фосфорная кислота" && cable == "КНМС")
+        }
+        private bool ValidateCableTemperature(string cable, int supportedTemp, int maxTechTemp)
+        {
+            switch (cable)
             {
-                MessageBox.Show("Фосфорная кислота недопустима для кабеля КНМС",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                case "КНММ":
+                    return supportedTemp <= 200 && maxTechTemp <= 250;
+                case "КНММН":
+                    return supportedTemp <= 600 && maxTechTemp <= 600;
+                case "КНМС":
+                    return supportedTemp <= 600 && maxTechTemp <= 800;
+                case "КНМСин":
+                    return supportedTemp <= 600 && maxTechTemp <= 1000;
+                case "КНМС825":
+                    return supportedTemp <= 650 && maxTechTemp <= 800;
+                default:
+                    return false;
             }
-
-            if (environment == "азотная кислота" && cable == "КНММ")
-            {
-                MessageBox.Show("Азотная кислота недопустима для кабеля КНММ",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if (environment == "морская вода" && (cable == "КНММ" || cable == "КНМС"))
-            {
-                MessageBox.Show("Морская вода недопустима для кабелей КНММ и КНМС",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if (environment == "хлориды" && cable == "КНМС")
-            {
-                MessageBox.Show("Хлориды недопустимы для кабеля КНМС",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if ((supportedTemp > 200 || maxTechTemp > 250) && cable == "КНММ")
-            {
-                MessageBox.Show("Данный кабель недопустим при указанных температурных параметрах",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if ((supportedTemp > 600 || maxTechTemp > 800) && cable == "КНММН")
-            {
-                MessageBox.Show("Данный кабель недопустим при указанных температурных параметрах",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if ((supportedTemp > 600 || maxTechTemp > 800) && cable == "КНМС")
-            {
-                MessageBox.Show("Данный кабель недопустим при указанных температурных параметрах",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if ((supportedTemp > 600 || maxTechTemp > 1000) && cable == "КНМСин")
-            {
-                MessageBox.Show("Данный кабель недопустим при указанных температурных параметрах",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if ((supportedTemp > 650 || maxTechTemp > 800) && cable == "КНМС825")
-            {
-                MessageBox.Show("Данный кабель недопустим при указанных температурных параметрах",
-                              "Ошибка выбора кабеля", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            return true;
         }
 
-        private void CheckTemp(int sup, int max)
-        {
-            UpdateCableTypeOptions();
-            var tempFilteredCables = new List<string>(filteredCables);
-            if (sup > 200 || max > 250)
-            {
-                tempFilteredCables.Remove("КНММ");
-            }
-
-            if (sup > 400 || max > 600)
-            {
-                tempFilteredCables.Remove("КНММН");
-            }
-
-            if (sup > 600 || max > 800)
-            {
-                tempFilteredCables.Remove("КНМС");
-            }
-
-            if (sup > 600 || max > 1000)
-            {
-                tempFilteredCables.Remove("КНМСин");
-            }
-
-            if (sup > 650 || max > 800)
-            {
-                tempFilteredCables.Remove("КНМС825");
-            }
-            CableTypeOptions = tempFilteredCables;
-        }
     }
 }

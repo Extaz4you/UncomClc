@@ -472,7 +472,7 @@ namespace UncomClc.ViewModels
                 case "КНММ":
                     return supportedTemp <= 200 && maxTechTemp <= 250;
                 case "КНММН":
-                    return supportedTemp <= 600 && maxTechTemp <= 600;
+                    return supportedTemp <= 400 && maxTechTemp <= 600;
                 case "КНМС":
                     return supportedTemp <= 600 && maxTechTemp <= 800;
                 case "КНМСин":

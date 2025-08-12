@@ -435,7 +435,7 @@
                                         <Label x:Name="Lenght" Content="Длина:"/>
                                         <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Lenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         <Label Content="Коэф. запаса:"/>
-                                        <TextBox x:Name="PipeKoef" Width="60"  Height="25" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox x:Name="PipeKoef" Width="60"  Height="25" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">

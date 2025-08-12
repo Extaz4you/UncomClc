@@ -82,7 +82,7 @@ namespace UncomClc.ViewModels
                 phaseVoltage = value;
                 OnPropertyChanged(nameof(PhaseVoltage));
                 OnPropertyChanged(nameof(WorkLoad));
-                UpdateNumberCoresOptions();
+                //UpdateNumberCoresOptions();
                 if (!isRecalculating)
                 {
                     isRecalculating = true;
@@ -97,16 +97,16 @@ namespace UncomClc.ViewModels
             get => Convert.ToInt32(lineVoltage);
             set
             {
-                if (numberCores == 1 && (value < 0 || value > 1143))
-                {
-                    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 0 до 1143", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                else if (numberCores == 2 && (value < 0 || value > 1039))
-                {
-                    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 0 до 1039", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                //if (numberCores == 1 && (value < 0 || value > 1143))
+                //{
+                //    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 0 до 1143", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    return;
+                //}
+                //else if (numberCores == 2 && (value < 0 || value > 1039))
+                //{
+                //    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 0 до 1039", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    return;
+                //}
                 lineVoltage = value;
                 OnPropertyChanged(nameof(LineVoltage));
                 OnPropertyChanged(nameof(WorkLoad));
@@ -151,7 +151,7 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(NumberCores));
                 PhaseVoltage = Convert.ToInt32(phaseVoltage);
                 LineVoltage = Convert.ToInt32(lineVoltage);
-                UpdateNumberCoresOptions();
+                //UpdateNumberCoresOptions();
             }
         }
 
@@ -188,6 +188,11 @@ namespace UncomClc.ViewModels
             get => minTempOn;
             set
             {
+                if (value < -60 || value > 650)
+                {
+                    MessageBox.Show("Введите значение от -60 °С до +650 °С", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 minTempOn = value;
                 OnPropertyChanged(nameof(MinTempOn));
             }
@@ -296,13 +301,13 @@ namespace UncomClc.ViewModels
         {
             var newOptions = new List<int>();
 
-            if (phaseVoltage > 600 || connectionScheme == "линия")
+            if (connectionScheme == "линия")
             {
                 newOptions.Add(2);
             }
             else
             {
-                newOptions.AddRange(new[] { 1, 2 });
+                newOptions.AddRange(new[] { 1 });
             }
 
             if (!NumberCoresOptions.SequenceEqual(newOptions))

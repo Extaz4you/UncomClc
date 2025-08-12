@@ -96,6 +96,10 @@ namespace UncomClc.ViewModels
                 if (thermalIsolation2 != value)
                 {
                     thermalIsolation2 = value;
+                    if (value == "- не выбрано -")
+                    {
+                        IsolationThickness2 = 0;
+                    }
                     OnPropertyChanged(nameof(ThermalIsolation2));
                     OnPropertyChanged(nameof(IsIsolationThicknessEnabled));
                 }

@@ -195,7 +195,6 @@ namespace UncomClc.ViewModels
                 {
                     PhaseVoltage = 600;
                     MessageBox.Show("Максимальное допустимое напряжение для 2-х жильного кабеля 600 В");
-                    return;
                 }
 
                 connectionScheme = value;
@@ -262,7 +261,6 @@ namespace UncomClc.ViewModels
         //public List<string> CableTypeOptions { get; } = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
         public List<string> NutritionOptions { get; private set; } = new List<string>() { "однофазное", "двухфазное", "трехфазное" };
         public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() {  "петля", "две петли", "три петли", "линия" };
-        public List<int> NumberCoresOptions { get; private set; } = new List<int>() { 1, 2 };
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string property)
@@ -294,9 +292,14 @@ namespace UncomClc.ViewModels
         }
         private void UpdateNumberCoresOptions()
         {
-            if(ConnectionScheme == "линия") NumberCores = 2;
-            else NumberCores = 1;
-            OnPropertyChanged(nameof(NumberCores)); 
+            // Для схемы "линия" всегда 2 жилы, для остальных - 1
+            int newCores = connectionScheme == "линия" ? 2 : 1;
+
+            // Меняем только если значение действительно изменилось
+            if (NumberCores != newCores)
+            {
+                NumberCores = newCores;
+            }
         }
 
 

@@ -582,7 +582,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Кол-во жил:"/>
-                                        <ComboBox x:Name="NumberCores" Width="60" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.NumberCoresOptions}" SelectedItem="{Binding PowerSupplyParametersVM.NumberCores}"/>
+                                        <TextBox x:Name="NumberCores" Width="20" Height="25" Text="{Binding PowerSupplyParametersVM.NumberCores, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина устан. части секции:"/>

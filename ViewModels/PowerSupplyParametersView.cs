@@ -30,7 +30,7 @@ namespace UncomClc.ViewModels
         private List<string> _cableTypeOptions;
         private int supportedTemp = 5;
         private int maxTechProductTemp = 20;
-        private List<string> filteredCables = new List<string>();
+
 
         public int SupportedTemp
         {
@@ -74,7 +74,7 @@ namespace UncomClc.ViewModels
                     MessageBox.Show("Фазное напряжение должно быть в диапазоне от 0 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                if (ConnectionScheme == "линия" && value > 600)
+                if (numberCores == 2 && value > 600)
                 {
                     MessageBox.Show("Максимальное допустимое напряжение для 2-х жильного кабеля 600 В", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
@@ -82,7 +82,6 @@ namespace UncomClc.ViewModels
                 phaseVoltage = value;
                 OnPropertyChanged(nameof(PhaseVoltage));
                 OnPropertyChanged(nameof(WorkLoad));
-                //UpdateNumberCoresOptions();
                 if (!isRecalculating)
                 {
                     isRecalculating = true;
@@ -125,15 +124,15 @@ namespace UncomClc.ViewModels
             get => numberCores;
             set
             {
-                // Проверяем, изменилось ли значение
                 if (numberCores == value) return;
 
-                // Проверка ограничений
-                if ((phaseVoltage > 600 || connectionScheme == "линия") && value == 2)
+                if (phaseVoltage > 600 && value == 2)
                 {
-                    MessageBox.Show(phaseVoltage > 600
-                        ? "При фазном напряжении свыше 600В нельзя выбрать 2 жилы"
-                        : "Для схемы 'линия' можно выбрать только 1 жилу",
+                    PhaseVoltage = Convert.ToInt32(600);
+                    OnPropertyChanged(nameof(PhaseVoltage));
+                    numberCores = value;
+                    OnPropertyChanged(nameof(NumberCores));
+                    MessageBox.Show("При фазном напряжении свыше 600В нельзя выбрать 2 жилы",
                         "Ошибка выбора", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
@@ -141,7 +140,6 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(NumberCores));
                 PhaseVoltage = Convert.ToInt32(phaseVoltage);
                 LineVoltage = Convert.ToInt32(lineVoltage);
-                //UpdateNumberCoresOptions();
             }
         }
 
@@ -296,70 +294,9 @@ namespace UncomClc.ViewModels
         }
         private void UpdateNumberCoresOptions()
         {
-
-        }
-        private void UpdateCableTypeOptions()
-        {
-            filteredCables = new List<string>();
-            switch (WorkEnvironment)
-            {
-                case "серная кислота":
-                    filteredCables = _allCableTypes
-                        .Where(t => t == "КНМСин" || t == "КНМС825")
-                        .ToList();
-                    break;
-
-                case "соляная кислота":
-                    filteredCables = _allCableTypes
-                        .Where(t => t == "КНММН" || t == "КНМСин" || t == "КНМС825")
-                        .ToList();
-                    break;
-
-                case "плавиковая кислота":
-                case "фосфорная кислота":
-                    filteredCables = _allCableTypes
-                        .Where(t => t != "КНМС")
-                        .ToList();
-                    break;
-
-                case "азотная кислота":
-                    filteredCables = _allCableTypes
-                        .Where(t => t != "КНММ")
-                        .ToList();
-                    break;
-
-                case "органические кислоты":
-
-                case "щелочи":
-                case "соли":
-                    filteredCables = new List<string>(_allCableTypes);
-                    break;
-
-                case "морская вода":
-                    filteredCables = _allCableTypes
-                        .Where(t => t != "КНММ" && t != "КНМС")
-                        .ToList();
-                    break;
-
-                case "хлориды":
-                    filteredCables = _allCableTypes
-                        .Where(t => t != "КНМС")
-                        .ToList();
-                    break;
-
-                default:
-                    filteredCables = new List<string>(_allCableTypes);
-                    break;
-            }
-
-            CableTypeOptions = filteredCables;
-        }
-        private void UpdateCableSelection()
-        {
-            if (!CableTypeOptions.Contains(CableType))
-            {
-                CableType = CableTypeOptions.FirstOrDefault();
-            }
+            if(ConnectionScheme == "линия") NumberCores = 2;
+            else NumberCores = 1;
+            OnPropertyChanged(nameof(NumberCores)); 
         }
 
 

@@ -191,12 +191,11 @@ namespace UncomClc.ViewModels
             get => connectionScheme;
             set
             {
-                if (value == "линия" && PhaseVoltage > 600)
+                if (value == "линия" && LineVoltage > 600)
                 {
-                    PhaseVoltage = 600;
+                    PhaseVoltage = 220;
                     MessageBox.Show("Максимальное допустимое напряжение для 2-х жильного кабеля 600 В");
                 }
-
                 connectionScheme = value;
                 OnPropertyChanged(nameof(ConnectionScheme));
                 UpdateNumberCoresOptions();

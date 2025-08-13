@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using UncomClc.ViewModels;
 using UncomClc.Views;
 using UncomClc.Views.InsulationsView;
+using UncomClc.Views.Valves;
 
 namespace UncomClc
 {
@@ -100,6 +101,15 @@ namespace UncomClc
                 ThermalIsolationCombobox2.Items.Refresh();
             };
             if (editWindow.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void ValvesAndSupports_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ValvesSupportsFlangs();
+            if (window.ShowDialog() == true)
             {
 
             }

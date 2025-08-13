@@ -9,7 +9,6 @@
         WindowState="Maximized">
 
     <Window.Resources>
-        <!-- Стиль для круглых кнопок -->
         <Style x:Key="CircleButtonStyle" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -30,8 +29,6 @@
             <Setter Property="Width" Value="20"/>
             <Setter Property="Height" Value="20"/>
         </Style>
-        <!-- Стиль для TextBox с подсказкой "°C" -->
-        <!-- Стиль для TextBox с подсказкой "В" -->
         <Style x:Key="TemperatureTextBoxStyle" TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>
@@ -416,7 +413,7 @@
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
-                                        <Button Content="Задвижки, фланцы, опоры" Margin="30,0,0,0"  Width="160" Height="25" BorderThickness="2" x:Name="ValvesAndSupports"/>
+                                        <Button Content="Задвижки, фланцы, опоры" Margin="30,0,0,0"  Width="160" Height="25" BorderThickness="2" x:Name="ValvesAndSupports" Click="ValvesAndSupports_Click"/>
                                     </StackPanel>
 
                                 </StackPanel>

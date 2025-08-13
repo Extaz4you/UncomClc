@@ -296,28 +296,7 @@ namespace UncomClc.ViewModels
         }
         private void UpdateNumberCoresOptions()
         {
-            var newOptions = new List<int>();
 
-            if (connectionScheme == "линия")
-            {
-                newOptions.Add(2);
-            }
-            else
-            {
-                newOptions.AddRange(new[] { 1 });
-            }
-
-            if (!NumberCoresOptions.SequenceEqual(newOptions))
-            {
-                NumberCoresOptions = newOptions;
-                OnPropertyChanged(nameof(NumberCoresOptions));
-
-                if (!NumberCoresOptions.Contains(numberCores))
-                {
-                    numberCores = NumberCoresOptions.FirstOrDefault();
-                    OnPropertyChanged(nameof(NumberCores));
-                }
-            }
         }
         private void UpdateCableTypeOptions()
         {

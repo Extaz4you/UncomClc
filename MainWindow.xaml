@@ -320,13 +320,10 @@
             <ToolBar Background="Transparent">
 
                 <Menu>
-                    <MenuItem Width="100" BorderThickness="5" BorderBrush="Tan">
-                        <MenuItem.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Файл"/>
-                            </DataTemplate>
-                        </MenuItem.HeaderTemplate>
-
+                    <MenuItem Width="32" Height="25" Background="White">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/folder.png" Width="20" Height="20"/>
+                        </MenuItem.Icon>
                         <MenuItem Header="Создать" Command="{Binding CreateCommand}">
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/CreateFile.png" Width="20" Height="20"/>

@@ -318,39 +318,39 @@
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1">
 
             <ToolBar Background="Transparent">
-                <Button Content="Файл" Margin="5" Width="120" x:Name="ContextMenuButton" BorderBrush="Tan" BorderThickness="2"/>
-                <ToolBar.ContextMenu>
-                    <ContextMenu x:Name="TreeViewContextMenu">
-                        <MenuItem x:Name="Add" Header="Добавить новую трубу">
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/Images/addpipe.png" Width="20" Height="20"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem x:Name="Delete" Header="Удалить" >
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/Images/delete.png" Width="20" Height="20"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
 
-                        <MenuItem x:Name="OpenFile" Header="Открыть" >
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/Images/OpenFile.png" Width="20" Height="20"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem x:Name="SaveFile" Header="Сохранить" >
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/Images/SaveFile.png" Width="20" Height="20"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem x:Name="CreateFile" Header="Создать">
+                <Menu>
+                    <MenuItem Width="100" BorderThickness="5" BorderBrush="Tan">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Файл"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+
+                        <MenuItem Header="Создать" Command="{Binding CreateCommand}">
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/CreateFile.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                    </ContextMenu>
-                </ToolBar.ContextMenu>
+
+                        <MenuItem Header="Открыть" Command="{Binding OpenCommand}">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/OpenFile.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Header="Сохранить" Command="{Binding SaveCommand}">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/SaveFile.png" Width="20" Height="20"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                    </MenuItem>
+                </Menu>
+                
             </ToolBar>
             
+
         </StackPanel>
 
         <!-- Верхняя 1 часть с вертикальными разделами -->

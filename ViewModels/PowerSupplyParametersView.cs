@@ -74,6 +74,11 @@ namespace UncomClc.ViewModels
                     MessageBox.Show("Фазное напряжение должно быть в диапазоне от 0 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                if (ConnectionScheme == "линия" && value > 600)
+                {
+                    MessageBox.Show("Максимальное допустимое напряжение для 2-х жильного кабеля 600 В", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 phaseVoltage = value;
                 OnPropertyChanged(nameof(PhaseVoltage));
                 OnPropertyChanged(nameof(WorkLoad));

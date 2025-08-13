@@ -180,7 +180,13 @@
   <ItemGroup>
     <Resource Include="Images\info.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\addpipe.png" />
+    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\OpenFile.png" />
+    <Resource Include="Images\SaveFile.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\infobutton.jpg" />
   </ItemGroup>

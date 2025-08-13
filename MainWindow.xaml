@@ -317,36 +317,32 @@
         <!-- Верхний горизонтальный раздел -->
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1">
 
-            <!--<ToolBar Background="Moccasin">
-                <Button Content="Файл" Margin="5" Width="120" Click="ShowContextMenu_Click" x:Name="ContextMenuButton" BorderBrush="Tan" BorderThickness="2"/>
-                <Button x:Name="Calculate" Content="Рассчитать" Margin="5" Width="80" BorderBrush="Tan" BorderThickness="2" Click="Calculate_Click"/>
-                <Button x:Name="CalculateAll" Content="Рассчитать все" Margin="5" Width="90" BorderBrush="Tan" BorderThickness="2" Click="CalculateAll_Click"/>
-                <Button x:Name="OpenExcel" Content="Обновить данные" Margin="5" Width="80" BorderBrush="Tan" BorderThickness="2" Click="OpenExcel_Click"/>
-                <Button x:Name="OpenReports" Content="Отчеты" Margin="5" Width="80" BorderBrush="Tan" BorderThickness="2"  Click="Show_Reports"/>
+            <ToolBar Background="Transparent">
+                <Button Content="Файл" Margin="5" Width="120" x:Name="ContextMenuButton" BorderBrush="Tan" BorderThickness="2"/>
                 <ToolBar.ContextMenu>
                     <ContextMenu x:Name="TreeViewContextMenu">
-                        <MenuItem x:Name="Add" Header="Добавить новую трубу" Click="Add_Click">
+                        <MenuItem x:Name="Add" Header="Добавить новую трубу">
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/addpipe.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem x:Name="Delete" Header="Удалить" Click="Delete_Click" >
+                        <MenuItem x:Name="Delete" Header="Удалить" >
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/delete.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem x:Name="OpenFile" Header="Открыть" Click="OpenFile_Click">
+                        <MenuItem x:Name="OpenFile" Header="Открыть" >
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/OpenFile.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem x:Name="SaveFile" Header="Сохранить" Click="SaveFile_Click">
+                        <MenuItem x:Name="SaveFile" Header="Сохранить" >
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/SaveFile.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem x:Name="CreateFile" Header="Создать" Click="CreateFile_Click">
+                        <MenuItem x:Name="CreateFile" Header="Создать">
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/CreateFile.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
@@ -355,22 +351,6 @@
                 </ToolBar.ContextMenu>
             </ToolBar>
             
-            <ToolBar Visibility="Hidden">
-                <ToolBar.ContextMenu>
-                    <ContextMenu x:Name="ReportsContextMenu">
-                        <MenuItem x:Name="GenerateReport" Header="Ведомости материалов" Click="GenerateReport_Click">
-
-                        </MenuItem>
-                        <MenuItem x:Name="GeneralReport" Header="Общий перечень линий" Click="GeneralReport_Click">
-
-                        </MenuItem>
-                        <MenuItem x:Name="SingleLine" Header="Параметры отдельной линии" Click="SingleLine_Click">
-
-                        </MenuItem>
-                    </ContextMenu>
-                </ToolBar.ContextMenu>
-            </ToolBar>-->
-
         </StackPanel>
 
         <!-- Верхняя 1 часть с вертикальными разделами -->

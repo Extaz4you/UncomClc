@@ -11,7 +11,7 @@ namespace UncomClc.ViewModels
 {
     public class PowerSupplyParametersView : INotifyPropertyChanged
     {
-        private List<string> _allConnectionSchemeOptions = new List<string>() { "линия", "петля", "звезда", "две петли", "две звезды", "три петли", "три звезды" };
+        private List<string> _allConnectionSchemeOptions = new List<string>() { "петля", "звезда", "две петли", "две звезды", "три петли", "три звезды", "линия" };
         private const double Sqrt3 = 1.73205080757;
         private double phaseVoltage = 220;
         private double lineVoltage = (220 * Sqrt3);
@@ -69,14 +69,9 @@ namespace UncomClc.ViewModels
             get => Convert.ToInt32(phaseVoltage);
             set
             {
-                if (numberCores == 1 && (value < 0 || value > 660))
+                if (value < 0 || value > 660)
                 {
                     MessageBox.Show("Фазное напряжение должно быть в диапазоне от 0 до 660", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                else if (numberCores == 2 && (value < 0 || value > 600))
-                {
-                    MessageBox.Show("Фазное напряжение должно быть в диапазоне от 0 до 600", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 phaseVoltage = value;
@@ -97,16 +92,6 @@ namespace UncomClc.ViewModels
             get => Convert.ToInt32(lineVoltage);
             set
             {
-                //if (numberCores == 1 && (value < 0 || value > 1143))
-                //{
-                //    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 0 до 1143", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-                //else if (numberCores == 2 && (value < 0 || value > 1039))
-                //{
-                //    MessageBox.Show("Линейное напряжение должно быть в диапазоне от 0 до 1039", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
                 lineVoltage = value;
                 OnPropertyChanged(nameof(LineVoltage));
                 OnPropertyChanged(nameof(WorkLoad));
@@ -203,6 +188,13 @@ namespace UncomClc.ViewModels
             get => connectionScheme;
             set
             {
+                if (value == "линия" && PhaseVoltage > 600)
+                {
+                    PhaseVoltage = 600;
+                    MessageBox.Show("Максимальное допустимое напряжение для 2-х жильного кабеля 600 В");
+                    return;
+                }
+
                 connectionScheme = value;
                 OnPropertyChanged(nameof(ConnectionScheme));
                 UpdateNumberCoresOptions();
@@ -266,7 +258,7 @@ namespace UncomClc.ViewModels
         public List<string> WorkEnvironmentOptions { get; } = new List<string> { "серная кислота", "соляная кислота", "плавиковая кислота", "фосфорная кислота", "азотная кислота", "органические кислоты", "щелочи", "соли", "морская вода", "хлориды", "-" };
         //public List<string> CableTypeOptions { get; } = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
         public List<string> NutritionOptions { get; private set; } = new List<string>() { "однофазное", "двухфазное", "трехфазное" };
-        public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() { "линия", "петля", "две петли", "три петли", };
+        public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() {  "петля", "две петли", "три петли", "линия" };
         public List<int> NumberCoresOptions { get; private set; } = new List<int>() { 1, 2 };
 
         public event PropertyChangedEventHandler PropertyChanged;

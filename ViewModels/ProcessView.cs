@@ -30,6 +30,12 @@ namespace UncomClc.ViewModels
         private string thermalIsolation2 = "- не выбрано -";
         private int isolationThickness = 50;
         private int isolationThickness2 = 0;
+        private float supportCount = 0;
+        private float supportLength = 0;
+        private float valveCount = 0;
+        private float valveLength = 0;
+        private float flangCount = 0;
+        private float flangLength = 0;
 
 
         public string Pipe
@@ -46,8 +52,14 @@ namespace UncomClc.ViewModels
             get => diam;
             set
             {
+                if (value > 1220)
+                {
+                    MessageBox.Show("Диамметр не может быть более 1220 мм");
+                    return;
+                }
                 diam = value;
                 OnPropertyChanged(nameof(Diam));
+                ChangeLenghtByTable();
             }
         }
         public int Thickness
@@ -77,8 +89,6 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(Lenght));
             }
         }
-
-
         public string ThermalIsolation
         {
             get => thermalIsolation;
@@ -105,7 +115,6 @@ namespace UncomClc.ViewModels
                 }
             }
         }
-
         public int IsolationThickness
         {
             get => isolationThickness;
@@ -124,7 +133,6 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(IsolationThickness2));
             }
         }
-
         public int MaxAddProductTemp
         {
             get => maxAddProductTemp;
@@ -182,10 +190,93 @@ namespace UncomClc.ViewModels
             }
         }
 
+        public float SupportCount
+        {
+            get => supportCount;
+            set
+            {
+                supportCount = value;
+                OnPropertyChanged(nameof(SupportCount));
+                ChangeLenghtByTable();
+
+                SupportLenght = value * SupportLenght;
+            }
+        }
+        public float SupportLenght
+        {
+            get => supportLength;
+            set
+            {
+                supportLength = value;
+                OnPropertyChanged(nameof(SupportLenght));
+            }
+        }
+        public float ValveCount
+        {
+            get => valveCount;
+            set
+            {
+                valveCount = value;
+                OnPropertyChanged(nameof(ValveCount));
+                ChangeLenghtByTable();
+                ValveLenght = value * ValveLenght;
+            }
+        }
+        public float ValveLenght
+        {
+            get => valveLength;
+            set
+            {
+                valveLength = value;
+                OnPropertyChanged(nameof(ValveLenght));
+            }
+        }
+        public float FlangCount
+        {
+            get => flangCount;
+            set
+            {
+                flangCount = value;
+                OnPropertyChanged(nameof(FlangCount));
+                ChangeLenghtByTable();
+                FlangLength = value * FlangLength;
+            }
+        }
+        public float FlangLength
+        {
+            get => flangLength;
+            set
+            {
+                flangLength = value;
+                OnPropertyChanged(nameof(FlangLength));
+            }
+        }
 
 
         public List<string> SteamingOptions { get; } = new List<string> { "Есть", "Нет" };
         public List<string> TemperatureClassOptions { get; } = new List<string> { "T1", "T2", "T3", "T4", "T5", "T6", "-" };
+
+        public Dictionary<int, SupportValveFlangTable> SupValFlTable { get; } = new Dictionary<int, SupportValveFlangTable>
+        {
+            {25, new SupportValveFlangTable() { FlLength = 0.3f, ValLength = 0.3f, SupLength = 0 } },
+            {32, new SupportValveFlangTable() { FlLength = 0.3f, ValLength = 0.4f, SupLength = 0 } },
+            {57, new SupportValveFlangTable() { FlLength = 0.4f, ValLength = 0.8f, SupLength = 0.7f } },
+            {76, new SupportValveFlangTable() { FlLength = 0.4f, ValLength = 0.9f, SupLength = 0.7f } },
+            {89, new SupportValveFlangTable() { FlLength = 0.5f, ValLength = 1.1f, SupLength = 0.7f } },
+            {108, new SupportValveFlangTable() { FlLength = 0.6f, ValLength = 1.4f, SupLength = 0.8f } },
+            {159, new SupportValveFlangTable() { FlLength = 0.6f, ValLength = 2.1f, SupLength = 0.8f } },
+            {219, new SupportValveFlangTable() { FlLength = 1f, ValLength = 2.8f, SupLength = 0.8f } },
+            {273, new SupportValveFlangTable() { FlLength = 1f, ValLength = 3.4f, SupLength = 0.8f } },
+            {325, new SupportValveFlangTable() { FlLength = 1.3f, ValLength = 4.1f, SupLength = 1.2f } },
+            {377, new SupportValveFlangTable() { FlLength = 1.3f, ValLength = 4.5f, SupLength = 1.2f } },
+            {426, new SupportValveFlangTable() { FlLength = 1.3f, ValLength = 5.1f, SupLength = 1.2f } },
+            {530, new SupportValveFlangTable() { FlLength = 1.5f, ValLength = 6.4f, SupLength = 1.2f } },
+            {630, new SupportValveFlangTable() { FlLength = 1.5f, ValLength = 7.7f, SupLength = 1.5f } },
+            {830, new SupportValveFlangTable() { FlLength = 2.2f, ValLength = 10f, SupLength = 2f } },
+            {1020, new SupportValveFlangTable() { FlLength = 2.7f, ValLength = 12.3f, SupLength = 2.5f } },
+            {1220, new SupportValveFlangTable() { FlLength = 3.1f, ValLength = 14.7f, SupLength = 3 } },
+        };
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -204,6 +295,19 @@ namespace UncomClc.ViewModels
                 case "T6": return 85;
                 default: return 0;
             }
+        }
+
+        private void ChangeLenghtByTable()
+        {
+            var info = SupValFlTable
+                       .Where(x => x.Key >= Diam)
+                       .OrderBy(x => x.Key)
+                       .Select(x => x.Value)
+                       .FirstOrDefault();
+
+            if(SupportCount > 0) SupportLenght = info.SupLength;
+            if (ValveCount > 0) ValveLenght = info.ValLength;
+            if (FlangCount > 0) FlangLength = info.FlLength;
         }
     }
 

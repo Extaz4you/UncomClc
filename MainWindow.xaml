@@ -520,20 +520,20 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
                                         <Label Content="Задвижки: "/>
-                                        <TextBox x:Name="ValvesCount" Margin="0,0,5,0" Width="40" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
-                                        <TextBox x:Name="ValvesLengt"  Width="70" Height="25" IsEnabled="False" Text="{Binding ProcessVM.ValvesLengt, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}"/>
+                                        <TextBox x:Name="ValvesCount" Margin="0,0,5,0" Width="40" Height="25" Text="{Binding ProcessVM.ValveCount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
+                                        <TextBox x:Name="ValvesLengt"  Width="70" Height="25" IsEnabled="False" Text="{Binding ProcessVM.ValveLenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
                                         <Label Content="Опоры: "/>
-                                        <TextBox x:Name="SupportsCount" Margin="0,0,5,0" Width="40" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
-                                        <TextBox x:Name="SupportsLenght"  Width="70" Height="25" Text="{Binding ProcessVM.SupportsLenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}" IsEnabled="False"/>
+                                        <TextBox x:Name="SupportsCount" Margin="0,0,5,0" Width="40" Height="25" Text="{Binding ProcessVM.SupportCount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
+                                        <TextBox x:Name="SupportsLenght"  Width="70" Height="25" Text="{Binding ProcessVM.SupportLenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}" IsEnabled="False"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
                                         <Label Content="Фланцы: "/>
-                                        <TextBox x:Name="FlangsCount" Margin="0,0,5,0" Width="40" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
-                                        <TextBox x:Name="FlangsLengt"  Width="70" Height="25" Text="{Binding ProcessVM.FlangsLengt, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}" IsEnabled="False"/>
+                                        <TextBox x:Name="FlangsCount" Margin="0,0,5,0" Width="40" Height="25" Text="{Binding ProcessVM.FlangCount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
+                                        <TextBox x:Name="FlangsLengt"  Width="70" Height="25" Text="{Binding ProcessVM.FlangLength, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}" IsEnabled="False"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">

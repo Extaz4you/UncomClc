@@ -70,19 +70,19 @@ namespace UncomClc
 
         private void SupValFl_Click(object sender, RoutedEventArgs e)
         {
-            //Window imageWindow = new Window
-            //{
-            //    Title = "Информация по выбору типа кабеля",
-            //    Width = 800,
-            //    Height = 700,
-            //    WindowStartupLocation = WindowStartupLocation.CenterScreen
-            //};
+            Window imageWindow = new Window
+            {
+                Title = "Информация по выбору типа кабеля",
+                Width = 500,
+                Height = 700,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
 
-            //Image image = new Image();
-            //image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/infobutton.jpg"));
+            Image image = new Image();
+            image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/supports.png"));
 
-            //imageWindow.Content = image;
-            //imageWindow.ShowDialog();
+            imageWindow.Content = image;
+            imageWindow.ShowDialog();
         }
 
         private void EditPipes_Click(object sender, RoutedEventArgs e)

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UncomClc.Data;
-using UncomClc.Models.Insulation;
+using UncomClc.Models.Insulations;
 using UncomClc.Views.PipeViews;
 
 namespace UncomClc.Views.InsulationsView

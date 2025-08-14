@@ -32,7 +32,6 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(MinEnvironmentTemp));
             }
         }
-
         public string PipelinePlacement
         {
             get => pipelinePlacement;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UncomClc.Models.Insulation
+namespace UncomClc.Models.Insulations
 {
     public class Insulation
     {

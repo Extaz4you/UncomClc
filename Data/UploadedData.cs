@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
 using UncomClc.Models;
-using UncomClc.Models.Insulation;
+using UncomClc.Models.Insulations;
 
 namespace UncomClc.Data
 {

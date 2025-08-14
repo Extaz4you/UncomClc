@@ -103,7 +103,7 @@
     </ApplicationDefinition>
     <Compile Include="Data\UploadedData.cs" />
     <Compile Include="Models\GeneralStructure.cs" />
-    <Compile Include="Models\Insulation\Insulation.cs" />
+    <Compile Include="Models\Insulations\Insulation.cs" />
     <Compile Include="Models\Pipe\Pipe.cs" />
     <Compile Include="ViewModels\EnvironmentView.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -118,6 +118,9 @@
     </Compile>
     <Compile Include="Views\InsulationsView\EditInsulation.xaml.cs">
       <DependentUpon>EditInsulation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Line\LineView.xaml.cs">
+      <DependentUpon>LineView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PipeViews\Add_Pipe.xaml.cs">
       <DependentUpon>Add_Pipe.xaml</DependentUpon>
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InsulationsView\EditInsulation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Line\LineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

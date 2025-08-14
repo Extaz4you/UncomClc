@@ -455,32 +455,26 @@
 
         <!-- Верхняя 1 часть с вертикальными разделами -->
         <Border Grid.Row="1" Grid.Column="0" Background="Gray" Margin="5" Grid.ColumnSpan="2">
-            <TreeView x:Name="PipeLinesTree" >
-                <!--<TreeView.ContextMenu>
+            <TreeView x:Name="PipeLinesTree" FontSize="22" ItemsSource="{Binding PipeLines}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+                <TreeView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Добавить новую трубу" Click="AddNewPipe_Click">
+                        <MenuItem Header="Добавить" Click="AddPipe_Click" Command="{Binding AddPipeCommand}">
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/addpipe.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Копировать запись" Click="CopyRecord_Click">
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/Images/Copy.png" Width="20" Height="20"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="Вставить" x:Name="InsertRecord" Click="InsertRecord_Click" IsEnabled="False">
-
-                        </MenuItem>
-                        <MenuItem Header="Вставить в конец" x:Name="InsertAtTheEndRecord" Click="InsertAtTheEndRecord_Click" IsEnabled="False">
-
-                        </MenuItem>
-                        <MenuItem Header="Удалить запись" Click="DeleteRecord_Click">
+                        <MenuItem Header="Удалить" >
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/delete.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
                     </ContextMenu>
-                </TreeView.ContextMenu>-->
+                </TreeView.ContextMenu>
             </TreeView>
         </Border>
 

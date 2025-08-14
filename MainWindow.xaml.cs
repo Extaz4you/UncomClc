@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using UncomClc.ViewModels;
 using UncomClc.Views;
 using UncomClc.Views.InsulationsView;
+using UncomClc.Views.Line;
 
 namespace UncomClc
 {
@@ -84,7 +85,6 @@ namespace UncomClc
             }
         }
 
-
         private void ThermalIsolationEditButton_Click(object sender, RoutedEventArgs e)
         {
             var editWindow = new EditInsulation();
@@ -105,5 +105,9 @@ namespace UncomClc
             }
         }
 
+        private void AddPipe_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

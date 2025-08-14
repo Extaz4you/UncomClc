@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using UncomClc.ViewModels;
 using UncomClc.Views;
 using UncomClc.Views.InsulationsView;
-using UncomClc.Views.Valves;
 
 namespace UncomClc
 {
@@ -69,6 +68,23 @@ namespace UncomClc
             imageWindow.ShowDialog();
         }
 
+        private void SupValFl_Click(object sender, RoutedEventArgs e)
+        {
+            //Window imageWindow = new Window
+            //{
+            //    Title = "Информация по выбору типа кабеля",
+            //    Width = 800,
+            //    Height = 700,
+            //    WindowStartupLocation = WindowStartupLocation.CenterScreen
+            //};
+
+            //Image image = new Image();
+            //image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/infobutton.jpg"));
+
+            //imageWindow.Content = image;
+            //imageWindow.ShowDialog();
+        }
+
         private void EditPipes_Click(object sender, RoutedEventArgs e)
         {
             EditPipes editPipes = new EditPipes();
@@ -106,13 +122,5 @@ namespace UncomClc
             }
         }
 
-        private void ValvesAndSupports_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new ValvesSupportsFlangs();
-            if (window.ShowDialog() == true)
-            {
-
-            }
-        }
     }
 }

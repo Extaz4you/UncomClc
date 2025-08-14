@@ -289,6 +289,112 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#FF000000"/>
         </Style>
+        <Style x:Key="CountTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                    Focusable="False"
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    VerticalScrollBarVisibility="Hidden"  
+                                    />
+
+                                    <TextBlock x:Name="DegreeSymbol"
+                                  Text="шт"
+                                  Opacity="0.3"
+                                  IsHitTestVisible="False"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Right"
+                                  Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+        <Style x:Key="LenghtCountTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                            Focusable="False"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden"  
+                            />
+
+                                    <TextBlock x:Name="DegreeSymbol"
+                          Text="м/шт"
+                          Opacity="0.3"
+                          IsHitTestVisible="False"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Right"
+                          Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -341,9 +447,9 @@
 
                     </MenuItem>
                 </Menu>
-                
+
             </ToolBar>
-            
+
 
         </StackPanel>
 
@@ -412,11 +518,33 @@
                                         <TextBox x:Name="PipeKoef" Width="60"  Height="25" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
-                                        <Button Content="Задвижки, фланцы, опоры" Margin="30,0,0,0"  Width="160" Height="25" BorderThickness="2" x:Name="ValvesAndSupports" Click="ValvesAndSupports_Click"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                                        <Label Content="Задвижки: "/>
+                                        <TextBox x:Name="ValvesCount" Margin="0,0,5,0" Width="40" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
+                                        <TextBox x:Name="ValvesLengt"  Width="70" Height="25" IsEnabled="False" Text="{Binding ProcessVM.ValvesLengt, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}"/>
                                     </StackPanel>
 
-                                </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                                        <Label Content="Опоры: "/>
+                                        <TextBox x:Name="SupportsCount" Margin="0,0,5,0" Width="40" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
+                                        <TextBox x:Name="SupportsLenght"  Width="70" Height="25" Text="{Binding ProcessVM.SupportsLenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}" IsEnabled="False"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                                        <Label Content="Фланцы: "/>
+                                        <TextBox x:Name="FlangsCount" Margin="0,0,5,0" Width="40" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
+                                        <TextBox x:Name="FlangsLengt"  Width="70" Height="25" Text="{Binding ProcessVM.FlangsLengt, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LenghtCountTextBoxStyle}" IsEnabled="False"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                                        <Button Width="25" Height="25" Margin="5,0,0,0" 
+                                            Style="{StaticResource CircleButtonStyle}" Click="SupValFl_Click">
+                                            <Image Source="/Images/info.png" Width="25" Height="25"/>
+                                        </Button>
+                                    </StackPanel>
+
+                                    </StackPanel>
+
                             </GroupBox>
 
                             <GroupBox Header="Теплоизоляция 1 слой" Margin="5" >
@@ -595,7 +723,7 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Дополнительные функции" IsEnabled="False">
-                
+
             </TabItem>
         </TabControl>
 

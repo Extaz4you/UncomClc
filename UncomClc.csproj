@@ -127,9 +127,6 @@
     <Compile Include="Views\PipeViews\EditPipes.xaml.cs">
       <DependentUpon>EditPipes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Valves\ValvesSupportsFlangs.xaml.cs">
-      <DependentUpon>ValvesSupportsFlangs.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,10 +160,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PipeViews\EditPipes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Valves\ValvesSupportsFlangs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

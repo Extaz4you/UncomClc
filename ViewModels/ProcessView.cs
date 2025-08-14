@@ -198,8 +198,6 @@ namespace UncomClc.ViewModels
                 supportCount = value;
                 OnPropertyChanged(nameof(SupportCount));
                 ChangeLenghtByTable();
-
-                SupportLenght = value * SupportLenght;
             }
         }
         public float SupportLenght
@@ -219,7 +217,6 @@ namespace UncomClc.ViewModels
                 valveCount = value;
                 OnPropertyChanged(nameof(ValveCount));
                 ChangeLenghtByTable();
-                ValveLenght = value * ValveLenght;
             }
         }
         public float ValveLenght
@@ -239,7 +236,6 @@ namespace UncomClc.ViewModels
                 flangCount = value;
                 OnPropertyChanged(nameof(FlangCount));
                 ChangeLenghtByTable();
-                FlangLength = value * FlangLength;
             }
         }
         public float FlangLength
@@ -258,13 +254,13 @@ namespace UncomClc.ViewModels
 
         public Dictionary<int, SupportValveFlangTable> SupValFlTable { get; } = new Dictionary<int, SupportValveFlangTable>
         {
-            {25, new SupportValveFlangTable() { FlLength = 0.3f, ValLength = 0.3f, SupLength = 0 } },
-            {32, new SupportValveFlangTable() { FlLength = 0.3f, ValLength = 0.4f, SupLength = 0 } },
-            {57, new SupportValveFlangTable() { FlLength = 0.4f, ValLength = 0.8f, SupLength = 0.7f } },
-            {76, new SupportValveFlangTable() { FlLength = 0.4f, ValLength = 0.9f, SupLength = 0.7f } },
-            {89, new SupportValveFlangTable() { FlLength = 0.5f, ValLength = 1.1f, SupLength = 0.7f } },
-            {108, new SupportValveFlangTable() { FlLength = 0.6f, ValLength = 1.4f, SupLength = 0.8f } },
-            {159, new SupportValveFlangTable() { FlLength = 0.6f, ValLength = 2.1f, SupLength = 0.8f } },
+            {25, new SupportValveFlangTable() { FlLength = 0.3f, ValLength = 0.5f, SupLength = 0.6f } },
+            {32, new SupportValveFlangTable() { FlLength = 0.3f, ValLength = 0.6f, SupLength = 0.6f } },
+            {57, new SupportValveFlangTable() { FlLength = 0.4f, ValLength = 2.0f, SupLength = 0.7f } },
+            {76, new SupportValveFlangTable() { FlLength = 0.4f, ValLength = 2.4f, SupLength = 0.7f } },
+            {89, new SupportValveFlangTable() { FlLength = 0.5f, ValLength = 2.4f, SupLength = 0.7f } },
+            {108, new SupportValveFlangTable() { FlLength = 0.6f, ValLength = 2.4f, SupLength = 0.8f } },
+            {159, new SupportValveFlangTable() { FlLength = 0.6f, ValLength = 2.4f, SupLength = 0.8f } },
             {219, new SupportValveFlangTable() { FlLength = 1f, ValLength = 2.8f, SupLength = 0.8f } },
             {273, new SupportValveFlangTable() { FlLength = 1f, ValLength = 3.4f, SupLength = 0.8f } },
             {325, new SupportValveFlangTable() { FlLength = 1.3f, ValLength = 4.1f, SupLength = 1.2f } },

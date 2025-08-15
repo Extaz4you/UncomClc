@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Xml;
 using UncomClc.Models;
+using UncomClc.Views.Line;
 
 namespace UncomClc.ViewModels
 {
@@ -58,6 +59,7 @@ namespace UncomClc.ViewModels
         public ICommand CreateCommand { get; }
         public ICommand OpenCommand { get; }
         public ICommand SaveCommand { get; }
+        public ICommand EditLineNameCommand { get; }
 
         public MainViewModel()
         {
@@ -67,11 +69,12 @@ namespace UncomClc.ViewModels
             CreateCommand = new RelayCommand(CreateFile);
             OpenCommand = new RelayCommand(OpenFile);
             SaveCommand = new RelayCommand(SaveFile);
+            EditLineNameCommand = new RelayCommand(EditLineName);
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -334,6 +337,22 @@ namespace UncomClc.ViewModels
             finally
             {
                 _isUpdatingUI = false;
+            }
+        }
+        private void EditLineName()
+        {
+            if (SelectedPipeLine == null) return;
+
+            var lineView = new LineView(SelectedPipeLine.Name);
+            if (lineView.ShowDialog() == true && !string.IsNullOrWhiteSpace(lineView.NameLine))
+            {
+                SelectedPipeLine.Name = lineView.NameLine.Trim();
+
+                var index = PipeLines.IndexOf(SelectedPipeLine);
+                PipeLines.RemoveAt(index);
+                PipeLines.Insert(index, SelectedPipeLine);
+
+                OnPropertyChanged(nameof(PipeLines));
             }
         }
 

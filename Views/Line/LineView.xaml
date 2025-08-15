@@ -13,7 +13,7 @@
 
             <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Label Content="Наименование:" />
-                <TextBox Width="200" x:Name="Name"/>
+                <TextBox Width="200" x:Name="Name" FontSize="14"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,5,5">

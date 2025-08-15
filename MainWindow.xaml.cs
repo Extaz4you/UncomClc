@@ -1,5 +1,7 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,10 +121,37 @@ namespace UncomClc
             if (DataContext is MainViewModel viewModel)
             {
                 // Обновляем SelectedPipeLine во ViewModel
-                viewModel.SelectedPipeLine = e.NewValue as GeneralStructure;
+                 viewModel.SelectedPipeLine = e.NewValue as GeneralStructure;
 
                 // Принудительно вызываем загрузку данных
                 viewModel.LoadSelectedPipelineData();
+            }
+        }
+
+        private void PipeLinesTree_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Проверяем, что клик был по элементу TreeView
+            if (PipeLinesTree.SelectedItem is GeneralStructure selectedItem &&
+                DataContext is MainViewModel vm)
+            {
+                // Создаем окно редактирования с текущим именем
+                var lineView = new LineView(selectedItem.Name);
+
+                if (lineView.ShowDialog() == true && !string.IsNullOrWhiteSpace(lineView.NameLine))
+                {
+                    // Обновляем имя в модели
+                    selectedItem.Name = lineView.NameLine;
+
+                    // Обновляем отображение TreeView
+                    var tempList = new ObservableCollection<GeneralStructure>(vm.PipeLines);
+                    vm.PipeLines = tempList;
+
+                    // Уведомляем об изменениях
+                    vm.OnPropertyChanged(nameof(vm.PipeLines));
+                    vm.OnPropertyChanged(nameof(vm.SelectedPipeLine));
+                }
+
+                e.Handled = true; // Предотвращаем дальнейшую обработку события
             }
         }
     }

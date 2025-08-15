@@ -20,14 +20,29 @@ namespace UncomClc.Views.Line
     /// </summary>
     public partial class LineView : Window
     {
-        public string NameLine { get; set; }
-        public LineView()
+        public string NameLine { get; private set; }
+        public LineView(string currentName)
         {
             InitializeComponent();
+            Load(currentName);
+            Name.Text = currentName;
+            Name.Focus();
+            Name.SelectAll();
+        }
+        private void Load(string name)
+        {
+            Name.Text = name;
         }
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            NameLine = Name.Text;
+            if (string.IsNullOrWhiteSpace(Name.Text))
+            {
+                MessageBox.Show("Название не может быть пустым", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            NameLine = Name.Text.Trim();
             DialogResult = true;
             Close();
         }

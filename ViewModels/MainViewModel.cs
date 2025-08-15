@@ -28,6 +28,7 @@ namespace UncomClc.ViewModels
         private ObservableCollection<GeneralStructure> _pipeLines = new ObservableCollection<GeneralStructure>();
         private GeneralStructure _selectedPipeLine;
         private string file;
+        private bool _isUpdatingUI;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -44,9 +45,10 @@ namespace UncomClc.ViewModels
             get => _selectedPipeLine;
             set
             {
+                if (_selectedPipeLine == value) return;
                 _selectedPipeLine = value;
                 OnPropertyChanged(nameof(SelectedPipeLine));
-                LoadSelectedPipelineData();
+
             }
         }
 
@@ -236,7 +238,7 @@ namespace UncomClc.ViewModels
         }
         private void SaveCurrentParameters()
         {
-            if (SelectedPipeLine == null) return;
+            if (_isUpdatingUI || SelectedPipeLine == null) return;
             var param = SelectedPipeLine.Parameters;
             var pipe = Data.UploadedData.Instance.Pipes.Where(x => x.Name == ProcessVM.Pipe).FirstOrDefault();
             var isulation = Data.UploadedData.Instance.Insulations.Where(x => x.Name == ProcessVM.ThermalIsolation).FirstOrDefault();
@@ -279,51 +281,60 @@ namespace UncomClc.ViewModels
             param.NumberCores = PowerSupplyParametersVM.NumberCores;
             param.LenghtSection = PowerSupplyParametersVM.LenghtSection;
         }
-        private void LoadSelectedPipelineData()
+        public void LoadSelectedPipelineData()
         {
-            if (SelectedPipeLine == null || SelectedPipeLine.Parameters == null) return;
+            if (_isUpdatingUI || SelectedPipeLine == null || SelectedPipeLine.Parameters == null)
+                return;
 
-            // Блокируем обновление UI во время загрузки
-            var temp = SelectedPipeLine.Parameters;
+            try
+            {
+                _isUpdatingUI = true;
+                // Блокируем обновление UI во время загрузки
+                var temp = SelectedPipeLine.Parameters;
 
-            // ProcessView
-            ProcessVM.Pipe = temp.Pipe?.Name;
-            ProcessVM.Diam = temp.Diam;
-            ProcessVM.Thickness = temp.Thickness;
-            ProcessVM.PipeKoef = temp.PipeKoef;
-            ProcessVM.Lenght = temp.Lenght;
-            ProcessVM.ThermalIsolation = temp.ThermalIsolation?.Name;
-            ProcessVM.ThermalIsolation2 = temp.ThermalIsolation2?.Name;
-            ProcessVM.IsolationThickness = temp.IsolationThickness;
-            ProcessVM.IsolationThickness2 = temp.IsolationThickness2;
-            ProcessVM.MaxAddProductTemp = temp.MaxAddProductTemp;
-            ProcessVM.SteamingStatus = temp.SteamingStatus;
-            ProcessVM.StreamingTemperature = temp.StreamingTemperature;
-            ProcessVM.TemperatureClassValue = temp.TemperatureClassValue;
-            ProcessVM.SupportCount = temp.SupportCount;
-            ProcessVM.SupportLenght = temp.SupportLenght;
-            ProcessVM.ValveCount = temp.ValveCount;
-            ProcessVM.ValveLenght = temp.ValveLenght;
-            ProcessVM.FlangCount = temp.FlangCount;
-            ProcessVM.FlangLength = temp.FlangLength;
+                // ProcessView
+                ProcessVM.Pipe = temp.Pipe?.Name;
+                ProcessVM.Diam = temp.Diam;
+                ProcessVM.Thickness = temp.Thickness;
+                ProcessVM.PipeKoef = temp.PipeKoef;
+                ProcessVM.Lenght = temp.Lenght;
+                ProcessVM.ThermalIsolation = temp.ThermalIsolation?.Name;
+                ProcessVM.ThermalIsolation2 = temp.ThermalIsolation2?.Name;
+                ProcessVM.IsolationThickness = temp.IsolationThickness;
+                ProcessVM.IsolationThickness2 = temp.IsolationThickness2;
+                ProcessVM.MaxAddProductTemp = temp.MaxAddProductTemp;
+                ProcessVM.SteamingStatus = temp.SteamingStatus;
+                ProcessVM.StreamingTemperature = temp.StreamingTemperature;
+                ProcessVM.TemperatureClassValue = temp.TemperatureClassValue;
+                ProcessVM.SupportCount = temp.SupportCount;
+                ProcessVM.SupportLenght = temp.SupportLenght;
+                ProcessVM.ValveCount = temp.ValveCount;
+                ProcessVM.ValveLenght = temp.ValveLenght;
+                ProcessVM.FlangCount = temp.FlangCount;
+                ProcessVM.FlangLength = temp.FlangLength;
 
-            // EnvironmentView
-            EnvironmentVM.MaxEnvironmentTemp = temp.MaxEnvironmentTemp;
-            EnvironmentVM.MinEnvironmentTemp = temp.MinEnvironmentTemp;
-            EnvironmentVM.PipelinePlacement = temp.PipelinePlacement;
+                // EnvironmentView
+                EnvironmentVM.MaxEnvironmentTemp = temp.MaxEnvironmentTemp;
+                EnvironmentVM.MinEnvironmentTemp = temp.MinEnvironmentTemp;
+                EnvironmentVM.PipelinePlacement = temp.PipelinePlacement;
 
-            // PowerSupplyParametersView
-            PowerSupplyParametersVM.SupportedTemp = temp.SupportedTemp;
-            PowerSupplyParametersVM.MaxTechProductTemp = temp.MaxTechProductTemp;
-            PowerSupplyParametersVM.WorkEnvironment = temp.WorkEnvironment;
-            PowerSupplyParametersVM.LineVoltage = temp.LineVoltage;
-            PowerSupplyParametersVM.Current = temp.Current;
-            PowerSupplyParametersVM.NumberCores = temp.NumberCores;
-            PowerSupplyParametersVM.LenghtSection = temp.LenghtSection;
-            PowerSupplyParametersVM.CableType = temp.CableType;
-            PowerSupplyParametersVM.MinTempOn = temp.MinTempOn;
-            PowerSupplyParametersVM.ConnectionScheme = temp.ConnectionScheme;
-            PowerSupplyParametersVM.Nutrition = temp.Nutrition;
+                // PowerSupplyParametersView
+                PowerSupplyParametersVM.SupportedTemp = temp.SupportedTemp;
+                PowerSupplyParametersVM.MaxTechProductTemp = temp.MaxTechProductTemp;
+                PowerSupplyParametersVM.WorkEnvironment = temp.WorkEnvironment;
+                PowerSupplyParametersVM.LineVoltage = temp.LineVoltage;
+                PowerSupplyParametersVM.Current = temp.Current;
+                PowerSupplyParametersVM.NumberCores = temp.NumberCores;
+                PowerSupplyParametersVM.LenghtSection = temp.LenghtSection;
+                PowerSupplyParametersVM.CableType = temp.CableType;
+                PowerSupplyParametersVM.MinTempOn = temp.MinTempOn;
+                PowerSupplyParametersVM.ConnectionScheme = temp.ConnectionScheme;
+                PowerSupplyParametersVM.Nutrition = temp.Nutrition;
+            }
+            finally
+            {
+                _isUpdatingUI = false;
+            }
         }
 
     }

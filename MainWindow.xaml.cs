@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UncomClc.Models;
 using UncomClc.ViewModels;
 using UncomClc.Views;
 using UncomClc.Views.InsulationsView;
@@ -108,6 +109,18 @@ namespace UncomClc
         private void AddPipe_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void PipeLinesTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (DataContext is MainViewModel viewModel)
+            {
+                // Обновляем SelectedPipeLine во ViewModel
+                viewModel.SelectedPipeLine = e.NewValue as GeneralStructure;
+
+                // Принудительно вызываем загрузку данных
+                viewModel.LoadSelectedPipelineData();
+            }
         }
     }
 }

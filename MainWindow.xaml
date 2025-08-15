@@ -455,7 +455,7 @@
 
         <!-- Верхняя 1 часть с вертикальными разделами -->
         <Border Grid.Row="1" Grid.Column="0" Background="Gray" Margin="5" Grid.ColumnSpan="2">
-            <TreeView x:Name="PipeLinesTree" FontSize="22" ItemsSource="{Binding PipeLines}">
+            <TreeView x:Name="PipeLinesTree" FontSize="22" ItemsSource="{Binding PipeLines}" SelectedItemChanged="PipeLinesTree_SelectedItemChanged">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate>
                         <TextBlock Text="{Binding Name}"/>
@@ -497,7 +497,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Наружный диаметр:"/>
-                                        <TextBox x:Name="Diam" Width="60" Height="25" Text="{Binding ProcessVM.Diam, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MMTextBoxStyle}"/>
+                                        <TextBox x:Name="Diam" Width="60" Height="25" Text="{Binding ProcessVM.Diam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MMTextBoxStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

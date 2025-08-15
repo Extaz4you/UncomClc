@@ -26,6 +26,7 @@ namespace UncomClc.ViewModels
 
         private ObservableCollection<GeneralStructure> _pipeLines = new ObservableCollection<GeneralStructure>();
         private GeneralStructure _selectedPipeLine;
+        private string file;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -102,15 +103,27 @@ namespace UncomClc.ViewModels
         }
         private void CreateFile()
         {
-            var newStructure = new GeneralStructure
+            var saveFileDialog = new SaveFileDialog
             {
-                Id = 1,
-                Name = "NewLine",
-                Parameters = new Parameters()
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                DefaultExt = ".json",
             };
-            PipeLines.Add(newStructure);
-            SelectedPipeLine = newStructure;
-            SaveFile();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                PipeLines.Clear();
+                file = saveFileDialog.FileName;
+                var newStructure = new GeneralStructure
+                {
+                    Id = 1,
+                    Name = "NewLine",
+                    Parameters = new Parameters()
+                };
+                PipeLines.Add(newStructure);
+                SelectedPipeLine = newStructure;
+                SaveFile();
+
+            }
+
         }
         private void OpenFile()
         {
@@ -122,9 +135,10 @@ namespace UncomClc.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
+                file = openFileDialog.FileName;
                 try
                 {
-                    var json = File.ReadAllText(openFileDialog.FileName);
+                    var json = File.ReadAllText(file);
                     var structures = JsonSerializer.Deserialize<ObservableCollection<GeneralStructure>>(json);
 
                     PipeLines.Clear();
@@ -152,24 +166,15 @@ namespace UncomClc.ViewModels
                 return;
             }
 
-            var saveFileDialog = new SaveFileDialog
+            try
             {
-                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
-                DefaultExt = ".json",
-            };
-
-            if (saveFileDialog.ShowDialog() == true)
+                var json = JsonSerializer.Serialize(PipeLines);
+                File.WriteAllText(file, json);
+                MessageBox.Show("Файл успешно сохранен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    var json = JsonSerializer.Serialize(PipeLines);
-                    File.WriteAllText(saveFileDialog.FileName, json);
-                    MessageBox.Show("Файл успешно сохранен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

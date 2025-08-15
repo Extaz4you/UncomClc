@@ -110,7 +110,10 @@ namespace UncomClc
         {
             
         }
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
         private void PipeLinesTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (DataContext is MainViewModel viewModel)

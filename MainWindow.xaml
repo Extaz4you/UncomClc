@@ -468,7 +468,7 @@
                                 <Image Source="pack://application:,,,/Images/addpipe.png" Width="20" Height="20"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Удалить" >
+                        <MenuItem Header="Удалить" Click="Delete_Click" Command="{Binding DeleteCommand}"> 
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/delete.png" Width="20" Height="20"/>
                             </MenuItem.Icon>

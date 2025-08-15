@@ -9,6 +9,6 @@ namespace UncomClc.Models
     public class Pipe
     {
         public string Name { get; set; }
-        public decimal Koef { get; set; }
+        public float Koef { get; set; }
     }
 }

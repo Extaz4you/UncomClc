@@ -28,6 +28,7 @@ namespace UncomClc.Models
         public string SteamingStatus { get; set; }
         public int StreamingTemperature { get; set; }
         public int TemperatureClassValue { get; set; }
+        public string TemperatureClass { get; set; }
         public float SupportCount { get; set; }
         public float SupportLenght { get; set; }
         public float ValveCount { get; set; }
@@ -40,7 +41,9 @@ namespace UncomClc.Models
         public int SupportedTemp { get; set; }
         public int MaxTechProductTemp { get; set; }
         public int LineVoltage { get; set; }
+        public int PhaseVoltage { get; set; }
         public int Current { get; set; }
+        public int WorkLoad { get; set; }
         public int NumberCores { get; set; }
         public int LenghtSection { get; set; }
         public string CableType { get; set; }

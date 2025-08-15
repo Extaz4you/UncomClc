@@ -558,8 +558,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Тип:"/>
-                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2" SelectedValue="{Binding ProcessVM.ThermalIsolation2}" SelectedValuePath="Content">
-                                            <ComboBoxItem Content="- не выбрано -" IsSelected="True"/>
+                                        <ComboBox Width="160" Margin="10,0" Height="25" x:Name="ThermalIsolationCombobox2" SelectedItem="{Binding ProcessVM.ThermalIsolation2}">
                                         </ComboBox>
                                         <Button x:Name="ThermalIsolationEditButton2" Content="..." Height="25" Width="60" Click="ThermalIsolationEditButton_Click" HorizontalAlignment="Center"/>
                                     </StackPanel>

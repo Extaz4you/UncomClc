@@ -42,7 +42,7 @@ namespace UncomClc.Views.PipeViews
         {
             _originalPipe.Name = Name.Text;
 
-            if (decimal.TryParse(Koef.Text, out decimal koef))
+            if (float.TryParse(Koef.Text, out float koef))
             {
                 _originalPipe.Koef = koef;
             }

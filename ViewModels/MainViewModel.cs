@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -71,6 +72,7 @@ namespace UncomClc.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         private void AddNewPipe()
         {
             var newId = PipeLines.Any() ? PipeLines.Max(p => p.Id) + 1 : 1;
@@ -168,7 +170,14 @@ namespace UncomClc.ViewModels
 
             try
             {
-                var json = JsonSerializer.Serialize(PipeLines);
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+                UpdateCurrentParameters();
+                var json = JsonSerializer.Serialize(PipeLines, options);
                 File.WriteAllText(file, json);
                 MessageBox.Show("Файл успешно сохранен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -176,6 +185,53 @@ namespace UncomClc.ViewModels
             {
                 MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void UpdateCurrentParameters()
+        {
+            if (SelectedPipeLine == null) return;
+            var param = SelectedPipeLine.Parameters;
+            var pipe = Data.UploadedData.Instance.Pipes.Where(x => x.Name == ProcessVM.Pipe).FirstOrDefault();
+            var isulation = Data.UploadedData.Instance.Insulations.Where(x => x.Name == ProcessVM.ThermalIsolation).FirstOrDefault();
+            var isulation2 = Data.UploadedData.Instance.Insulations.Where(x => x.Name == ProcessVM.ThermalIsolation2).FirstOrDefault();
+            
+            param.Pipe = pipe;
+            param.ThermalIsolation = isulation;
+            param.ThermalIsolation2 = isulation2;
+            param.IsolationThickness = ProcessVM.IsolationThickness;
+            param.IsolationThickness2 = ProcessVM.IsolationThickness2;
+            param.Diam = ProcessVM.Diam;
+            param.Thickness = ProcessVM.Thickness;
+            param.Lenght = ProcessVM.Lenght;
+            param.PipeKoef = ProcessVM.PipeKoef;
+            param.ValveCount = ProcessVM.ValveCount;
+            param.ValveLenght = ProcessVM.ValveLenght;
+            param.SupportLenght = ProcessVM.SupportLenght;
+            param.SupportCount = ProcessVM.SupportCount;
+            param.FlangCount = ProcessVM.FlangCount;
+            param.FlangLength = ProcessVM.FlangLength;
+            param.MinEnvironmentTemp = EnvironmentVM.MinEnvironmentTemp;
+            param.MaxEnvironmentTemp = EnvironmentVM.MaxEnvironmentTemp;
+            param.PipelinePlacement = EnvironmentVM.PipelinePlacement;
+            param.SupportedTemp = PowerSupplyParametersVM.SupportedTemp;
+            param.MaxAddProductTemp = ProcessVM.MaxAddProductTemp;
+            param.MaxTechProductTemp = PowerSupplyParametersVM.MaxTechProductTemp;
+            param.SteamingStatus = ProcessVM.SteamingStatus;
+            param.StreamingTemperature = ProcessVM.StreamingTemperature;
+            param.TemperatureClass = ProcessVM.TemperatureClass;
+            param.TemperatureClassValue = ProcessVM.TemperatureClassValue;
+            param.WorkEnvironment = PowerSupplyParametersVM.WorkEnvironment;
+            param.PhaseVoltage = PowerSupplyParametersVM.PhaseVoltage;
+            param.LineVoltage = PowerSupplyParametersVM.LineVoltage;
+            param.Current = PowerSupplyParametersVM.Current;
+            param.Nutrition = PowerSupplyParametersVM.Nutrition;
+            param.WorkLoad = PowerSupplyParametersVM.WorkLoad;
+            param.ConnectionScheme = PowerSupplyParametersVM.ConnectionScheme;
+            param.MinTempOn = PowerSupplyParametersVM.MinTempOn;
+            param.CableType = PowerSupplyParametersVM.CableType;
+            param.NumberCores = PowerSupplyParametersVM.NumberCores;
+            param.LenghtSection = PowerSupplyParametersVM.LenghtSection;
+
         }
     }
 }

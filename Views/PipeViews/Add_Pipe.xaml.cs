@@ -34,8 +34,8 @@ namespace UncomClc.Views.PipeViews
         }
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            decimal parsed;
-            var isParsed = decimal.TryParse(Koef.Text, out parsed);
+            float parsed;
+            var isParsed = float.TryParse(Koef.Text, out parsed);
             NewPipe = new Models.Pipe
             {
                 Name = Name.Text,

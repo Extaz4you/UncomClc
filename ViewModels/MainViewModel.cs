@@ -107,49 +107,7 @@ namespace UncomClc.ViewModels
             {
                 Id = newId,
                 Name = $"NewLine_{newId}",
-                Parameters = new Parameters()
-                {
-                    // ProcessView
-                    Pipe = Data.UploadedData.Instance.Pipes.FirstOrDefault(x => x.Name == "сталь углеродистая"),
-                    Diam = 57,
-                    Thickness = 3,
-                    PipeKoef = 1.01f,
-                    Lenght = 10,
-                    ThermalIsolation = Data.UploadedData.Instance.Insulations.FirstOrDefault(x => x.Name == "минеральная вата"),
-                    ThermalIsolation2 = new Insulation(),
-                    IsolationThickness = 50,
-                    IsolationThickness2 = 0,
-                    MaxAddProductTemp = 100,
-                    SteamingStatus = "Нет",
-                    StreamingTemperature = 200,
-                    TemperatureClass = "-",
-                    TemperatureClassValue = 0,
-                    SupportCount = 0,
-                    //SupportLenght = temp.SupportLenght;
-                    ValveCount = 0,
-                    //ValveLenght = temp.ValveLenght;
-                    FlangCount = 0,
-                    //FlangLength = temp.FlangLength;
-
-                    // EnvironmentView
-                    MaxEnvironmentTemp = 30,
-                    MinEnvironmentTemp = -20,
-                    PipelinePlacement = "открытый воздух",
-
-                    // PowerSupplyParametersView
-                    SupportedTemp = 5,
-                    MaxTechProductTemp = 20,
-                    WorkEnvironment = "-",
-                    PhaseVoltage = 220,
-                    LineVoltage = (int)(220 * 1.73205080757),
-                    Current = 25,
-                    NumberCores = 1,
-                    LenghtSection = 2,
-                    CableType = "КНМС825",
-                    MinTempOn = -20,
-                    ConnectionScheme = "петля",
-                    Nutrition = "однофазное"
-                }//UpdateCurrentParameters()
+                Parameters = UpdateCurrentParameters()
             };
 
             PipeLines.Add(newStructure);

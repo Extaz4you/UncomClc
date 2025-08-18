@@ -98,6 +98,7 @@ namespace UncomClc.ViewModels
 
         private void AddNewPipe()
         {
+            if (string.IsNullOrEmpty(file)) return;
             var newId = PipeLines.Any() ? PipeLines.Max(p => p.Id) + 1 : 1;
             var newStructure = new GeneralStructure
             {

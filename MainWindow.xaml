@@ -422,8 +422,8 @@
 
             <ToolBar Background="Transparent">
 
-                <Menu>
-                    <MenuItem Width="32" Height="25" Background="White">
+                <Menu Background="White">
+                    <MenuItem Width="32" Height="25" Margin="5" Background="Tan" BorderBrush="Black">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/folder.png" Width="20" Height="20"/>
                         </MenuItem.Icon>
@@ -445,6 +445,16 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
+                    </MenuItem >
+                    <MenuItem Width="105" Height="25" Margin="5" Background="Tan" BorderBrush="Black" Command="{Binding AddPipeCommand}">
+                        <MenuItem.Header>
+                            <TextBlock Text="Добавить трубу" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem  Width="100" Height="25" Margin="5" Background="Tan" BorderBrush="Black" >
+                        <MenuItem.Header>
+                            <TextBlock Text="Рассчитать" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </MenuItem.Header>
                     </MenuItem>
                 </Menu>
 

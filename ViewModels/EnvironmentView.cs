@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace UncomClc.ViewModels
 {
-    public class EnvironmentView : INotifyPropertyChanged
+    public class EnvironmentView : BaseViewModel
     {
         private int minEnvironmentTemp = -20;
         private int maxEnvironmentTemp = 30;
@@ -45,10 +45,5 @@ namespace UncomClc.ViewModels
 
         public List<string> PipelinePlacementOptions { get; } = new List<string> { "открытый воздух", "в помещении" };
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string property)
-        {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
-        }
     }
 }

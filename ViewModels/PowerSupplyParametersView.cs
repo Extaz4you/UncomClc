@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace UncomClc.ViewModels
 {
-    public class PowerSupplyParametersView : INotifyPropertyChanged
+    public class PowerSupplyParametersView : BaseViewModel
     {
         private List<string> _allConnectionSchemeOptions = new List<string>() { "петля", "звезда", "две петли", "две звезды", "три петли", "три звезды", "линия" };
         private const double Sqrt3 = 1.73205080757;
@@ -260,12 +260,6 @@ namespace UncomClc.ViewModels
         //public List<string> CableTypeOptions { get; } = new List<string>() { "КНММ", "КНММН", "КНМС", "КНМСин", "КНМС825" };
         public List<string> NutritionOptions { get; private set; } = new List<string>() { "однофазное", "двухфазное", "трехфазное" };
         public List<string> ConnectionSchemeOptions { get; private set; } = new List<string>() {  "петля", "две петли", "три петли", "линия" };
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string property)
-        {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
-        }
 
 
         private void UpdateConnectionSchemeOptions()

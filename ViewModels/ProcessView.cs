@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace UncomClc.ViewModels
 {
-    public class ProcessView : INotifyPropertyChanged
+    public class ProcessView : BaseViewModel
     {
 
         private int maxAddProductTemp = 100;
@@ -273,12 +273,6 @@ namespace UncomClc.ViewModels
             {1220, new SupportValveFlangTable() { FlLength = 3.1f, ValLength = 14.7f, SupLength = 3 } },
         };
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         private int GetTemperatureForClass(string tempClass)
         {
             switch (tempClass)

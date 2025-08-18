@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
 using UncomClc.Models;
@@ -21,6 +23,7 @@ namespace UncomClc.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        public string TempFile;
         public ProcessView ProcessVM { get; } = new ProcessView();
         public EnvironmentView EnvironmentVM { get; } = new EnvironmentView();
         public PowerSupplyParametersView PowerSupplyParametersVM { get; } = new PowerSupplyParametersView();
@@ -29,7 +32,10 @@ namespace UncomClc.ViewModels
         private ObservableCollection<GeneralStructure> _pipeLines = new ObservableCollection<GeneralStructure>();
         private GeneralStructure _selectedPipeLine;
         private string file;
+        private string tempFilePath;
         private bool _isUpdatingUI;
+        private DateTime _lastSaveTime = DateTime.MinValue;
+        private string _lastSavedContent;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -70,8 +76,19 @@ namespace UncomClc.ViewModels
             OpenCommand = new RelayCommand(OpenFile);
             SaveCommand = new RelayCommand(SaveFile);
             EditLineNameCommand = new RelayCommand(EditLineName);
-        }
 
+            ProcessVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
+            EnvironmentVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
+            PowerSupplyParametersVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
+        }
+        private void OnChildPropertyChanged()
+        {
+            if (!_isUpdatingUI && SelectedPipeLine != null)
+            {
+                SaveCurrentParameters();
+                SaveToTempFile();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public virtual void OnPropertyChanged(string propertyName)
@@ -91,6 +108,7 @@ namespace UncomClc.ViewModels
 
             PipeLines.Add(newStructure);
             SelectedPipeLine = newStructure;
+            SaveToTempFile();
         }
         private void DeleteSelectedPipe()
         {
@@ -107,6 +125,7 @@ namespace UncomClc.ViewModels
             {
                 PipeLines.Remove(SelectedPipeLine);
                 SelectedPipeLine = PipeLines.FirstOrDefault();
+                SaveToTempFile();
             }
         }
         private void CreateFile()
@@ -120,6 +139,8 @@ namespace UncomClc.ViewModels
             {
                 PipeLines.Clear();
                 file = saveFileDialog.FileName;
+                tempFilePath = Path.ChangeExtension(file, ".tmp");
+                TempFile = tempFilePath;
                 var newStructure = new GeneralStructure
                 {
                     Id = 1,
@@ -128,7 +149,7 @@ namespace UncomClc.ViewModels
                 };
                 PipeLines.Add(newStructure);
                 SelectedPipeLine = newStructure;
-                SaveFile();
+                SaveToTempFile();
 
             }
 
@@ -144,33 +165,27 @@ namespace UncomClc.ViewModels
             if (openFileDialog.ShowDialog() == true)
             {
                 file = openFileDialog.FileName;
+                tempFilePath = Path.ChangeExtension(file, ".tmp");
+                TempFile = tempFilePath;
                 try
                 {
-                    var json = File.ReadAllText(file);
-                    var structures = JsonSerializer.Deserialize<ObservableCollection<GeneralStructure>>(json);
+                    // Копируем исходный файл во временный
+                    File.Copy(file, tempFilePath, overwrite: true);
 
-                    PipeLines.Clear();
-                    foreach (var structure in structures)
-                    {
-                        PipeLines.Add(structure);
-                    }
-
-                    if (PipeLines.Count > 0)
-                    {
-                        SelectedPipeLine = PipeLines[0];
-                    }
+                    // Загружаем данные из временного файла
+                    LoadFromTempFile();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при открытии файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
-        private void SaveFile()
+        public void SaveFile()
         {
-            if (PipeLines.Count == 0)
+            if (string.IsNullOrEmpty(file))
             {
-                MessageBox.Show("Нет данных для сохранения", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Файл не создан/не открыт", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -180,16 +195,26 @@ namespace UncomClc.ViewModels
                 {
                     WriteIndented = true,
                     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 };
-                SaveCurrentParameters();
+
+                // 1. Сохраняем текущие изменения во временный файл
                 var json = JsonSerializer.Serialize(PipeLines, options);
-                File.WriteAllText(file, json);
-                MessageBox.Show("Файл успешно сохранен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                File.WriteAllText(tempFilePath, json);
+
+                // 2. Копируем временный файл в основной
+                File.Copy(tempFilePath, file, overwrite: true);
+
+                // 3. Удаляем временный файл
+                File.Delete(tempFilePath);
+                tempFilePath = null;
+                TempFile = null;
+                MessageBox.Show("Файл успешно сохранён", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -239,7 +264,7 @@ namespace UncomClc.ViewModels
             param.LenghtSection = PowerSupplyParametersVM.LenghtSection;
             return param;
         }
-        private void SaveCurrentParameters()
+        public void SaveCurrentParameters()
         {
             if (_isUpdatingUI || SelectedPipeLine == null) return;
             var param = SelectedPipeLine.Parameters;
@@ -338,6 +363,7 @@ namespace UncomClc.ViewModels
             {
                 _isUpdatingUI = false;
             }
+            SaveToTempFile();
         }
         private void EditLineName()
         {
@@ -356,6 +382,70 @@ namespace UncomClc.ViewModels
             }
         }
 
+        public void SaveToTempFile()
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+
+                var currentContent = JsonSerializer.Serialize(PipeLines, options);
+
+                // Оптимизация: сохраняем только если данные изменились
+                if (currentContent != _lastSavedContent || (DateTime.Now - _lastSaveTime).TotalSeconds > 5)
+                {
+                    File.WriteAllText(tempFilePath, currentContent);
+                    _lastSavedContent = currentContent;
+                    _lastSaveTime = DateTime.Now;
+                    Debug.WriteLine($"Автосохранение выполнено: {DateTime.Now}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка автосохранения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void LoadFromTempFile()
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                };
+
+                var json = File.ReadAllText(tempFilePath);
+                var structures = JsonSerializer.Deserialize<ObservableCollection<GeneralStructure>>(json, options);
+
+                // Создаем новую коллекцию вместо очистки старой
+                var newPipeLines = new ObservableCollection<GeneralStructure>();
+
+                foreach (var structure in structures)
+                {
+                    newPipeLines.Add(structure);
+                }
+
+                // Полностью заменяем коллекцию (это вызовет обновление UI)
+                PipeLines = newPipeLines;
+
+                // Выбираем первый элемент
+                SelectedPipeLine = PipeLines.FirstOrDefault();
+
+                // Принудительно обновляем привязки
+                OnPropertyChanged(nameof(PipeLines));
+                OnPropertyChanged(nameof(SelectedPipeLine));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
 

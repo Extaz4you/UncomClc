@@ -2,6 +2,8 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -153,6 +155,35 @@ namespace UncomClc
 
                 e.Handled = true; // Предотвращаем дальнейшую обработку события
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (DataContext is MainViewModel vm && !string.IsNullOrEmpty(vm.TempFile))
+            {
+                var result = MessageBox.Show("Сохранить изменения перед закрытием?", "Подтверждение",
+                                           MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    vm.SaveFile();
+                }
+                else if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                // Удаляем временный файл, если он есть
+                try
+                {
+                    if (File.Exists(vm.TempFile))
+                        File.Delete(vm.TempFile);
+                }
+                catch { /* Игнорируем ошибки удаления */ }
+            }
+
+            base.OnClosing(e);
         }
     }
 }

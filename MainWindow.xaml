@@ -451,7 +451,7 @@
                             <TextBlock Text="Добавить трубу" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem  Width="100" Height="25" Margin="5" Background="Tan" BorderBrush="Black" >
+                    <MenuItem  Width="100" Height="25" Margin="5" Background="Tan" BorderBrush="Black" Command="{Binding Calculate}">
                         <MenuItem.Header>
                             <TextBlock Text="Рассчитать" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </MenuItem.Header>
@@ -729,7 +729,7 @@
             </TabItem>
         </TabControl>
 
-        <Border x:Name="Message" Grid.Row="2" Grid.ColumnSpan="3" Margin="5" Background="Gray">
+        <Border x:Name="Message" Grid.Row="2" Grid.ColumnSpan="3" Margin="5" Background="LightGray">
             <ScrollViewer>
                 <TextBlock x:Name="MessagesBlock">
 
@@ -738,21 +738,49 @@
         </Border>
 
         <!-- Нижняя часть с горизонтальным разделом -->
-        <Border Grid.Row="3" Grid.ColumnSpan="3" Margin="5" Background="LightGray">
+        <Border Grid.Row="3" Grid.ColumnSpan="3" Background="White">
             <ScrollViewer>
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <!-- Для заголовка или других элементов с фиксированной высотой -->
-                        <RowDefinition Height="*" />
-                        <!-- Этот ряд занимает все оставшееся пространство -->
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left">
-                        <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Top">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label Content="Результаты расчета" FontSize="18" FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" >
+                            <StackPanel Orientation="Vertical" >
+
+                                <GroupBox>
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Трубопровод" FontSize="16" FontWeight="Bold"/>
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Расчетные тепловые потери с запасом: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Длина одной нитки с запасом: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Запас длины на трубу: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Запас длины на задвижку: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Запас длины на фланцы: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Запас длины на опоры: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                                
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

@@ -30,11 +30,11 @@ namespace UncomClc.ViewModels
         private string thermalIsolation2 = "- не выбрано -";
         private int isolationThickness = 50;
         private int isolationThickness2 = 0;
-        private float supportCount = 0;
+        private int supportCount = 0;
         private float supportLength = 0;
-        private float valveCount = 0;
+        private int valveCount = 0;
         private float valveLength = 0;
-        private float flangCount = 0;
+        private int flangCount = 0;
         private float flangLength = 0;
 
 
@@ -190,7 +190,7 @@ namespace UncomClc.ViewModels
             }
         }
 
-        public float SupportCount
+        public int SupportCount
         {
             get => supportCount;
             set
@@ -209,7 +209,7 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(SupportLenght));
             }
         }
-        public float ValveCount
+        public int ValveCount
         {
             get => valveCount;
             set
@@ -228,7 +228,7 @@ namespace UncomClc.ViewModels
                 OnPropertyChanged(nameof(ValveLenght));
             }
         }
-        public float FlangCount
+        public int FlangCount
         {
             get => flangCount;
             set

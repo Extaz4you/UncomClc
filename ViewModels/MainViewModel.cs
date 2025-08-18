@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Xml;
 using UncomClc.Models;
 using UncomClc.Models.Insulations;
+using UncomClc.Service;
 using UncomClc.Views.Line;
 
 namespace UncomClc.ViewModels
@@ -37,6 +38,7 @@ namespace UncomClc.ViewModels
         private bool _isUpdatingUI;
         private DateTime _lastSaveTime = DateTime.MinValue;
         private string _lastSavedContent;
+        private readonly CalculateService calculationService;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -68,9 +70,11 @@ namespace UncomClc.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand EditLineNameCommand { get; }
         public ICommand CopyCommand { get; }
+        public ICommand Calculate { get; }
 
         public MainViewModel()
         {
+            calculationService = new CalculateService();
             // Инициализация команд
             AddPipeCommand = new RelayCommand(AddNewPipe);
             DeleteCommand = new RelayCommand(DeleteSelectedPipe);
@@ -79,6 +83,7 @@ namespace UncomClc.ViewModels
             SaveCommand = new RelayCommand(SaveFile);
             EditLineNameCommand = new RelayCommand(EditLineName);
             CopyCommand = new RelayCommand(CopyRow);
+            Calculate = new RelayCommand(ExecuteCalculate);
 
             ProcessVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             EnvironmentVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
@@ -484,6 +489,12 @@ namespace UncomClc.ViewModels
             {
                 MessageBox.Show($"Ошибка загрузки: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+
+        private void ExecuteCalculate()
+        {
+            calculationService.Calculation(SelectedPipeLine);
         }
 
     }

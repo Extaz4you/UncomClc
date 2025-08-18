@@ -105,6 +105,7 @@
     <Compile Include="Models\GeneralStructure.cs" />
     <Compile Include="Models\Insulations\Insulation.cs" />
     <Compile Include="Models\Pipe\Pipe.cs" />
+    <Compile Include="Service\CalculateService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\EnvironmentView.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

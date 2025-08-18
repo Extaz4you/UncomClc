@@ -29,11 +29,11 @@ namespace UncomClc.Models
         public int StreamingTemperature { get; set; }
         public int TemperatureClassValue { get; set; }
         public string TemperatureClass { get; set; }
-        public float SupportCount { get; set; }
+        public int SupportCount { get; set; }
         public float SupportLenght { get; set; }
-        public float ValveCount { get; set; }
+        public int ValveCount { get; set; }
         public float ValveLenght { get; set; }
-        public float FlangCount { get; set; }
+        public int FlangCount { get; set; }
         public float FlangLength { get; set; }
         public int MaxEnvironmentTemp { get; set; }
         public int MinEnvironmentTemp { get; set; }

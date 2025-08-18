@@ -29,6 +29,10 @@ namespace UncomClc
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GeneralStructure _draggedItem;
+        private Point _startPoint;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -179,5 +183,77 @@ namespace UncomClc
 
             base.OnClosing(e);
         }
+        private void PipeLinesTree_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _startPoint = e.GetPosition(null);
+            _draggedItem = (e.OriginalSource as FrameworkElement)?.DataContext as GeneralStructure;
+        }
+
+        private void PipeLinesTree_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed || _draggedItem == null)
+                return;
+
+            var currentPosition = e.GetPosition(null);
+            var diff = _startPoint - currentPosition;
+
+            if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+            {
+                var treeView = sender as TreeView;
+                if (treeView != null)
+                {
+                    DragDrop.DoDragDrop(treeView, _draggedItem, DragDropEffects.Move);
+                }
+            }
+        }
+
+        private void PipeLinesTree_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(GeneralStructure)))
+            {
+                e.Effects = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            e.Handled = true;
+        }
+
+        private void PipeLinesTree_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(GeneralStructure)))
+            {
+                var targetItem = (e.OriginalSource as FrameworkElement)?.DataContext as GeneralStructure;
+                var draggedItem = e.Data.GetData(typeof(GeneralStructure)) as GeneralStructure;
+
+                if (draggedItem == null || targetItem == null || draggedItem == targetItem)
+                    return;
+
+                if (DataContext is MainViewModel vm)
+                {
+                    // Получаем индексы элементов
+                    int oldIndex = vm.PipeLines.IndexOf(draggedItem);
+                    int newIndex = vm.PipeLines.IndexOf(targetItem);
+
+                    if (oldIndex != -1 && newIndex != -1)
+                    {
+                        // Перемещаем элемент в коллекции
+                        vm.PipeLines.Move(oldIndex, newIndex);
+
+                        // Обновляем привязки
+                        vm.OnPropertyChanged(nameof(vm.PipeLines));
+                        vm.OnPropertyChanged(nameof(vm.SelectedPipeLine));
+
+                        // Сохраняем изменения
+                        vm.SaveToTempFile();
+                    }
+                }
+            }
+            _draggedItem = null;
+            e.Handled = true;
+        }
+
     }
 }

@@ -484,6 +484,16 @@ namespace UncomClc.ViewModels
                 MessageBox.Show($"Ошибка загрузки: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+    }
+    public static class ObservableCollectionExtensions
+    {
+        public static void Move<T>(this ObservableCollection<T> collection, int oldIndex, int newIndex)
+        {
+            var item = collection[oldIndex];
+            collection.RemoveAt(oldIndex);
+            collection.Insert(newIndex, item);
+        }
     }
 }
 

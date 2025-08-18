@@ -465,7 +465,13 @@
 
         <!-- Верхняя 1 часть с вертикальными разделами -->
         <Border Grid.Row="1" Grid.Column="0" Background="Gray" Margin="5" Grid.ColumnSpan="2">
-            <TreeView x:Name="PipeLinesTree" FontSize="22" ItemsSource="{Binding PipeLines}" SelectedItemChanged="PipeLinesTree_SelectedItemChanged" MouseDoubleClick="PipeLinesTree_MouseDoubleClick">
+            <TreeView x:Name="PipeLinesTree" FontSize="22" ItemsSource="{Binding PipeLines}" SelectedItemChanged="PipeLinesTree_SelectedItemChanged"
+                      MouseDoubleClick="PipeLinesTree_MouseDoubleClick"           
+                      PreviewMouseLeftButtonDown="PipeLinesTree_PreviewMouseLeftButtonDown"
+                      PreviewMouseMove="PipeLinesTree_PreviewMouseMove"
+                      DragOver="PipeLinesTree_DragOver"
+                      Drop="PipeLinesTree_Drop"
+                      AllowDrop="True">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate>
                         <TextBlock Text="{Binding Name}"/>

@@ -66,6 +66,7 @@ namespace UncomClc.ViewModels
         public ICommand OpenCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand EditLineNameCommand { get; }
+        public ICommand CopyCommand { get; }
 
         public MainViewModel()
         {
@@ -76,6 +77,7 @@ namespace UncomClc.ViewModels
             OpenCommand = new RelayCommand(OpenFile);
             SaveCommand = new RelayCommand(SaveFile);
             EditLineNameCommand = new RelayCommand(EditLineName);
+            CopyCommand = new RelayCommand(CopyRow);
 
             ProcessVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             EnvironmentVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
@@ -110,6 +112,41 @@ namespace UncomClc.ViewModels
             PipeLines.Add(newStructure);
             SelectedPipeLine = newStructure;
             SaveToTempFile();
+        }
+        private void CopyRow()
+        {
+            if (string.IsNullOrEmpty(file)) return;
+            if (SelectedPipeLine == null) return;
+
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                };
+
+                var serializedParams = JsonSerializer.Serialize(SelectedPipeLine.Parameters, options);
+                var copiedParams = JsonSerializer.Deserialize<Parameters>(serializedParams, options);
+
+                var newId = PipeLines.Any() ? PipeLines.Max(p => p.Id) + 1 : 1;
+
+                var newStructure = new GeneralStructure
+                {
+                    Id = newId,
+                    Name = $"{SelectedPipeLine.Name}_Copy",
+                    Parameters = copiedParams
+                };
+
+                PipeLines.Add(newStructure);
+                SelectedPipeLine = newStructure;
+                SaveToTempFile();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при копировании: {ex.Message}", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void DeleteSelectedPipe()
         {

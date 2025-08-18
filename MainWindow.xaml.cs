@@ -56,7 +56,6 @@ namespace UncomClc
         {
             Pipes.Items.Clear();
         }
-
         private void InfoButton(object sender, RoutedEventArgs e)
         {
             Window imageWindow = new Window
@@ -73,7 +72,6 @@ namespace UncomClc
             imageWindow.Content = image;
             imageWindow.ShowDialog();
         }
-
         private void EditPipes_Click(object sender, RoutedEventArgs e)
         {
             EditPipes editPipes = new EditPipes();
@@ -89,7 +87,6 @@ namespace UncomClc
 
             }
         }
-
         private void ThermalIsolationEditButton_Click(object sender, RoutedEventArgs e)
         {
             var editWindow = new EditInsulation();
@@ -109,7 +106,6 @@ namespace UncomClc
 
             }
         }
-
         private void AddPipe_Click(object sender, RoutedEventArgs e)
         {
             
@@ -129,7 +125,6 @@ namespace UncomClc
                 viewModel.LoadSelectedPipelineData();
             }
         }
-
         private void PipeLinesTree_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             // Проверяем, что клик был по элементу TreeView
@@ -156,7 +151,6 @@ namespace UncomClc
                 e.Handled = true; // Предотвращаем дальнейшую обработку события
             }
         }
-
         protected override void OnClosing(CancelEventArgs e)
         {
             if (DataContext is MainViewModel vm && !string.IsNullOrEmpty(vm.TempFile))

@@ -25,6 +25,7 @@ namespace UncomClc.Service
         }
         public void Calculation(GeneralStructure structure)
         {
+            TextBlock.Text = "";
             var param = structure.Parameters;
 
             int Dtr = param.Diam;
@@ -71,11 +72,10 @@ namespace UncomClc.Service
             var rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * 3.14f * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * 3.14f * Kiz) + Math.Log((Dtr + 2 * Tiz1 + 2 * Tiz2) / (Dtr + 2 * Tiz1)) / (2 * 3.14f * Tiz2) + 1 / (3.14f * (Dtr + 2 * Tiz1 + 2 * Tiz2) * a));
             TextBlock.Text += $"\r\nТеплопотери: {rpot}\r\n";
 
-
             var cables = ExcelReader.ReadCableDataFromExcel(bd);
 
             var findNeededCable = cables.LastOrDefault(x => x.Resistance > rpot);
-            TextBlock.Text += $"\r\n Элемент из БД: Номер строки: {findNeededCable.RowNumber} Марка: {findNeededCable.Mark} Сечение: {findNeededCable.Cross} Сопротивление: {findNeededCable.Resistance} Альфа: {findNeededCable.Alfa} Дельта: {findNeededCable.Delta} Длина: {findNeededCable.Length}\r\n";
+            TextBlock.Text += $"\r\n Элемент из БД ({bd}): Номер строки: {findNeededCable.RowNumber} Марка: {findNeededCable.Mark} Сечение: {findNeededCable.Cross} Сопротивление: {findNeededCable.Resistance} Альфа: {findNeededCable.Alfa} Дельта: {findNeededCable.Delta} Длина: {findNeededCable.Length}\r\n";
 
         }
 

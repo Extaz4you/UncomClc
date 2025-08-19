@@ -39,6 +39,7 @@ namespace UncomClc.ViewModels
         private DateTime _lastSaveTime = DateTime.MinValue;
         private string _lastSavedContent;
         private readonly CalculateService calculationService;
+        private TextBlock TextBlock;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -72,9 +73,9 @@ namespace UncomClc.ViewModels
         public ICommand CopyCommand { get; }
         public ICommand Calculate { get; }
 
-        public MainViewModel()
+        public MainViewModel(TextBlock textBlock)
         {
-            calculationService = new CalculateService();
+            calculationService = new CalculateService(textBlock);
             // Инициализация команд
             AddPipeCommand = new RelayCommand(AddNewPipe);
             DeleteCommand = new RelayCommand(DeleteSelectedPipe);
@@ -88,6 +89,7 @@ namespace UncomClc.ViewModels
             ProcessVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             EnvironmentVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             PowerSupplyParametersVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
+            TextBlock = textBlock;
         }
         private void OnChildPropertyChanged()
         {

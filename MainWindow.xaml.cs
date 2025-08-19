@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UncomClc.Models;
+using UncomClc.Service;
 using UncomClc.ViewModels;
 using UncomClc.Views;
 using UncomClc.Views.InsulationsView;
@@ -31,12 +32,12 @@ namespace UncomClc
     {
         private GeneralStructure _draggedItem;
         private Point _startPoint;
-
+        private readonly CalculateService calculateService;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
+            this.DataContext = new MainViewModel(MessagesBlock);
             Load();
         }
         private void Load()
@@ -188,7 +189,6 @@ namespace UncomClc
             _startPoint = e.GetPosition(null);
             _draggedItem = (e.OriginalSource as FrameworkElement)?.DataContext as GeneralStructure;
         }
-
         private void PipeLinesTree_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton != MouseButtonState.Pressed || _draggedItem == null)
@@ -207,7 +207,6 @@ namespace UncomClc
                 }
             }
         }
-
         private void PipeLinesTree_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(GeneralStructure)))
@@ -220,7 +219,6 @@ namespace UncomClc
             }
             e.Handled = true;
         }
-
         private void PipeLinesTree_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(GeneralStructure)))

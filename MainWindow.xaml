@@ -395,6 +395,218 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#FF000000"/>
         </Style>
+        <Style x:Key="VatCountTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+        Background="{TemplateBinding Background}"
+        BorderBrush="{TemplateBinding BorderBrush}"
+        BorderThickness="{TemplateBinding BorderThickness}"
+        SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                    Focusable="False"
+                    HorizontalScrollBarVisibility="Hidden"
+                    VerticalScrollBarVisibility="Hidden"  
+                    />
+
+                                    <TextBlock x:Name="DegreeSymbol"
+                  Text="Вт/м"
+                  Opacity="0.3"
+                  IsHitTestVisible="False"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Right"
+                  Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+        <Style x:Key="KVatCountTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+Background="{TemplateBinding Background}"
+BorderBrush="{TemplateBinding BorderBrush}"
+BorderThickness="{TemplateBinding BorderThickness}"
+SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+            Focusable="False"
+            HorizontalScrollBarVisibility="Hidden"
+            VerticalScrollBarVisibility="Hidden"  
+            />
+
+                                    <TextBlock x:Name="DegreeSymbol"
+          Text="кВт"
+          Opacity="0.3"
+          IsHitTestVisible="False"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Right"
+          Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+        <Style x:Key="OmCountTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+Background="{TemplateBinding Background}"
+BorderBrush="{TemplateBinding BorderBrush}"
+BorderThickness="{TemplateBinding BorderThickness}"
+SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+            Focusable="False"
+            HorizontalScrollBarVisibility="Hidden"
+            VerticalScrollBarVisibility="Hidden"  
+            />
+
+                                    <TextBlock x:Name="DegreeSymbol"
+          Text="Ом/км"
+          Opacity="0.3"
+          IsHitTestVisible="False"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Right"
+          Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
+        <Style x:Key="MM2CountTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Базовый Border из стандартного шаблона -->
+                            <Border x:Name="border" 
+Background="{TemplateBinding Background}"
+BorderBrush="{TemplateBinding BorderBrush}"
+BorderThickness="{TemplateBinding BorderThickness}"
+SnapsToDevicePixels="True">
+
+                                <!-- Основной контент -->
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+            Focusable="False"
+            HorizontalScrollBarVisibility="Hidden"
+            VerticalScrollBarVisibility="Hidden"  
+            />
+
+                                    <TextBlock x:Name="DegreeSymbol"
+          Text="мм2"
+          Opacity="0.3"
+          IsHitTestVisible="False"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Right"
+          Margin="0,0,5,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Стандартные триггеры для TextBox -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="2,0,25,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF000000"/>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -745,8 +957,8 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Label Content="Результаты расчета" FontSize="18" FontWeight="Bold" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" >
-                            <StackPanel Orientation="Vertical" >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Margin="10">
 
                                 <GroupBox>
                                     <GroupBox.Header>
@@ -755,31 +967,149 @@
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Расчетные тепловые потери с запасом: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина одной нитки с запасом: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на трубу: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на задвижку: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на фланцы: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на опоры: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>
                                 
+                                
+                                
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Margin="10">
+
+                                <GroupBox>
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Параметры КСЭО" FontSize="16" FontWeight="Bold"/>
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Мощность обгрева трубы рабочая: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Мощность одной нитки кабеля рабочая: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Схема соединения: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Кол-во нагревательных секций: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Длина нагревательного кабеля секции: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Максимальная температура оболочки кабеля: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Margin="10">
+
+                                <GroupBox>
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Условное обозначение нагревательной секции" FontSize="16" FontWeight="Bold"/>
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <TextBox Width="350" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Марка кабеля: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Сечение жилы: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MM2CountTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Номинальное эквив. сопр. жил при 20°C: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource OmCountTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Рабочее напряжение: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Расчетная мощность при 20°C: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Длина нагревательного кабеля секции: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Длина холодного ввода: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="температруный класс ВЗЭО: "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Margin="10">
+
+                                <GroupBox>
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Электрические характеристики нагрев. секции" FontSize="16" FontWeight="Bold"/>
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Питание "/>
+                                            <TextBox Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Рабочее напряжение: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Стартовый ток секции: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Рабочий ток секции: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Стартовая мощность секции: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                            <Label Content="Рабочая мощность секции: "/>
+                                            <TextBox Width="50" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

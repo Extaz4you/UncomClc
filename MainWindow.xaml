@@ -1069,7 +1069,7 @@ SnapsToDevicePixels="True">
                                             <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                            <Label Content="Температруный класс ВЗЭО: "/>
+                                            <Label Content="Температурный класс ВЗЭО: "/>
                                             <TextBox Width="50" Height="25"/>
                                         </StackPanel>
                                     </StackPanel>

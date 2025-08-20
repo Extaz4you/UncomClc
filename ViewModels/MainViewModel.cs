@@ -430,6 +430,7 @@ namespace UncomClc.ViewModels
 
         public void SaveToTempFile()
         {
+            if (string.IsNullOrEmpty(tempFilePath)) return;
             try
             {
                 var options = new JsonSerializerOptions

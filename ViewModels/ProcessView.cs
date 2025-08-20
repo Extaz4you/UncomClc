@@ -27,6 +27,7 @@ namespace UncomClc.ViewModels
         private float pipeKoef = 1.01f;
         private int lenght = 10;
         private string thermalIsolation = "минеральная вата";
+        private string previousThermalIsolation = "минеральная вата";
         private string thermalIsolation2 = "- не выбрано -";
         private int isolationThickness = 50;
         private int isolationThickness2 = 0;
@@ -94,8 +95,26 @@ namespace UncomClc.ViewModels
             get => thermalIsolation;
             set
             {
-                thermalIsolation = value;
-                OnPropertyChanged(nameof(ThermalIsolation));
+                if (string.IsNullOrEmpty(value) || value == "")
+                {
+                    MessageBox.Show("Нельзя выбрать пустое значение", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    // Восстанавливаем значение через Dispatcher чтобы UI успел обновиться
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        thermalIsolation = previousThermalIsolation;
+                        OnPropertyChanged(nameof(ThermalIsolation));
+                    }));
+
+                    return;
+                }
+
+                if (thermalIsolation != value)
+                {
+                    previousThermalIsolation = thermalIsolation;
+                    thermalIsolation = value;
+                    OnPropertyChanged(nameof(ThermalIsolation));
+                }
             }
         }
         public string ThermalIsolation2

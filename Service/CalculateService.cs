@@ -74,7 +74,7 @@ namespace UncomClc.Service
 
             var cables = ExcelReader.ReadCableDataFromExcel(bd);
 
-            var findNeededCable = cables.LastOrDefault(x => x.Resistance > rpot);
+            var findNeededCable = cables.FirstOrDefault();
             TextBlock.Text += $"\r\n Элемент из БД ({bd}): Номер строки: {findNeededCable.RowNumber} Марка: {findNeededCable.Mark} Сечение: {findNeededCable.Cross} Сопротивление: {findNeededCable.Resistance} Альфа: {findNeededCable.Alfa} Дельта: {findNeededCable.Delta} Длина: {findNeededCable.Length}\r\n";
 
         }

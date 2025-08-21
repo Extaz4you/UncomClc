@@ -57,7 +57,7 @@ namespace UncomClc.Service
             float Ktr = param.Pipe.Koef;
             float Kiz = (float)param.ThermalIsolation.Koef;
             float Kiz2 = param.ThermalIsolation2 == null ?  0 : (float)param.ThermalIsolation2.Koef;
-            int a = param.PipelinePlacement == "отрытый воздух" ? 30 : 10;
+            int a = param.PipelinePlacement == "открытый воздух" ? 30 : 10;
             float Kzap = param.Diam >= 100 ? 1.1f : 1.15f;
             int Tpar = param.StreamingTemperature;
             string Tclass = param.TemperatureClass;

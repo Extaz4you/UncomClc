@@ -30,11 +30,15 @@ namespace UncomClc.Service
             var param = structure.Parameters;
 
             int Dtr = param.Diam;
+            double Dtr_m = param.Diam / 1000.0;
             int Tst = param.Thickness;
+            double Tst_m = param.Thickness / 1000.0;
             int Ltr = param.Lenght;
             float KLtr = param.PipeKoef;
             int Tiz1 = param.IsolationThickness;
+            double Tiz1_m = param.IsolationThickness / 1000.0;
             int Tiz2 = param.IsolationThickness2;
+            double Tiz2_m = param.IsolationThickness2 / 1000.0;
             int Tokrmin = param.MinEnvironmentTemp;
             int Tokrmax = param.MaxEnvironmentTemp;
             int Ttr = param.SupportedTemp;
@@ -69,12 +73,12 @@ namespace UncomClc.Service
             var Lop = Sop * Iop;
 
             TextBlock.Text += $"\r\nПЕРЕМЕННЫЕ\r\n";
-            TextBlock.Text += $"\r\nDtr - {Dtr}";
-            TextBlock.Text += $"\r\nTst - {Tst}";
+            TextBlock.Text += $"\r\nDtr - {Dtr_m}";
+            TextBlock.Text += $"\r\nTst - {Tst_m}";
             TextBlock.Text += $"\r\nLtr - {Ltr}";
             TextBlock.Text += $"\r\nKLtr - {KLtr}";
-            TextBlock.Text += $"\r\nTiz1 - {Tiz1}";
-            TextBlock.Text += $"\r\nTiz2 - {Tiz2}";
+            TextBlock.Text += $"\r\nTiz1 - {Tiz1_m}";
+            TextBlock.Text += $"\r\nTiz2 - {Tiz2_m}";
             TextBlock.Text += $"\r\nTokrmin - {Tokrmin}";
             TextBlock.Text += $"\r\nTokrmax - {Tokrmax}";
             TextBlock.Text += $"\r\nTtr - {Ttr}";
@@ -120,11 +124,20 @@ namespace UncomClc.Service
             double rpot = 0;
             if (param.ThermalIsolation2 != null && !string.IsNullOrEmpty(param.ThermalIsolation2.Name))
             {
-                rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * Math.PI * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * Math.PI * Kiz) + Math.Log((Dtr + 2 * Tiz1 + 2 * Tiz2) / (Dtr + 2 * Tiz1)) / (2 * Math.PI * Kiz2) + 1 / (Math.PI * (Dtr + 2 * Tiz1 + 2 * Tiz2) * a));
+                rpot = Kzap * (Ttr - Tokrmin) / (
+                    Math.Log(Dtr_m / (Dtr_m - 2 * Tst_m)) / (2 * Math.PI * Ktr) +
+                    Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Math.PI * Kiz) +
+                    Math.Log((Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) / (Dtr_m + 2 * Tiz1_m)) / (2 * Math.PI * Kiz2) +
+                    1 / (Math.PI * (Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) * a)
+                );
             }
             else
             {
-                rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * Math.PI * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * Math.PI * Kiz) + 1 / (Math.PI * (Dtr + 2 * Tiz1) * a));
+                rpot = Kzap * (Ttr - Tokrmin) / (
+                    Math.Log(Dtr_m / (Dtr_m - 2 * Tst_m)) / (2 * Math.PI * Ktr) +
+                    Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Math.PI * Kiz) +
+                    1 / (Math.PI * (Dtr_m + 2 * Tiz1_m) * a)
+                );
             }
 
             TextBlock.Text += $"\r\nТеплопотери: {rpot}\r\n";
@@ -132,6 +145,7 @@ namespace UncomClc.Service
             var cables = ExcelReader.ReadCableDataFromExcel(bd);
 
             var findNeededCable = cables.FirstOrDefault();
+            findNeededCable.Resistance = findNeededCable.Resistance / 1000.0;
             TextBlock.Text += $"\r\n Элемент из БД ({bd}): Номер строки: {findNeededCable.RowNumber} Марка: {findNeededCable.Mark} Сечение: {findNeededCable.Cross} Сопротивление: {findNeededCable.Resistance} Альфа: {findNeededCable.Alfa} Дельта: {findNeededCable.Delta} Длина: {findNeededCable.Length}\r\n";
             var result = new CalculateResult { Rpot = rpot };
             return result;

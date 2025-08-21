@@ -137,6 +137,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PowerSupplyParametersView.cs" />
     <Compile Include="ViewModels\ProcessView.cs" />
+    <Compile Include="ViewModels\ResultView.cs" />
     <Compile Include="ViewModels\SupportValveFlangTable.cs" />
     <Compile Include="Views\InsulationsView\Add_Insulation.xaml.cs">
       <DependentUpon>Add_Insulation.xaml</DependentUpon>

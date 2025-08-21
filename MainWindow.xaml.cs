@@ -125,7 +125,6 @@ namespace UncomClc
             {
                 // Обновляем SelectedPipeLine во ViewModel
                  viewModel.SelectedPipeLine = e.NewValue as GeneralStructure;
-
                 // Принудительно вызываем загрузку данных
                 viewModel.LoadSelectedPipelineData();
             }

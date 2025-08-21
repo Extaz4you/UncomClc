@@ -30,6 +30,8 @@ namespace UncomClc.ViewModels
         public EnvironmentView EnvironmentVM { get; } = new EnvironmentView();
         public PowerSupplyParametersView PowerSupplyParametersVM { get; } = new PowerSupplyParametersView();
 
+        public ResultView ResultView { get; } = new ResultView();
+
 
         private ObservableCollection<GeneralStructure> _pipeLines = new ObservableCollection<GeneralStructure>();
         private GeneralStructure _selectedPipeLine;
@@ -59,7 +61,15 @@ namespace UncomClc.ViewModels
                 if (_selectedPipeLine == value) return;
                 _selectedPipeLine = value;
                 OnPropertyChanged(nameof(SelectedPipeLine));
-
+                // Очищаем результаты, если элемент не выбран
+                if (_selectedPipeLine == null)
+                {
+                    ResultView.CalculatedHeatLoss = 0;
+                }
+                else
+                {
+                    LoadSelectedPipelineData();
+                }
             }
         }
 
@@ -89,6 +99,7 @@ namespace UncomClc.ViewModels
             ProcessVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             EnvironmentVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             PowerSupplyParametersVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
+            ResultView.PropertyChanged += (s, e) => OnChildPropertyChanged();
             TextBlock = textBlock;
         }
         private void OnChildPropertyChanged()
@@ -109,12 +120,19 @@ namespace UncomClc.ViewModels
         private void AddNewPipe()
         {
             if (string.IsNullOrEmpty(file)) return;
+            // Рассчитываем текущую выбранную трубу перед добавлением новой
+            if (SelectedPipeLine != null)
+            {
+                ExecuteCalculate(); // Рассчитываем текущую трубу
+                SaveCurrentParameters(); // Сохраняем параметры и результаты
+            }
             var newId = PipeLines.Any() ? PipeLines.Max(p => p.Id) + 1 : 1;
             var newStructure = new GeneralStructure
             {
                 Id = newId,
                 Name = $"NewLine_{newId}",
-                Parameters = UpdateCurrentParameters()
+                Parameters = UpdateCurrentParameters(),
+                CalculateResult = UpdateCurrentResult()
             };
 
             PipeLines.Add(newStructure);
@@ -136,6 +154,7 @@ namespace UncomClc.ViewModels
 
                 var serializedParams = JsonSerializer.Serialize(SelectedPipeLine.Parameters, options);
                 var copiedParams = JsonSerializer.Deserialize<Parameters>(serializedParams, options);
+                var copiedresult = JsonSerializer.Deserialize<CalculateResult>(serializedParams, options);
 
                 var newId = PipeLines.Any() ? PipeLines.Max(p => p.Id) + 1 : 1;
 
@@ -143,7 +162,8 @@ namespace UncomClc.ViewModels
                 {
                     Id = newId,
                     Name = $"{SelectedPipeLine.Name}_Copy",
-                    Parameters = copiedParams
+                    Parameters = copiedParams,
+                    CalculateResult = copiedresult
                 };
 
                 PipeLines.Add(newStructure);
@@ -191,7 +211,8 @@ namespace UncomClc.ViewModels
                 {
                     Id = 1,
                     Name = "NewLine",
-                    Parameters = UpdateCurrentParameters()
+                    Parameters = UpdateCurrentParameters(),
+                    CalculateResult = UpdateCurrentResult()
                 };
                 PipeLines.Add(newStructure);
                 SelectedPipeLine = newStructure;
@@ -310,6 +331,14 @@ namespace UncomClc.ViewModels
             param.LenghtSection = PowerSupplyParametersVM.LenghtSection;
             return param;
         }
+
+        private CalculateResult UpdateCurrentResult()
+        {
+            var result = new CalculateResult();
+            result.Rpot = ResultView.CalculatedHeatLoss;
+            return result;
+        }
+
         public void SaveCurrentParameters()
         {
             if (_isUpdatingUI || SelectedPipeLine == null) return;
@@ -365,7 +394,7 @@ namespace UncomClc.ViewModels
                 _isUpdatingUI = true;
                 // Блокируем обновление UI во время загрузки
                 var temp = SelectedPipeLine.Parameters;
-
+                var result = SelectedPipeLine.CalculateResult;
                 // ProcessView
                 ProcessVM.Pipe = temp.Pipe?.Name;
                 ProcessVM.Diam = temp.Diam;
@@ -404,6 +433,10 @@ namespace UncomClc.ViewModels
                 PowerSupplyParametersVM.MinTempOn = temp.MinTempOn;
                 PowerSupplyParametersVM.ConnectionScheme = temp.ConnectionScheme;
                 PowerSupplyParametersVM.Nutrition = temp.Nutrition;
+
+                // result
+
+                ResultView.CalculatedHeatLoss = result.Rpot;
             }
             finally
             {
@@ -497,10 +530,25 @@ namespace UncomClc.ViewModels
 
         private void ExecuteCalculate()
         {
-            calculationService.Calculation(SelectedPipeLine);
+           var result = calculationService.Calculation(SelectedPipeLine);
+            if (result != null)
+            {
+                // Сохраняем результат в текущий объект
+                SelectedPipeLine.CalculateResult = result;
+
+                // Обновляем отображение
+                ResultView.CalculatedHeatLoss = result.Rpot;
+
+                // Сохраняем изменения
+                SaveToTempFile();
+
+                // Уведомляем об изменении (если нужно)
+                OnPropertyChanged(nameof(SelectedPipeLine));
+            }
         }
 
     }
+
     public static class ObservableCollectionExtensions
     {
         public static void Move<T>(this ObservableCollection<T> collection, int oldIndex, int newIndex)

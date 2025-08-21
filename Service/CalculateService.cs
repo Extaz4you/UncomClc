@@ -23,9 +23,9 @@ namespace UncomClc.Service
         {
             TextBlock = block;
         }
-        public void Calculation(GeneralStructure structure)
+        public CalculateResult Calculation(GeneralStructure structure)
         {
-            if (structure == null) return;
+            if (structure == null) return new CalculateResult();
             TextBlock.Text = "";
             var param = structure.Parameters;
 
@@ -68,25 +68,59 @@ namespace UncomClc.Service
             var Lfl = Sfl * Ifl;
             var Lop = Sop * Iop;
 
+            TextBlock.Text += $"\r\nПЕРЕМЕННЫЕ\r\n";
+            TextBlock.Text += $"\r\nDtr - {Dtr}";
+            TextBlock.Text += $"\r\nTst - {Tst}";
+            TextBlock.Text += $"\r\nLtr - {Ltr}";
+            TextBlock.Text += $"\r\nKLtr - {KLtr}";
+            TextBlock.Text += $"\r\nTiz1 - {Tiz1}";
+            TextBlock.Text += $"\r\nTiz2 - {Tiz2}";
+            TextBlock.Text += $"\r\nTokrmin - {Tokrmin}";
+            TextBlock.Text += $"\r\nTokrmax - {Tokrmax}";
+            TextBlock.Text += $"\r\nTtr - {Ttr}";
+            TextBlock.Text += $"\r\nTtechmax - {Ttechmax}";
+            TextBlock.Text += $"\r\nTaddmax - {Taddmax}";
+            TextBlock.Text += $"\r\nUf - {Uf}";
+            TextBlock.Text += $"\r\nUl - {Ul}";
+            TextBlock.Text += $"\r\nIabnom - {Iabnom}";
+            TextBlock.Text += $"\r\nUrab - {Urab}";
+            TextBlock.Text += $"\r\nTvklmin - {Tvklmin}";
+            TextBlock.Text += $"\r\nSzhil - {Szhil}";
+            TextBlock.Text += $"\r\nLust - {Lust}";
+            TextBlock.Text += $"\r\nSzadv - {Szadv}";
+            TextBlock.Text += $"\r\nSop - {Sop}";
+            TextBlock.Text += $"\r\nSfl - {Sfl}";
+            TextBlock.Text += $"\r\nIzadv - {Izadv}";
+            TextBlock.Text += $"\r\nIop - {Iop}";
+            TextBlock.Text += $"\r\nIfl - {Ifl}";
+            TextBlock.Text += $"\r\nMrBd - {MrBd}";
+            TextBlock.Text += $"\r\nKtr - {Ktr}";
+            TextBlock.Text += $"\r\nKiz - {Kiz}";
+            TextBlock.Text += $"\r\nKiz2 - {Kiz2}";
+            TextBlock.Text += $"\r\na - {a}";
+            TextBlock.Text += $"\r\nKzap - {Kzap}";
+            TextBlock.Text += $"\r\nTpar - {Tpar}";
+            TextBlock.Text += $"\r\nTclass - {Tclass}";
             TextBlock.Text += $"\r\nLzap - {Lzap}";
             TextBlock.Text += $"\r\nLzadv - {Lzadv}";
             TextBlock.Text += $"\r\nLfl - {Lfl}";
-            TextBlock.Text += $"\r\nKzap - {Kzap}";
-            TextBlock.Text += $"\r\nTokrmin - {Tokrmin}";
-            TextBlock.Text += $"\r\nDtr - {Dtr}";
-            TextBlock.Text += $"\r\nTst - {Tst}";
-            TextBlock.Text += $"\r\nKtr - {Ktr}";
-            TextBlock.Text += $"\r\nTiz1 - {Tiz1}";
-            TextBlock.Text += $"\r\nKiz - {Kiz}";
-            TextBlock.Text += $"\r\na - {a}";
+            TextBlock.Text += $"\r\nLop - {Lop}";
+            TextBlock.Text += $"\r\nbd - {bd}\r\n";
 
+            TextBlock.Text += $"\r\n1 РАСЧЕТ\r\n";
+            TextBlock.Text += $"\r\nLzap - {Lzap}";
+            TextBlock.Text += $"\r\nLzadv - {Lzadv}";
+            TextBlock.Text += $"\r\nLfl - {Lfl}";
+            TextBlock.Text += $"\r\nLop - {Lop}";
 
             var Lobsh = Ltr + Lzap + Lzadv + Lfl + Lop;
 
+            TextBlock.Text += $"\r\nLobsh - {Lobsh}";
+
             double rpot = 0;
-            if (Tiz2 > 0)
+            if (param.ThermalIsolation2 != null && !string.IsNullOrEmpty(param.ThermalIsolation2.Name))
             {
-                rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * Math.PI * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * Math.PI * Kiz) + Math.Log((Dtr + 2 * Tiz1 + 2 * Tiz2) / (Dtr + 2 * Tiz1)) / (2 * Math.PI * Tiz2) + 1 / (Math.PI * (Dtr + 2 * Tiz1 + 2 * Tiz2) * a));
+                rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * Math.PI * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * Math.PI * Kiz) + Math.Log((Dtr + 2 * Tiz1 + 2 * Tiz2) / (Dtr + 2 * Tiz1)) / (2 * Math.PI * Kiz2) + 1 / (Math.PI * (Dtr + 2 * Tiz1 + 2 * Tiz2) * a));
             }
             else
             {
@@ -99,7 +133,8 @@ namespace UncomClc.Service
 
             var findNeededCable = cables.FirstOrDefault();
             TextBlock.Text += $"\r\n Элемент из БД ({bd}): Номер строки: {findNeededCable.RowNumber} Марка: {findNeededCable.Mark} Сечение: {findNeededCable.Cross} Сопротивление: {findNeededCable.Resistance} Альфа: {findNeededCable.Alfa} Дельта: {findNeededCable.Delta} Длина: {findNeededCable.Length}\r\n";
-
+            var result = new CalculateResult { Rpot = rpot };
+            return result;
         }
 
         public string FindOutDataBase(Parameters param)
@@ -115,7 +150,7 @@ namespace UncomClc.Service
             if (param.NumberCores == 2)
             {
                 if (param.CableType == "КНММ" && param.WorkLoad < 300) return "2КНММ-В3";
-                if (param.CableType == "КНМММ" && param.WorkLoad < 300) return "2КНММН-В3";
+                if (param.CableType == "КНММН" && param.WorkLoad < 300) return "2КНММН-В3";
                 if (param.CableType == "КНМС" && param.WorkLoad < 300) return "2КНМС-В3";
                 if (param.CableType == "КНМСин" && param.WorkLoad < 300) return "2КНМСин-В3";
                 if (param.CableType == "КНМС825" && param.WorkLoad < 300) return "2КНМС825-В3";

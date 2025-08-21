@@ -967,7 +967,7 @@ SnapsToDevicePixels="True">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Расчетные тепловые потери с запасом: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.CalculatedHeatLoss, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина одной нитки кабеля с запасом: "/>

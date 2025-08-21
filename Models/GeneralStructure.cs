@@ -12,6 +12,7 @@ namespace UncomClc.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Parameters Parameters { get; set; }
+        public CalculateResult CalculateResult { get; set; }
     }
     public class Parameters
     {
@@ -51,5 +52,9 @@ namespace UncomClc.Models
         public string ConnectionScheme { get; set; }
         public string Nutrition { get; set; }
         public string WorkEnvironment { get; set; }
+    }
+    public class CalculateResult
+    {
+        public double Rpot { get; set; }
     }
 }

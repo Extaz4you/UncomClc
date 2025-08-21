@@ -25,6 +25,7 @@ namespace UncomClc.Service
         }
         public void Calculation(GeneralStructure structure)
         {
+            if (structure == null) return;
             TextBlock.Text = "";
             var param = structure.Parameters;
 
@@ -55,7 +56,7 @@ namespace UncomClc.Service
             string MrBd = param.CableType;
             float Ktr = param.Pipe.Koef;
             float Kiz = (float)param.ThermalIsolation.Koef;
-            float Kiz2 = (float)param.ThermalIsolation2.Koef;
+            float Kiz2 = param.ThermalIsolation2 == null ?  0 : (float)param.ThermalIsolation2.Koef;
             int a = param.PipelinePlacement == "отрытый воздух" ? 30 : 10;
             float Kzap = param.Diam >= 100 ? 1.1f : 1.15f;
             int Tpar = param.StreamingTemperature;
@@ -67,9 +68,31 @@ namespace UncomClc.Service
             var Lfl = Sfl * Ifl;
             var Lop = Sop * Iop;
 
+            TextBlock.Text += $"\r\nLzap - {Lzap}";
+            TextBlock.Text += $"\r\nLzadv - {Lzadv}";
+            TextBlock.Text += $"\r\nLfl - {Lfl}";
+            TextBlock.Text += $"\r\nKzap - {Kzap}";
+            TextBlock.Text += $"\r\nTokrmin - {Tokrmin}";
+            TextBlock.Text += $"\r\nDtr - {Dtr}";
+            TextBlock.Text += $"\r\nTst - {Tst}";
+            TextBlock.Text += $"\r\nKtr - {Ktr}";
+            TextBlock.Text += $"\r\nTiz1 - {Tiz1}";
+            TextBlock.Text += $"\r\nKiz - {Kiz}";
+            TextBlock.Text += $"\r\na - {a}";
+
+
             var Lobsh = Ltr + Lzap + Lzadv + Lfl + Lop;
 
-            var rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * 3.14f * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * 3.14f * Kiz) + Math.Log((Dtr + 2 * Tiz1 + 2 * Tiz2) / (Dtr + 2 * Tiz1)) / (2 * 3.14f * Tiz2) + 1 / (3.14f * (Dtr + 2 * Tiz1 + 2 * Tiz2) * a));
+            double rpot = 0;
+            if (Tiz2 > 0)
+            {
+                rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * Math.PI * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * Math.PI * Kiz) + Math.Log((Dtr + 2 * Tiz1 + 2 * Tiz2) / (Dtr + 2 * Tiz1)) / (2 * Math.PI * Tiz2) + 1 / (Math.PI * (Dtr + 2 * Tiz1 + 2 * Tiz2) * a));
+            }
+            else
+            {
+                rpot = Kzap * (Ttr - Tokrmin) / (Math.Log(Dtr / (Dtr - 2 * Tst)) / (2 * Math.PI * Ktr) + Math.Log((Dtr + 2 * Tiz1) / Dtr) / (2 * Math.PI * Kiz) + 1 / (Math.PI * (Dtr + 2 * Tiz1) * a));
+            }
+
             TextBlock.Text += $"\r\nТеплопотери: {rpot}\r\n";
 
             var cables = ExcelReader.ReadCableDataFromExcel(bd);
@@ -97,8 +120,8 @@ namespace UncomClc.Service
                 if (param.CableType == "КНМСин" && param.WorkLoad < 300) return "2КНМСин-В3";
                 if (param.CableType == "КНМС825" && param.WorkLoad < 300) return "2КНМС825-В3";
 
-                if (param.CableType == "КНМС825" && param.WorkLoad > 300) return "2КНМС825-В6";
-                if (param.CableType == "КНМММ" && param.WorkLoad > 300) return "2КНММН-В6";
+                if (param.CableType == "КНММ" && param.WorkLoad > 300) return "2КНММ-В6";
+                if (param.CableType == "КНММН" && param.WorkLoad > 300) return "2КНММН-В6";
                 if (param.CableType == "КНМС" && param.WorkLoad > 300) return "2КНМС-В6";
                 if (param.CableType == "КНМСин" && param.WorkLoad > 300) return "2КНМСин-В6";
                 if (param.CableType == "КНМС825" && param.WorkLoad > 300) return "2КНМС825-В6";

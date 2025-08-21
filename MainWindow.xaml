@@ -970,7 +970,7 @@ SnapsToDevicePixels="True">
                                             <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                            <Label Content="Длина одной нитки с запасом: "/>
+                                            <Label Content="Длина одной нитки кабеля с запасом: "/>
                                             <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
@@ -978,7 +978,7 @@ SnapsToDevicePixels="True">
                                             <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                            <Label Content="Запас длины на задвижку: "/>
+                                            <Label Content="Запас длины на задвижки: "/>
                                             <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
@@ -1003,7 +1003,7 @@ SnapsToDevicePixels="True">
                                     </GroupBox.Header>
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                            <Label Content="Мощность обгрева трубы рабочая: "/>
+                                            <Label Content="Мощность обогрева трубы рабочая: "/>
                                             <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">

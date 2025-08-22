@@ -65,6 +65,7 @@ namespace UncomClc.Service
             float Kzap = param.Diam >= 100 ? 1.1f : 1.15f;
             int Tpar = param.StreamingTemperature;
             string Tclass = param.TemperatureClass;
+            int Tvalue = param.TemperatureClassValue;
             var bd = FindOutDataBase(param);
 
             var Lzap = Ltr * KLtr - Ltr;
@@ -110,7 +111,7 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\nLfl - {Lfl}";
             TextBlock.Text += $"\r\nLop - {Lop}";
             TextBlock.Text += $"\r\nbd - {bd}\r\n";
-            TextBlock.Text += $"\r\nTclass - {Tclass}\r\n";
+            TextBlock.Text += $"\r\nTclass/value  - {Tclass} - {Tvalue}";
 
             TextBlock.Text += $"\r\n1 РАСЧЕТ\r\n";
             TextBlock.Text += $"\r\nLzap - {Lzap}";

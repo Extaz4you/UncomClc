@@ -31,7 +31,7 @@ namespace UncomClc.ViewModels
         public PowerSupplyParametersView PowerSupplyParametersVM { get; } = new PowerSupplyParametersView();
 
         public ResultView ResultView { get; } = new ResultView();
-
+        
 
         private ObservableCollection<GeneralStructure> _pipeLines = new ObservableCollection<GeneralStructure>();
         private GeneralStructure _selectedPipeLine;
@@ -42,6 +42,7 @@ namespace UncomClc.ViewModels
         private string _lastSavedContent;
         private readonly CalculateService calculationService;
         private TextBlock TextBlock;
+        private string _currentFileName;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -59,9 +60,18 @@ namespace UncomClc.ViewModels
             set
             {
                 if (_selectedPipeLine == value) return;
+
+                // Выполняем расчет для текущего элемента перед переключением
+                if (_selectedPipeLine != null)
+                {
+                    ExecuteCalculate(); // Рассчитываем текущую трубу
+                    SaveCurrentParameters(); // Сохраняем параметры и результаты
+                }
+
                 _selectedPipeLine = value;
                 OnPropertyChanged(nameof(SelectedPipeLine));
-                // Очищаем результаты, если элемент не выбран
+
+                // Загружаем данные нового элемента
                 if (_selectedPipeLine == null)
                 {
                     ResultView.CalculatedHeatLoss = 0;
@@ -83,6 +93,16 @@ namespace UncomClc.ViewModels
         public ICommand CopyCommand { get; }
         public ICommand Calculate { get; }
 
+        public string CurrentFile
+        {
+            get => _currentFileName;
+            set
+            {
+                _currentFileName = value;
+                OnPropertyChanged(nameof(CurrentFile));
+            }
+        }
+
         public MainViewModel(TextBlock textBlock)
         {
             calculationService = new CalculateService(textBlock);
@@ -101,6 +121,9 @@ namespace UncomClc.ViewModels
             PowerSupplyParametersVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             ResultView.PropertyChanged += (s, e) => OnChildPropertyChanged();
             TextBlock = textBlock;
+            CurrentFile = "Нет файла";
+
+            PipeLines = new ObservableCollection<GeneralStructure>();
         }
         private void OnChildPropertyChanged()
         {
@@ -196,6 +219,7 @@ namespace UncomClc.ViewModels
         }
         private void CreateFile()
         {
+            if (!string.IsNullOrEmpty(file)) QuestionBeforeExite();
             var saveFileDialog = new SaveFileDialog
             {
                 Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
@@ -207,6 +231,13 @@ namespace UncomClc.ViewModels
                 file = saveFileDialog.FileName;
                 tempFilePath = Path.ChangeExtension(file, ".tmp");
                 TempFile = tempFilePath;
+                CurrentFile = Path.GetFileName(file);
+                // Создаем пустой основной файл
+                File.WriteAllText(file, "[]");
+
+                // Создаем временный файл с теми же данными
+                File.WriteAllText(tempFilePath, "[]");
+
                 var newStructure = new GeneralStructure
                 {
                     Id = 1,
@@ -217,12 +248,11 @@ namespace UncomClc.ViewModels
                 PipeLines.Add(newStructure);
                 SelectedPipeLine = newStructure;
                 SaveToTempFile();
-
             }
-
         }
         private void OpenFile()
         {
+            if (!string.IsNullOrEmpty(file)) QuestionBeforeExite();
             var openFileDialog = new OpenFileDialog
             {
                 Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
@@ -234,12 +264,13 @@ namespace UncomClc.ViewModels
                 file = openFileDialog.FileName;
                 tempFilePath = Path.ChangeExtension(file, ".tmp");
                 TempFile = tempFilePath;
+                CurrentFile = Path.GetFileName(file);
                 try
                 {
-                    // Копируем исходный файл во временный
+                    // 1. Копируем исходный файл во временный
                     File.Copy(file, tempFilePath, overwrite: true);
 
-                    // Загружаем данные из временного файла
+                    // 2. Загружаем данные из временного файла
                     LoadFromTempFile();
                 }
                 catch (Exception ex)
@@ -266,17 +297,25 @@ namespace UncomClc.ViewModels
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 };
 
-                // 1. Сохраняем текущие изменения во временный файл
-                var json = JsonSerializer.Serialize(PipeLines, options);
-                File.WriteAllText(tempFilePath, json);
+                // 1. Читаем данные из временного файла
+                var json = File.ReadAllText(tempFilePath);
 
-                // 2. Копируем временный файл в основной
-                File.Copy(tempFilePath, file, overwrite: true);
+                // 2. Сохраняем данные в основной файл
+                File.WriteAllText(file, json);
 
                 // 3. Удаляем временный файл
-                File.Delete(tempFilePath);
-                tempFilePath = null;
-                TempFile = null;
+                if (File.Exists(tempFilePath))
+                {
+                    File.Delete(tempFilePath);
+                }
+
+                // 4. Создаем новый временный файл для продолжения работы
+                tempFilePath = Path.ChangeExtension(file, ".tmp");
+                TempFile = tempFilePath;
+                File.WriteAllText(tempFilePath, json); // Сохраняем данные в новый временный файл
+
+                _lastSavedContent = json; // Обновляем последнее сохраненное содержимое
+
                 MessageBox.Show("Файл успешно сохранён", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -287,12 +326,12 @@ namespace UncomClc.ViewModels
 
         private Parameters UpdateCurrentParameters()
         {
-            
+
             var param = new Parameters();
             var pipe = Data.UploadedData.Instance.Pipes.Where(x => x.Name == ProcessVM.Pipe).FirstOrDefault();
             var isulation = Data.UploadedData.Instance.Insulations.Where(x => x.Name == ProcessVM.ThermalIsolation).FirstOrDefault();
             var isulation2 = Data.UploadedData.Instance.Insulations.Where(x => x.Name == ProcessVM.ThermalIsolation2).FirstOrDefault();
-            
+
             param.Pipe = pipe;
             param.ThermalIsolation = isulation;
             param.ThermalIsolation2 = isulation2;
@@ -476,14 +515,11 @@ namespace UncomClc.ViewModels
 
                 var currentContent = JsonSerializer.Serialize(PipeLines, options);
 
-                // Оптимизация: сохраняем только если данные изменились
-                if (currentContent != _lastSavedContent || (DateTime.Now - _lastSaveTime).TotalSeconds > 5)
-                {
-                    File.WriteAllText(tempFilePath, currentContent);
-                    _lastSavedContent = currentContent;
-                    _lastSaveTime = DateTime.Now;
-                    Debug.WriteLine($"Автосохранение выполнено: {DateTime.Now}");
-                }
+                // Всегда сохраняем во временный файл
+                File.WriteAllText(tempFilePath, currentContent);
+                _lastSavedContent = currentContent;
+                _lastSaveTime = DateTime.Now;
+                Debug.WriteLine($"Автосохранение выполнено: {DateTime.Now}");
             }
             catch (Exception ex)
             {
@@ -526,11 +562,10 @@ namespace UncomClc.ViewModels
                 MessageBox.Show($"Ошибка загрузки: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
-        private void ExecuteCalculate()
+        public void ExecuteCalculate()
         {
-           var result = calculationService.Calculation(SelectedPipeLine);
+            if (SelectedPipeLine == null) return;
+            var result = calculationService.Calculation(SelectedPipeLine);
             if (result != null)
             {
                 // Сохраняем результат в текущий объект
@@ -544,6 +579,25 @@ namespace UncomClc.ViewModels
 
                 // Уведомляем об изменении (если нужно)
                 OnPropertyChanged(nameof(SelectedPipeLine));
+            }
+        }
+
+        private void QuestionBeforeExite()
+        {
+            var result = MessageBox.Show("Сохранить изменения перед закрытием?", "Подтверждение",
+                           MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                SaveFile();
+                if (File.Exists(tempFilePath))
+                {
+                    File.Delete(tempFilePath);
+                }
+            }
+            else if (result == MessageBoxResult.Cancel)
+            {
+                return;
             }
         }
 

@@ -110,6 +110,7 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\nLfl - {Lfl}";
             TextBlock.Text += $"\r\nLop - {Lop}";
             TextBlock.Text += $"\r\nbd - {bd}\r\n";
+            TextBlock.Text += $"\r\nTclass - {Tclass}\r\n";
 
             TextBlock.Text += $"\r\n1 РАСЧЕТ\r\n";
             TextBlock.Text += $"\r\nLzap - {Lzap}";
@@ -163,11 +164,11 @@ namespace UncomClc.Service
             }
             if (param.NumberCores == 2)
             {
-                if (param.CableType == "КНММ" && param.WorkLoad < 300) return "2КНММ-В3";
-                if (param.CableType == "КНММН" && param.WorkLoad < 300) return "2КНММН-В3";
-                if (param.CableType == "КНМС" && param.WorkLoad < 300) return "2КНМС-В3";
-                if (param.CableType == "КНМСин" && param.WorkLoad < 300) return "2КНМСин-В3";
-                if (param.CableType == "КНМС825" && param.WorkLoad < 300) return "2КНМС825-В3";
+                if (param.CableType == "КНММ" && param.WorkLoad <= 300) return "2КНММ-В3";
+                if (param.CableType == "КНММН" && param.WorkLoad <= 300) return "2КНММН-В3";
+                if (param.CableType == "КНМС" && param.WorkLoad <= 300) return "2КНМС-В3";
+                if (param.CableType == "КНМСин" && param.WorkLoad <= 300) return "2КНМСин-В3";
+                if (param.CableType == "КНМС825" && param.WorkLoad <= 300) return "2КНМС825-В3";
 
                 if (param.CableType == "КНММ" && param.WorkLoad > 300) return "2КНММ-В6";
                 if (param.CableType == "КНММН" && param.WorkLoad > 300) return "2КНММН-В6";

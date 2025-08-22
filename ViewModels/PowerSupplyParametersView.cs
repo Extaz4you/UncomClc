@@ -198,6 +198,7 @@ namespace UncomClc.ViewModels
                 }
                 connectionScheme = value;
                 OnPropertyChanged(nameof(ConnectionScheme));
+                CheckLineVoltageLimit();
                 UpdateNumberCoresOptions();
             }
         }
@@ -210,6 +211,7 @@ namespace UncomClc.ViewModels
                 nutrition = value;
                 OnPropertyChanged(nameof(Nutrition));
                 OnPropertyChanged(nameof(WorkLoad));
+                CheckLineVoltageLimit();
                 UpdateConnectionSchemeOptions();
             }
         }
@@ -397,6 +399,20 @@ namespace UncomClc.ViewModels
                     return false;
             }
         }
+
+        private void CheckLineVoltageLimit()
+        {
+            // Если выбрана схема "линия" и Workload превышает 600V
+            if (ConnectionScheme == "линия" && WorkLoad > 600)
+            {
+                // Сбрасываем напряжение на 220V
+                PhaseVoltage = 220;
+
+                MessageBox.Show("Максимальное допустимое напряжение для 2-х жильного кабеля 600 В",
+                    "Ошибка напряжения", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
 
     }
 }

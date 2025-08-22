@@ -612,13 +612,9 @@ SnapsToDevicePixels="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <!-- Верхний горизонтальный раздел -->
             <RowDefinition Height="0.9*" />
-            <!-- Верхняя часть (вертикальные разделы) -->
-            <RowDefinition Height="0.2*" />
-            <!-- Середина сообщения (горизонтальный раздел) -->
             <RowDefinition Height="0.5*" />
-            <!-- Нижняя часть (горизонтальный раздел) -->
+            <RowDefinition Height="0.2*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>

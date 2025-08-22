@@ -669,7 +669,7 @@ SnapsToDevicePixels="True">
                         </MenuItem.Header>
                     </MenuItem>
                 </Menu>
-                <TextBox x:Name="FileName" Width="100" Height="25" FontWeight="Bold" Text="{Binding CurrentFile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+                <TextBox x:Name="FileName" Width="200" Height="25" FontWeight="Bold" Text="{Binding CurrentFile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
 
             </ToolBar>
             

@@ -143,6 +143,14 @@ namespace UncomClc.ViewModels
         private void AddNewPipe()
         {
             if (string.IsNullOrEmpty(file)) return;
+
+            var currentParams = UpdateCurrentParameters();
+            if (currentParams.Diam < 2 * currentParams.Thickness)
+            {
+                MessageBox.Show("Диаметр трубы не может быть меньше двух толщин стенки", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             // Рассчитываем текущую выбранную трубу перед добавлением новой
             if (SelectedPipeLine != null)
             {

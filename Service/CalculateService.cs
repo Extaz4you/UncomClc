@@ -26,6 +26,12 @@ namespace UncomClc.Service
         public CalculateResult Calculation(GeneralStructure structure)
         {
             if (structure == null) return new CalculateResult();
+            if (structure.Parameters.Diam < 2 * structure.Parameters.Thickness)
+            {
+                MessageBox.Show("Диаметр трубы не может быть меньше двух толщин стенки", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
+                return new CalculateResult();
+            }
             TextBlock.Text = "";
             var param = structure.Parameters;
 

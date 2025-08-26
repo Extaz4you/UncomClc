@@ -654,9 +654,10 @@ SnapsToDevicePixels="True">
                         </MenuItem>
 
                     </MenuItem >
-                    <MenuItem Width="105" Height="25" Margin="5" Background="Tan" BorderBrush="Black" Command="{Binding AddPipeCommand}">
+                    <TextBox x:Name="FileName" Width="200" Height="25" FontSize="16" FontWeight="Bold" Text="{Binding CurrentFile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+                    <MenuItem Width="145" Height="25" Margin="5" Background="Tan" BorderBrush="Black" Command="{Binding AddPipeCommand}">
                         <MenuItem.Header>
-                            <TextBlock Text="Добавить трубу" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="Добавить трубопровод" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </MenuItem.Header>
                     </MenuItem>
                     <MenuItem  Width="100" Height="25" Margin="5" Background="Tan" BorderBrush="Black" Command="{Binding Calculate}">
@@ -665,7 +666,6 @@ SnapsToDevicePixels="True">
                         </MenuItem.Header>
                     </MenuItem>
                 </Menu>
-                <TextBox x:Name="FileName" Width="200" Height="25" FontWeight="Bold" Text="{Binding CurrentFile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
 
             </ToolBar>
             
@@ -734,7 +734,7 @@ SnapsToDevicePixels="True">
                                         <Label x:Name="Lenght" Content="Длина:"/>
                                         <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Lenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         <Label Content="Коэф. запаса:"/>
-                                        <TextBox x:Name="PipeKoef" Width="60"  Height="25" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
+                                        <TextBox x:Name="PipeKoef" Width="60"  Height="25" Padding="0,3,0,0" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
@@ -918,7 +918,7 @@ SnapsToDevicePixels="True">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Кол-во жил:"/>
-                                        <TextBox x:Name="NumberCores" Width="20" Height="25" Text="{Binding PowerSupplyParametersVM.NumberCores, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+                                        <TextBox x:Name="NumberCores" Width="20" Height="25" Padding="3,3,0,0" Text="{Binding PowerSupplyParametersVM.NumberCores, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Длина устан. части секции:"/>
@@ -968,23 +968,23 @@ SnapsToDevicePixels="True">
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина одной нитки кабеля с запасом: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на трубу: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на задвижки: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на фланцы: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на опоры: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>
@@ -1001,27 +1001,27 @@ SnapsToDevicePixels="True">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Мощность обогрева трубы рабочая: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Мощность одной нитки кабеля рабочая: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Схема соединения: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="70" Height="25"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Кол-во нагревательных секций: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource CountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина нагревательного кабеля секции: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Максимальная температура оболочки кабеля: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource TemperatureTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>
@@ -1039,35 +1039,35 @@ SnapsToDevicePixels="True">
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Марка кабеля: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="70" Height="25"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Сечение жилы: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MM2CountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MM2CountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Номинальное эквив. сопр. жил при 20°C: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource OmCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource OmCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочее напряжение: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Расчетная мощность при 20°C: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина нагревательного кабеля секции: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина холодного ввода: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Температурный класс ВЗЭО: "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="70" Height="25"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>
@@ -1082,27 +1082,27 @@ SnapsToDevicePixels="True">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Питание "/>
-                                            <TextBox Width="50" Height="25"/>
+                                            <TextBox Width="70" Height="25"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочее напряжение: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource VoltageTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Стартовый ток секции: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочий ток секции: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource CurrnetTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Стартовая мощность секции: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочая мощность секции: "/>
-                                            <TextBox Width="50" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UncomClc"
         mc:Ignorable="d"
+        Icon="pack://application:,,,/Images/uncomtech.png"
         Title="UncomClc" Height="1000" Width="2000"
         WindowState="Maximized">
 
@@ -654,7 +655,7 @@ SnapsToDevicePixels="True">
                         </MenuItem>
 
                     </MenuItem >
-                    <TextBox x:Name="FileName" Width="200" Height="25" FontSize="16" FontWeight="Bold" Text="{Binding CurrentFile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+                    <TextBox x:Name="FileName" Width="150" Height="25" FontSize="16" FontWeight="Bold" Text="{Binding CurrentFile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
                     <MenuItem Width="145" Height="25" Margin="5" Background="Tan" BorderBrush="Black" Command="{Binding AddPipeCommand}">
                         <MenuItem.Header>
                             <TextBlock Text="Добавить трубопровод" HorizontalAlignment="Center" VerticalAlignment="Center"/>

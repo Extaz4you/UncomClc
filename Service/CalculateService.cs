@@ -138,7 +138,7 @@ namespace UncomClc.Service
                     TextBlock.Text += $"\r\n✅ УСЛОВИЕ ВЫПОЛНЕНО: Pobogrrab ({Pobogrrab}) > rpot ({rpot})\r\n";
                     cableFound = true;
                     selectedCable = findNeededCable;
-                    break; 
+                    break;
                 }
                 else
                 {
@@ -270,33 +270,46 @@ namespace UncomClc.Service
             CalculateCableTemperatureIterative(double Rsec20, int Urab, string connectionScheme, double Lsec,
                                               CableModel cable, int Ttr)
         {
+            const int maxIterations = 10;
             int iteration = 0;
+            int Tkabrab = Ttr; // Начальное значение температуры кабеля
             decimal Tkabrab0;
-            double Rsecrab = 0;
-            double Psecrab = 0;
-            double Pkabrab = 0;
-            int Tkabrab = Ttr;
+            double Rsecrab, Psecrab, Pkabrab;
+
+            bool converged = false;
 
             do
             {
                 iteration++;
-                Rsecrab = Rsec20 * (1 + double.Parse(cable.Alfa) * (Tkabrab - 20));
-                Psecrab = (Urab * Urab) / (3 * Rsecrab);
 
+                // Вычисляем сопротивление при текущей температуре
+                Rsecrab = Rsec20 * (1 + double.Parse(cable.Alfa) * (Tkabrab - 20));
+
+                // Вычисляем мощность в зависимости от схемы подключения
                 if (connectionScheme == "петля" || connectionScheme == "две петли" || connectionScheme == "три петли")
                 {
                     Psecrab = (Urab * Urab) / Rsecrab;
                 }
-
-                Pkabrab = Psecrab / Lsec;
-                Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * (cable.Dkab /1000)) +Ttr;
-
-                if (Math.Abs(Tkabrab0 - Tkabrab) >= 1m)
+                else
                 {
-                    Tkabrab = (int)Tkabrab0;
+                    Psecrab = (Urab * Urab) / (3 * Rsecrab);
                 }
 
-            } while (Math.Abs(Tkabrab0 - Tkabrab) >= 1m && iteration < 5);
+                Pkabrab = Psecrab / Lsec;
+                Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * (cable.Dkab / 1000)) + Ttr;
+
+                // Проверяем сходимость
+                if (Math.Abs(Tkabrab0 - Tkabrab) <= 1m)
+                {
+                    converged = true;
+                }
+                else
+                {
+                    // Обновляем температуру для следующей итерации
+                    Tkabrab = (int)Math.Round(Tkabrab0);
+                }
+
+            } while (!converged && iteration < maxIterations);
 
             return (Rsecrab, Psecrab, Pkabrab, Tkabrab0, Tkabrab, iteration);
         }

@@ -289,7 +289,7 @@ namespace UncomClc.Service
                 }
 
                 Pkabrab = Psecrab / Lsec;
-                Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * (cable.Dkab /100)) +Ttr;
+                Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * (cable.Dkab /1000)) +Ttr;
 
                 if (Math.Abs(Tkabrab0 - Tkabrab) >= 1m)
                 {

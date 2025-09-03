@@ -138,7 +138,7 @@ namespace UncomClc.Service
                     TextBlock.Text += $"\r\n✅ УСЛОВИЕ ВЫПОЛНЕНО: Pobogrrab ({Pobogrrab}) > rpot ({rpot})\r\n";
                     cableFound = true;
                     selectedCable = findNeededCable;
-                    break; // Выходим из цикла, так как нашли подходящий кабель
+                    break; 
                 }
                 else
                 {
@@ -163,9 +163,7 @@ namespace UncomClc.Service
                 return new CalculateResult();
             }
             TextBlock.Text += $"\r\n\n🎉 ПОДОБРАН ПОДХОДЯЩИЙ КАБЕЛЬ:\r\n";
-            TextBlock.Text += $"\r\nМарка: {selectedCable.Mark}";
-            TextBlock.Text += $"\r\nСечение: {selectedCable.Cross}";
-            TextBlock.Text += $"\r\nНомер строки: {selectedCable.RowNumber}";
+            TextBlock.Text += $"\r\nМарка: {selectedCable.Mark} Сопротивление: {selectedCable.Resistance} Номер строки: {selectedCable.RowNumber}";
 
 
             var finalResult = new CalculateResult { Rpot = rpot };

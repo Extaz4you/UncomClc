@@ -212,6 +212,7 @@ namespace UncomClc.Service
         {
             return new Lengths
             {
+                Ltr = param.Lenght,
                 Lzap = param.Lenght * param.PipeKoef - param.Lenght,
                 Lzadv = param.ValveCount * param.ValveLenght,
                 Lfl = param.FlangCount * param.FlangLength,
@@ -324,7 +325,7 @@ namespace UncomClc.Service
         // Вспомогательные классы
         public class Lengths
         {
-            public double Lzap { get; set; }
+            public float Lzap { get; set; }
             public double Lzadv { get; set; }
             public double Lfl { get; set; }
             public double Lop { get; set; }

@@ -268,14 +268,14 @@ namespace UncomClc.Service
 
         private (double Rsecrab, double Psecrab, double Pkabrab, decimal Tkabrab0, int Tkabrab, int iteration)
             CalculateCableTemperatureIterative(double Rsec20, int Urab, string connectionScheme, double Lsec,
-                                              CableModel cable, int initialTkabrab)
+                                              CableModel cable, int Ttr)
         {
             int iteration = 0;
             decimal Tkabrab0;
             double Rsecrab = 0;
             double Psecrab = 0;
             double Pkabrab = 0;
-            int Tkabrab = initialTkabrab;
+            int Tkabrab = Ttr;
 
             do
             {
@@ -288,8 +288,8 @@ namespace UncomClc.Service
                     Psecrab = (Urab * Urab) / Rsecrab;
                 }
 
-                    Pkabrab = Psecrab / Lsec;
-                Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * cable.Dkab);
+                Pkabrab = Psecrab / Lsec;
+                Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * (cable.Dkab /100)) +Ttr;
 
                 if (Math.Abs(Tkabrab0 - Tkabrab) >= 1m)
                 {

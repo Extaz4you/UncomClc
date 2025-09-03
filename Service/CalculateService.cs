@@ -281,12 +281,14 @@ namespace UncomClc.Service
             {
                 iteration++;
                 Rsecrab = Rsec20 * (1 + double.Parse(cable.Alfa) * (Tkabrab - 20));
-                Psecrab = (Urab * Urab) / Rsecrab;
+                Psecrab = (Urab * Urab) / (3 * Rsecrab);
 
                 if (connectionScheme == "петля" || connectionScheme == "две петли" || connectionScheme == "три петли")
-                    Psecrab = (Urab * Urab) / (3 * Rsecrab);
+                {
+                    Psecrab = (Urab * Urab) / Rsecrab;
+                }
 
-                Pkabrab = Psecrab / Lsec;
+                    Pkabrab = Psecrab / Lsec;
                 Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * cable.Dkab);
 
                 if (Math.Abs(Tkabrab0 - Tkabrab) >= 1m)

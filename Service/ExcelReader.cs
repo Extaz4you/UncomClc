@@ -45,13 +45,14 @@ namespace UncomClc.Service
 
                     var cable = new CableModel
                     {
-                        RowNumber = worksheet.Cells[row, 1].Value?.ToString(),
+                        RowNumber = int.Parse(worksheet.Cells[row, 1].Value?.ToString()),
                         Mark = worksheet.Cells[row, 2].Value?.ToString(),
                         Cross = worksheet.Cells[row, 3].Value?.ToString(),
                         Resistance = double.Parse(worksheet.Cells[row, 4].Value?.ToString()),
                         Alfa = worksheet.Cells[row, 5].Value?.ToString(),
                         Delta = worksheet.Cells[row, 6].Value?.ToString(),
-                        Length = worksheet.Cells[row, 7].Value?.ToString()
+                        Length = worksheet.Cells[row, 7].Value?.ToString(),
+                        Dkab = decimal.Parse(worksheet.Cells[row, 13].Value?.ToString())
                     };
 
                     cableData.Add(cable);

@@ -167,7 +167,11 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\n\n🎉 ПОДОБРАН ПОДХОДЯЩИЙ КАБЕЛЬ:\r\n";
             TextBlock.Text += $"\r\nМарка: {selectedCable.Mark} Сопротивление: {selectedCable.Resistance} Номер строки: {selectedCable.RowNumber}";
 
-            if (double.Parse(selectedCable.Length) < Lsec) ShowWarningMessage(2, structure );
+            if (double.Parse(selectedCable.Length) < Lsec)
+            {
+                ShowWarningMessage(2, structure);
+                return new CalculateResult();
+            }
 
             double Rsecvklmin = Rsec20 * (1 + double.Parse(selectedCable.Alfa) * (Tvklmin - 20));
             TextBlock.Text += $"\r\nRsecvklmin - {Rsecvklmin}\r\n";
@@ -182,7 +186,6 @@ namespace UncomClc.Service
 
 
             var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
-            //structure.HasWarning = false;
             return finalResult;
         }
 
@@ -383,12 +386,12 @@ namespace UncomClc.Service
                     MessageBox.Show("Не удалось подобрать нагревательную секцию по необходимой мощности обогрева. Попробуйте изменить параметры КСЭО или питающей сети",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     structure.HasWarning = true;
-                    return;
+                    break;
                 case 2:
                     MessageBox.Show("Расчетная длина нагревательной секции превышает максимальную длину кабеля в бухте. Обратитесь к производителю нагревательных секций на предмет сращивания кабеля муфтами",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     structure.HasWarning = true;
-                    return;
+                    break;
             }
 
         }

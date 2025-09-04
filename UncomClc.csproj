@@ -160,6 +160,7 @@
     <Compile Include="Views\PipeViews\EditPipes.xaml.cs">
       <DependentUpon>EditPipes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WarningConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

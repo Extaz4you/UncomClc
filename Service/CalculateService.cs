@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using UncomClc.Models;
 using UncomClc.Models.Cable;
+using UncomClc.ViewModels;
 using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace UncomClc.Service
@@ -152,7 +153,7 @@ namespace UncomClc.Service
                 if (iteration >= maxRow)
                 {
                     TextBlock.Text += $"\r\nДостигнут максимальный номер строки ({maxRow}). Поиск завершен.\r\n";
-                    ShowWarningMessage();
+                    ShowWarningMessage(1, structure);
                     break;
                 }
             }
@@ -168,7 +169,7 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\n\n🎉 ПОДОБРАН ПОДХОДЯЩИЙ КАБЕЛЬ:\r\n";
             TextBlock.Text += $"\r\nМарка: {selectedCable.Mark} Сопротивление: {selectedCable.Resistance} Номер строки: {selectedCable.RowNumber}";
 
-            if (double.Parse(selectedCable.Length) < Lsec) ShowWarningMessage();
+            if (double.Parse(selectedCable.Length) < Lsec) ShowWarningMessage(2, structure );
 
             double Rsecvklmin = Rsec20 * (1 + double.Parse(selectedCable.Alfa) * (Tvklmin - 20));
             TextBlock.Text += $"\r\nRsecvklmin - {Rsecvklmin}\r\n";
@@ -182,7 +183,8 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\nIrab - {caclRes.Irab}\r\n";
 
 
-            var finalResult = new CalculateResult { Rpot = rpot };
+            var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
+            //structure.HasWarning = false;
             return finalResult;
         }
 
@@ -302,7 +304,7 @@ namespace UncomClc.Service
                 Rsecrab = Rsec20 * (1 + double.Parse(cable.Alfa) * (Tkabrab - 20));
 
                 // Вычисляем мощность в зависимости от схемы подключения
-                if (connectionScheme == "петля" || connectionScheme == "две петли" || connectionScheme == "три петли")
+                if (connectionScheme == "линия" || connectionScheme == "петля" || connectionScheme == "две петли" || connectionScheme == "три петли")
                 {
                     Psecrab = (Urab * Urab) / Rsecrab;
                 }
@@ -375,11 +377,22 @@ namespace UncomClc.Service
             }
         }
 
-        private void ShowWarningMessage()
+        private void ShowWarningMessage(int errorPlace, GeneralStructure structure)
         {
-            MessageBox.Show("ТУТ БУДЕТ ТЕКСТ ОШИБКИ, НО ПОТОМ ...",
-              "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            return;
+            switch (errorPlace)
+            {
+                case 1:
+                    MessageBox.Show("Не удалось подобрать нагревательную секцию по необходимой мощности обогрева. \r\nПопробуйте изменить параметры КСЭО или питающей сети",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    structure.HasWarning = true;
+                    return;
+                case 2:
+                    MessageBox.Show("Расчетная длина нагревательной секции превышает максимальную \r\nдлину кабеля в бухте. Обратитесь к производителю нагревательных \r\nсекций на предмет сращивания кабеля муфтамии",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    structure.HasWarning = true;
+                    return;
+            }
+
         }
 
         private (double Psec20, double Psecvklmin, double ssec, double Ivklmin, double Irab)
@@ -388,7 +401,7 @@ namespace UncomClc.Service
             double Psec20 = 0;
             double Psecvklmin = 0;
 
-            if (param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
+            if (param.ConnectionScheme == "петля" || param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
             {
                 Psec20 = Math.Pow(Urab, 2) / Rsec20;
                 Psecvklmin = Math.Pow(Urab, 2) / Rsecvklmin;

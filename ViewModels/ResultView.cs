@@ -10,7 +10,6 @@ namespace UncomClc.ViewModels
     public class ResultView : INotifyPropertyChanged
     {
         private double _calculatedHeatLoss;
-
         public double CalculatedHeatLoss
         {
             get => _calculatedHeatLoss;
@@ -21,10 +20,16 @@ namespace UncomClc.ViewModels
             }
         }
 
-
-
-
-
+        private double _heatCableLength;
+        public double HeatCableLength
+        {
+            get => _heatCableLength;
+            set
+            {
+                _heatCableLength = value;
+                OnPropertyChanged(nameof(HeatCableLength));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public virtual void OnPropertyChanged(string propertyName)

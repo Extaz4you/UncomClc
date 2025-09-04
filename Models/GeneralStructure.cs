@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,12 +8,31 @@ using UncomClc.Models.Insulations;
 
 namespace UncomClc.Models
 {
-    public class GeneralStructure
+    public class GeneralStructure : INotifyPropertyChanged
     {
+
         public int Id { get; set; }
         public string Name { get; set; }
         public Parameters Parameters { get; set; }
         public CalculateResult CalculateResult { get; set; }
+
+        private bool _hasWarning;
+        public bool HasWarning
+        {
+            get => _hasWarning;
+            set
+            {
+                _hasWarning = value;
+                OnPropertyChanged(nameof(HasWarning));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
     public class Parameters
     {
@@ -53,8 +73,16 @@ namespace UncomClc.Models
         public string Nutrition { get; set; }
         public string WorkEnvironment { get; set; }
     }
-    public class CalculateResult
+    public class CalculateResult : INotifyPropertyChanged
     {
         public double Rpot { get; set; }
+        public double HeatCableLenght { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -153,7 +153,6 @@ namespace UncomClc.Service
                 if (iteration >= maxRow)
                 {
                     TextBlock.Text += $"\r\nДостигнут максимальный номер строки ({maxRow}). Поиск завершен.\r\n";
-                    ShowWarningMessage(1, structure);
                     break;
                 }
             }
@@ -162,8 +161,7 @@ namespace UncomClc.Service
             // Проверяем, найден ли подходящий кабель
             if (!cableFound)
             {
-                MessageBox.Show("Не удалось подобрать подходящий кабель. Все кабели из базы данных не обеспечивают достаточную мощность.",
-                              "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowWarningMessage(1, structure);
                 return new CalculateResult();
             }
             TextBlock.Text += $"\r\n\n🎉 ПОДОБРАН ПОДХОДЯЩИЙ КАБЕЛЬ:\r\n";
@@ -401,7 +399,7 @@ namespace UncomClc.Service
             double Psec20 = 0;
             double Psecvklmin = 0;
 
-            if (param.ConnectionScheme == "петля" || param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
+            if (param.ConnectionScheme == "линия" || param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
             {
                 Psec20 = Math.Pow(Urab, 2) / Rsec20;
                 Psecvklmin = Math.Pow(Urab, 2) / Rsecvklmin;

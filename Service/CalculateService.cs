@@ -377,7 +377,9 @@ namespace UncomClc.Service
 
         private void ShowWarningMessage()
         {
-
+            MessageBox.Show("ТУТ БУДЕТ ТЕКСТ ОШИБКИ, НО ПОТОМ ...",
+              "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
         }
 
         private (double Psec20, double Psecvklmin, double ssec, double Ivklmin, double Irab)

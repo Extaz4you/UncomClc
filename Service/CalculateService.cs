@@ -104,27 +104,29 @@ namespace UncomClc.Service
             double Pobogrrab = 0;
             bool cableFound = false;
             CableModel selectedCable = null;
+            double Lsec;
+            double Rsec20;
+            (double Rsecrab, double Psecrab, double Pkabrab, decimal Tkabrab0, int Tkabrab, int iteration) result;
             do
             {
                 iteration++;
                 var findNeededCable = cables.FirstOrDefault(x => x.RowNumber == iteration);
-
                 findNeededCable.Resistance = findNeededCable.Resistance / 1000.0;
                 TextBlock.Text += $"\r\n Элемент из БД ({bd}): Номер строки: {findNeededCable.RowNumber} Марка: {findNeededCable.Mark} Сечение: {findNeededCable.Cross} Сопротивление: {findNeededCable.Resistance} Альфа: {findNeededCable.Alfa} Дельта: {findNeededCable.Delta} Длина: {findNeededCable.Length}\r\n";
 
 
-                var Lsec = Lobsh;
+                Lsec = Lobsh;
                 if (param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
                     Lsec = 2 * Lobsh;
                 TextBlock.Text += $"\r\nLsec - {Lsec}\r\n";
 
-                var Rsec20 = findNeededCable.Resistance * Lsec;
+                Rsec20 = findNeededCable.Resistance * Lsec;
                 TextBlock.Text += $"\r\nRsec20 - {Rsec20}\r\n";
 
                 var Tkabrab = Ttr;
                 TextBlock.Text += $"\r\nTkabrab - {Tkabrab}\r\n";
 
-                var result = CalculateCableTemperatureIterative(Rsec20, Urab, param.ConnectionScheme, Lsec, findNeededCable, Ttr);
+                result = CalculateCableTemperatureIterative(Rsec20, Urab, param.ConnectionScheme, Lsec, findNeededCable, Ttr);
                 TextBlock.Text += $"\r\nRsecrab - {result.Rsecrab}\r\n";
                 TextBlock.Text += $"\r\nPsecrab - {result.Psecrab}\r\n";
                 TextBlock.Text += $"\r\nPkabrab - {result.Pkabrab}\r\n";
@@ -150,6 +152,7 @@ namespace UncomClc.Service
                 if (iteration >= maxRow)
                 {
                     TextBlock.Text += $"\r\nДостигнут максимальный номер строки ({maxRow}). Поиск завершен.\r\n";
+                    ShowWarningMessage();
                     break;
                 }
             }
@@ -164,6 +167,19 @@ namespace UncomClc.Service
             }
             TextBlock.Text += $"\r\n\n🎉 ПОДОБРАН ПОДХОДЯЩИЙ КАБЕЛЬ:\r\n";
             TextBlock.Text += $"\r\nМарка: {selectedCable.Mark} Сопротивление: {selectedCable.Resistance} Номер строки: {selectedCable.RowNumber}";
+
+            if (double.Parse(selectedCable.Length) < Lsec) ShowWarningMessage();
+
+            double Rsecvklmin = Rsec20 * (1 + double.Parse(selectedCable.Alfa) * (Tvklmin - 20));
+            TextBlock.Text += $"\r\nRsecvklmin - {Rsecvklmin}\r\n";
+
+            var caclRes = CalculateResistance(param, Rsec20, Urab, Rsecvklmin, result.Rsecrab);
+
+            TextBlock.Text += $"\r\nPsec20 - {caclRes.Psec20}\r\n";
+            TextBlock.Text += $"\r\nPsecvklmin - {caclRes.Psecvklmin}\r\n";
+            TextBlock.Text += $"\r\nssec - {caclRes.ssec}\r\n";
+            TextBlock.Text += $"\r\nIvklmin - {caclRes.Ivklmin}\r\n";
+            TextBlock.Text += $"\r\nIrab - {caclRes.Irab}\r\n";
 
 
             var finalResult = new CalculateResult { Rpot = rpot };
@@ -335,6 +351,55 @@ namespace UncomClc.Service
                 default:
                     return Pkabrab;
             }
+        }
+        private int HeatSection(string scheme)
+        {
+            switch (scheme)
+            {
+                case "линия":
+                    return 1;
+                case "петля":
+                    return 1;
+                case "две петли":
+                    return 2;
+                case "три петли":
+                    return 3;
+                case "звезда":
+                    return 3;
+                case "две звезды":
+                    return 6;
+                case "три звезды":
+                    return 9;
+                default:
+                    return 0;
+            }
+        }
+
+        private void ShowWarningMessage()
+        {
+
+        }
+
+        private (double Psec20, double Psecvklmin, double ssec, double Ivklmin, double Irab)
+            CalculateResistance(Parameters param, double Rsec20, double Urab, double Rsecvklmin, double Rsecrab)
+        {
+            double Psec20 = 0;
+            double Psecvklmin = 0;
+
+            if (param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
+            {
+                Psec20 = Math.Pow(Urab, 2) / Rsec20;
+                Psecvklmin = Math.Pow(Urab, 2) / Rsecvklmin;
+            }
+            else
+            {
+                Psec20 = Math.Pow(Urab, 2) / (3 * Rsec20);
+                Psecvklmin = Math.Pow(Urab, 2) / (3 * Rsecvklmin);
+            }
+            var ssec = HeatSection(param.ConnectionScheme);
+            var Ivklmin = Urab / Rsecvklmin;
+            var Irab = Urab / Rsecrab;
+            return (Psec20, Psecvklmin, ssec, Ivklmin, Irab);
         }
 
         // Вспомогательные классы

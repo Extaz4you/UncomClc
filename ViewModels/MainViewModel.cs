@@ -582,7 +582,6 @@ namespace UncomClc.ViewModels
                 // Обновляем отображение
                 ResultView.CalculatedHeatLoss = result.Rpot;
                 ResultView.HeatCableLength = result.HeatCableLenght;
-
                 // Сохраняем изменения
                 SaveToTempFile();
 

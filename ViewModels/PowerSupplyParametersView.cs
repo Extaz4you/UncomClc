@@ -12,7 +12,7 @@ namespace UncomClc.ViewModels
     public class PowerSupplyParametersView : BaseViewModel
     {
         private List<string> _allConnectionSchemeOptions = new List<string>() { "петля", "звезда", "две петли", "две звезды", "три петли", "три звезды", "линия" };
-        private const double Sqrt3 = 1.73205080757;
+        private const double Sqrt3 = 1.729;
         private double phaseVoltage = 220;
         private double lineVoltage = (220 * Sqrt3);
         private int current = 25;

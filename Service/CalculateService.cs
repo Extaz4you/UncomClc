@@ -186,6 +186,7 @@ namespace UncomClc.Service
 
 
             var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
+            structure.HasWarning = false;
             return finalResult;
         }
 

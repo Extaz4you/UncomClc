@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interactivity;
 using UncomClc.Models;
 using UncomClc.Models.Cable;
 using UncomClc.ViewModels;
@@ -184,6 +186,7 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\nIvklmin - {caclRes.Ivklmin}\r\n";
             TextBlock.Text += $"\r\nIrab - {caclRes.Irab}\r\n";
 
+            var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
             var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
             structure.HasWarning = false;
@@ -356,6 +359,7 @@ namespace UncomClc.Service
                     return Pkabrab;
             }
         }
+
         private int HeatSection(string scheme)
         {
             switch (scheme)
@@ -418,6 +422,83 @@ namespace UncomClc.Service
             var Irab = Urab / Rsecrab;
             return (Psec20, Psecvklmin, ssec, Ivklmin, Irab);
         }
+
+        private (double Rsecmax, double Psecmax, double Pkabmax, double Ttpmax, double iteration, double Tobol, double Tobol0) 
+            CalculateShellTemperature(int Tokrmax, double Rsec20, double Urab, double Lsec, string connectionScheme, CableModel cable, Parameters param)
+        {
+            double Tobol = Tokrmax;
+            double Tobol0;
+            bool converged = false;
+            const int maxIterations = 10;
+            int iteration = 0;
+            double Ttpmax;
+            double Rsecmax, Psecmax, Pkabmax;
+
+            double Dtr_m = param.Diam / 1000.0;
+            double Tiz1_m = param.IsolationThickness / 1000.0;
+            double Tiz2_m = param.IsolationThickness2 / 1000.0;
+            int Ttr = param.SupportedTemp;
+            float Kiz = (float)param.ThermalIsolation.Koef;
+            float Kiz2 = param.ThermalIsolation2 == null ? 0 : (float)param.ThermalIsolation2.Koef;
+            int a = param.PipelinePlacement == "открытый воздух" ? 30 : 10;
+
+            do
+            {
+                iteration++;
+
+                Rsecmax = Rsec20 * (1 + (double.Parse(cable.Alfa) / 1000) * (Tobol - 20));
+                TextBlock.Text += $"\r\nRsecmax - {Rsecmax}\r\n";
+
+                // Вычисляем мощность в зависимости от схемы подключения
+                if (connectionScheme == "линия" || connectionScheme == "петля" || connectionScheme == "две петли" || connectionScheme == "три петли")
+                {
+                    Psecmax = Math.Pow(Urab * 1.1, 2) / Rsecmax;
+                }
+                else
+                {
+                    Psecmax = Math.Pow(Urab * 1.1, 2) / (3*Rsecmax);
+                }
+                TextBlock.Text += $"\r\nPsecmax - {Psecmax}\r\n";
+
+                Pkabmax = Psecmax / Lsec;
+                TextBlock.Text += $"\r\nPkabmax - {Pkabmax}\r\n";
+
+                var Pobogmax = CalculatePobogr(Pkabmax, param);
+                TextBlock.Text += $"\r\nPobogmax - {Pobogmax}\r\n";
+
+                if (param.ThermalIsolation2 != null && param.ThermalIsolation != null && Tiz2_m > 0)
+                {
+                    Ttpmax = (Pobogmax / 3.14) * (Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Kiz) + Math.Log((Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) / (Dtr_m + 2 * Tiz1_m)) / (2 * Kiz2) + 1 / ((Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) * a)) + Tokrmax;
+                }
+                else
+                {
+                    Ttpmax = (Pobogmax / 3.14) * (Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Kiz) + 1 / ((Dtr_m + 2 * Tiz1_m) * a)) + Tokrmax;
+                }
+                TextBlock.Text += $"\r\nTtpmax - {Ttpmax}\r\n";
+
+                double alpha_cable = double.Parse(cable.Alfa);
+                double D_kab_m = double.Parse(cable.Dkab.ToString()) / 1000.0;
+                Tobol0 = Pkabmax / (alpha_cable * Math.PI * D_kab_m) + Ttpmax;
+
+                TextBlock.Text += $"\r\nTobol0 - {Tobol0}\r\n";
+                // Проверяем сходимость
+                if (Math.Abs(Tobol0 - Tobol) <= 1)
+                {
+                    converged = true;
+                }
+                else
+                {
+                    // Обновляем температуру для следующей итерации
+                    Tobol = Tobol0;
+                }
+            }
+            while (!converged && iteration < maxIterations);
+
+            return (Rsecmax, Psecmax, Pkabmax, Ttpmax, iteration, Tobol, Tobol0);
+        }
+
+
+
 
         // Вспомогательные классы
         public class Lengths

@@ -188,6 +188,13 @@ namespace UncomClc.Service
 
             var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
+            TextBlock.Text += $"\r\nRsecmax - {shellTemp.Rsecmax}\r\n";
+            TextBlock.Text += $"\r\nPsecmax - {shellTemp.Psecmax}\r\n";
+            TextBlock.Text += $"\r\nPkabmax - {shellTemp.Pkabmax}\r\n";
+            TextBlock.Text += $"\r\nPobogmax - {shellTemp.Pobogmax}\r\n";
+            TextBlock.Text += $"\r\nTtpmax - {shellTemp.Ttpmax}\r\n";
+            TextBlock.Text += $"\r\nTobol0 - {shellTemp.Tobol0}\r\n";
+
             var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
             structure.HasWarning = false;
             return finalResult;
@@ -423,7 +430,7 @@ namespace UncomClc.Service
             return (Psec20, Psecvklmin, ssec, Ivklmin, Irab);
         }
 
-        private (double Rsecmax, double Psecmax, double Pkabmax, double Ttpmax, double iteration, double Tobol, double Tobol0) 
+        private (double Rsecmax, double Psecmax, double Pkabmax, double Ttpmax, double Pobogmax, double iteration, double Tobol, double Tobol0) 
             CalculateShellTemperature(int Tokrmax, double Rsec20, double Urab, double Lsec, string connectionScheme, CableModel cable, Parameters param)
         {
             double Tobol = Tokrmax;
@@ -432,7 +439,7 @@ namespace UncomClc.Service
             const int maxIterations = 10;
             int iteration = 0;
             double Ttpmax;
-            double Rsecmax, Psecmax, Pkabmax;
+            double Rsecmax, Psecmax, Pkabmax, Pobogmax;
 
             double Dtr_m = param.Diam / 1000.0;
             double Tiz1_m = param.IsolationThickness / 1000.0;
@@ -446,8 +453,7 @@ namespace UncomClc.Service
             {
                 iteration++;
 
-                Rsecmax = Rsec20 * (1 + (double.Parse(cable.Alfa) / 1000) * (Tobol - 20));
-                TextBlock.Text += $"\r\nRsecmax - {Rsecmax}\r\n";
+                Rsecmax = Rsec20 * (1 + double.Parse(cable.Alfa) * (Tobol - 20));
 
                 // Вычисляем мощность в зависимости от схемы подключения
                 if (connectionScheme == "линия" || connectionScheme == "петля" || connectionScheme == "две петли" || connectionScheme == "три петли")
@@ -458,13 +464,10 @@ namespace UncomClc.Service
                 {
                     Psecmax = Math.Pow(Urab * 1.1, 2) / (3*Rsecmax);
                 }
-                TextBlock.Text += $"\r\nPsecmax - {Psecmax}\r\n";
 
                 Pkabmax = Psecmax / Lsec;
-                TextBlock.Text += $"\r\nPkabmax - {Pkabmax}\r\n";
 
-                var Pobogmax = CalculatePobogr(Pkabmax, param);
-                TextBlock.Text += $"\r\nPobogmax - {Pobogmax}\r\n";
+                Pobogmax = CalculatePobogr(Pkabmax, param);
 
                 if (param.ThermalIsolation2 != null && param.ThermalIsolation != null && Tiz2_m > 0)
                 {
@@ -474,13 +477,11 @@ namespace UncomClc.Service
                 {
                     Ttpmax = (Pobogmax / 3.14) * (Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Kiz) + 1 / ((Dtr_m + 2 * Tiz1_m) * a)) + Tokrmax;
                 }
-                TextBlock.Text += $"\r\nTtpmax - {Ttpmax}\r\n";
 
                 double alpha_cable = double.Parse(cable.Alfa);
                 double D_kab_m = double.Parse(cable.Dkab.ToString()) / 1000.0;
                 Tobol0 = Pkabmax / (alpha_cable * Math.PI * D_kab_m) + Ttpmax;
 
-                TextBlock.Text += $"\r\nTobol0 - {Tobol0}\r\n";
                 // Проверяем сходимость
                 if (Math.Abs(Tobol0 - Tobol) <= 1)
                 {
@@ -494,7 +495,7 @@ namespace UncomClc.Service
             }
             while (!converged && iteration < maxIterations);
 
-            return (Rsecmax, Psecmax, Pkabmax, Ttpmax, iteration, Tobol, Tobol0);
+            return (Rsecmax, Psecmax, Pkabmax, Ttpmax, Pobogmax, iteration, Tobol, Tobol0);
         }
 
 

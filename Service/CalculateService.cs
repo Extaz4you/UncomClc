@@ -195,6 +195,9 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\nTtpmax - {shellTemp.Ttpmax}\r\n";
             TextBlock.Text += $"\r\nTobol0 - {shellTemp.Tobol0}\r\n";
 
+            var maxTemp = GetmaxTempFromBd(bd);
+
+
             var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
             structure.HasWarning = false;
             return finalResult;
@@ -404,6 +407,26 @@ namespace UncomClc.Service
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     structure.HasWarning = true;
                     break;
+                case 3:
+                    MessageBox.Show("Расчетная максимальная температура оболочки кабеля превышает максимальную допустимую температуру воздействия на кабель. Попробуйте изменить параметры КСЭО, марку кабеля или предусмотрите систему регулирования температуры",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    structure.HasWarning = true;
+                    break;
+                case 4:
+                    MessageBox.Show("Расчетная максимальная температура оболочки кабеля превышает максимальную допустимую температуру продукта. Попробуйте изменить параметры КСЭО или предусмотрите систему регулирования температуры",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    structure.HasWarning = true;
+                    break;
+                case 5:
+                    MessageBox.Show("Расчетная максимальная температура оболочки кабеля превышает температурный класс ВЗЭО. Попробуйте изменить параметры КСЭО или предусмотрите систему регулирования температуры",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    structure.HasWarning = true;
+                    break;
+                case 6:
+                    MessageBox.Show("Стартовый ток секции превышает номинальный ток автоматического выключателя. Попробуйте изменить параметры КСЭО или предусмотреть другое защитное оборудование",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    structure.HasWarning = true;
+                    break;
             }
 
         }
@@ -498,6 +521,34 @@ namespace UncomClc.Service
             return (Rsecmax, Psecmax, Pkabmax, Ttpmax, Pobogmax, iteration, Tobol, Tobol0);
         }
 
+
+        private int GetmaxTempFromBd(string bd)
+        {
+            var maxTemps = new Dictionary<string, int>
+            {
+                { "КНММ", 200 },
+                { "КНММН", 400 },
+                { "КНМС", 600 },
+                { "КНМСин", 800 },
+                { "КНМС825", 650 },
+                { "2КНММ-В3", 200 },
+                { "2КНММН-В3", 400 },
+                { "2КНМС-В3", 600 },
+                { "2КНМСин-В3", 600 },
+                { "2КНМС825-В3", 650 },
+                { "2КНММ-В6", 200 },
+                { "2КНММН-В6", 400 },
+                { "2КНМС-В6", 600 },
+                { "2КНМСин-В6", 600 },
+                { "2КНМС825-В6", 650 },
+            };
+            int temp = 0;
+            if (maxTemps.ContainsKey(bd))
+            {
+                temp = maxTemps[bd];
+            }
+            return temp;
+        }
 
 
 

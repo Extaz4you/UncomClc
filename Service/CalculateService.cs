@@ -196,8 +196,29 @@ namespace UncomClc.Service
             TextBlock.Text += $"\r\nTobol0 - {shellTemp.Tobol0}\r\n";
 
             var maxTemp = GetmaxTempFromBd(bd);
+            if (shellTemp.Tobol > maxRow)
+            {
+                ShowWarningMessage(3, structure);
+                return new CalculateResult();
+            }
+            if (shellTemp.Tobol > Taddmax)
+            {
+                ShowWarningMessage(4, structure);
+                return new CalculateResult();
+            }
+            if (shellTemp.Tobol > Tvalue)
+            {
+                ShowWarningMessage(5, structure);
+                return new CalculateResult();
+            }
+            if (caclRes.Ivklmin > Iabnom)
+            {
+                ShowWarningMessage(6, structure);
+                return new CalculateResult();
+            }
 
-
+            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
+            MessageBox.Show(CH);
             var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
             structure.HasWarning = false;
             return finalResult;

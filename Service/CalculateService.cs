@@ -522,7 +522,7 @@ namespace UncomClc.Service
                     Ttpmax = (Pobogmax / 3.14) * (Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Kiz) + 1 / ((Dtr_m + 2 * Tiz1_m) * a)) + Tokrmax;
                 }
 
-                double alpha_cable = double.Parse(cable.Alfa);
+                double alpha_cable = 60;//double.Parse(cable.Alfa);
                 double D_kab_m = double.Parse(cable.Dkab.ToString()) / 1000.0;
                 Tobol0 = Pkabmax / (alpha_cable * Math.PI * D_kab_m) + Ttpmax;
 

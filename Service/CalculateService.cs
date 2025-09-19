@@ -513,7 +513,7 @@ namespace UncomClc.Service
 
                 Pobogmax = CalculatePobogr(Pkabmax, param);
 
-                if (param.ThermalIsolation2 != null && param.ThermalIsolation != null && Tiz2_m > 0)
+                if (param.ThermalIsolation2 != null && !string.IsNullOrEmpty(param.ThermalIsolation2.Name) && Tiz2_m > 0)
                 {
                     Ttpmax = (Pobogmax / 3.14) * (Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Kiz) + Math.Log((Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) / (Dtr_m + 2 * Tiz1_m)) / (2 * Kiz2) + 1 / ((Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) * a)) + Tokrmax;
                 }

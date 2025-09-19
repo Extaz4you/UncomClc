@@ -21,7 +21,7 @@ namespace UncomClc.ViewModels
 
         protected void TriggerAutoSave()
         {
-            if (Application.Current?.MainWindow?.DataContext is MainViewModel mainVm)
+            if (Application.Current?.MainWindow?.DataContext is Main mainVm)
             {
                 mainVm.SaveCurrentParameters();
                 mainVm.SaveToTempFile();

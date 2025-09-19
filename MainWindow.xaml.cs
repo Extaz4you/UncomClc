@@ -37,7 +37,7 @@ namespace UncomClc
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel(MessagesBlock);
+            this.DataContext = new Main();
             Load();
         }
         private void Load()
@@ -121,7 +121,7 @@ namespace UncomClc
         }
         private void PipeLinesTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (DataContext is MainViewModel viewModel)
+            if (DataContext is Main viewModel)
             {
                 // Обновляем SelectedPipeLine во ViewModel
                  viewModel.SelectedPipeLine = e.NewValue as GeneralStructure;
@@ -133,7 +133,7 @@ namespace UncomClc
         {
             // Проверяем, что клик был по элементу TreeView
             if (PipeLinesTree.SelectedItem is GeneralStructure selectedItem &&
-                DataContext is MainViewModel vm)
+                DataContext is Main vm)
             {
                 // Создаем окно редактирования с текущим именем
                 var lineView = new LineView(selectedItem.Name);
@@ -157,7 +157,7 @@ namespace UncomClc
         }
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (DataContext is MainViewModel vm && !string.IsNullOrEmpty(vm.TempFile))
+            if (DataContext is Main vm && !string.IsNullOrEmpty(vm.TempFile))
             {
                 var result = MessageBox.Show("Сохранить изменения перед закрытием?", "Подтверждение",
                                            MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
@@ -228,7 +228,7 @@ namespace UncomClc
                 if (draggedItem == null || targetItem == null || draggedItem == targetItem)
                     return;
 
-                if (DataContext is MainViewModel vm)
+                if (DataContext is Main vm)
                 {
                     // Получаем индексы элементов
                     int oldIndex = vm.PipeLines.IndexOf(draggedItem);

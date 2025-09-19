@@ -22,9 +22,8 @@ namespace UncomClc.Service
     {
         private TextBlock TextBlock;
 
-        public CalculateService(TextBlock block)
+        public CalculateService()
         {
-            TextBlock = block;
         }
         public CalculateResult Calculation(GeneralStructure structure)
         {
@@ -35,7 +34,6 @@ namespace UncomClc.Service
                               MessageBoxButton.OK, MessageBoxImage.Error);
                 return new CalculateResult();
             }
-            TextBlock.Text = "";
             var param = structure.Parameters;
 
             int Dtr = param.Diam;
@@ -77,20 +75,15 @@ namespace UncomClc.Service
             int Tvalue = param.TemperatureClassValue;
             var bd = FindOutDataBase(param);
 
-            // Вывод переменных
-            PrintVariables(param);
 
             // Расчет длин
             var lengths = CalculateLengths(param);
-            PrintLengths(lengths);
 
             //Общая длина
             var Lobsh = CalculateTotalLength(lengths);
-            TextBlock.Text += $"\r\nLobsh - {Lobsh}";
 
             // Расчет теплопотерь
             double rpot = CalculateHeatLoss(param, Lobsh);
-            TextBlock.Text += $"\r\nТеплопотери: {rpot}\r\n";
 
             //Подбор бд и выбор 1 кабеля
             var cables = ExcelReader.ReadCableDataFromExcel(bd);
@@ -115,46 +108,29 @@ namespace UncomClc.Service
                 iteration++;
                 var findNeededCable = cables.FirstOrDefault(x => x.RowNumber == iteration);
                 findNeededCable.Resistance = findNeededCable.Resistance / 1000.0;
-                TextBlock.Text += $"\r\n Элемент из БД ({bd}): Номер строки: {findNeededCable.RowNumber} Марка: {findNeededCable.Mark} Сечение: {findNeededCable.Cross} Сопротивление: {findNeededCable.Resistance} Альфа: {findNeededCable.Alfa} Дельта: {findNeededCable.Delta} Длина: {findNeededCable.Length}\r\n";
-
 
                 Lsec = Lobsh;
                 if (param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
                     Lsec = 2 * Lobsh;
-                TextBlock.Text += $"\r\nLsec - {Lsec}\r\n";
 
                 Rsec20 = findNeededCable.Resistance * Lsec;
-                TextBlock.Text += $"\r\nRsec20 - {Rsec20}\r\n";
 
                 var Tkabrab = Ttr;
-                TextBlock.Text += $"\r\nTkabrab - {Tkabrab}\r\n";
 
                 result = CalculateCableTemperatureIterative(Rsec20, Urab, param.ConnectionScheme, Lsec, findNeededCable, Ttr);
-                TextBlock.Text += $"\r\nRsecrab - {result.Rsecrab}\r\n";
-                TextBlock.Text += $"\r\nPsecrab - {result.Psecrab}\r\n";
-                TextBlock.Text += $"\r\nPkabrab - {result.Pkabrab}\r\n";
-                TextBlock.Text += $"\r\nTkabrab0 - {result.Tkabrab0}\r\n";
-                TextBlock.Text += $"\r\nФинальный результат после {result.iteration} итераций: Tkabrab = {result.Tkabrab}°C";
+
 
                 Pobogrrab = CalculatePobogr(result.Pkabrab, param);
-                TextBlock.Text += $"\r\nPobogrrab - {Pobogrrab}\r\n";
                 if (Pobogrrab > rpot)
                 {
-                    TextBlock.Text += $"\r\n✅ УСЛОВИЕ ВЫПОЛНЕНО: Pobogrrab ({Pobogrrab}) > rpot ({rpot})\r\n";
                     cableFound = true;
                     selectedCable = findNeededCable;
                     break;
-                }
-                else
-                {
-                    TextBlock.Text += $"\r\n❌ УСЛОВИЕ НЕ ВЫПОЛНЕНО: Pobogrrab ({Pobogrrab}) <= rpot ({rpot})\r\n";
-                    TextBlock.Text += $"\r\nПродолжаем поиск...\r\n";
                 }
 
                 // Проверяем, не превысили ли максимальный номер строки
                 if (iteration >= maxRow)
                 {
-                    TextBlock.Text += $"\r\nДостигнут максимальный номер строки ({maxRow}). Поиск завершен.\r\n";
                     break;
                 }
             }
@@ -166,8 +142,7 @@ namespace UncomClc.Service
                 ShowWarningMessage(1, structure);
                 return new CalculateResult();
             }
-            TextBlock.Text += $"\r\n\n🎉 ПОДОБРАН ПОДХОДЯЩИЙ КАБЕЛЬ:\r\n";
-            TextBlock.Text += $"\r\nМарка: {selectedCable.Mark} Сопротивление: {selectedCable.Resistance} Номер строки: {selectedCable.RowNumber}";
+
 
             if (double.Parse(selectedCable.Length) < Lsec)
             {
@@ -176,24 +151,11 @@ namespace UncomClc.Service
             }
 
             double Rsecvklmin = Rsec20 * (1 + double.Parse(selectedCable.Alfa) * (Tvklmin - 20));
-            TextBlock.Text += $"\r\nRsecvklmin - {Rsecvklmin}\r\n";
 
             var caclRes = CalculateResistance(param, Rsec20, Urab, Rsecvklmin, result.Rsecrab);
 
-            TextBlock.Text += $"\r\nPsec20 - {caclRes.Psec20}\r\n";
-            TextBlock.Text += $"\r\nPsecvklmin - {caclRes.Psecvklmin}\r\n";
-            TextBlock.Text += $"\r\nssec - {caclRes.ssec}\r\n";
-            TextBlock.Text += $"\r\nIvklmin - {caclRes.Ivklmin}\r\n";
-            TextBlock.Text += $"\r\nIrab - {caclRes.Irab}\r\n";
-
             var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
-            TextBlock.Text += $"\r\nRsecmax - {shellTemp.Rsecmax}\r\n";
-            TextBlock.Text += $"\r\nPsecmax - {shellTemp.Psecmax}\r\n";
-            TextBlock.Text += $"\r\nPkabmax - {shellTemp.Pkabmax}\r\n";
-            TextBlock.Text += $"\r\nPobogmax - {shellTemp.Pobogmax}\r\n";
-            TextBlock.Text += $"\r\nTtpmax - {shellTemp.Ttpmax}\r\n";
-            TextBlock.Text += $"\r\nTobol0 - {shellTemp.Tobol0}\r\n";
 
             var maxTemp = GetmaxTempFromBd(bd);
             if (shellTemp.Tobol > maxRow)
@@ -218,8 +180,34 @@ namespace UncomClc.Service
             }
 
             var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
-            MessageBox.Show(CH);
-            var finalResult = new CalculateResult { Rpot = rpot, HeatCableLenght = Lsec };
+            var finalResult = new CalculateResult { 
+                Rpot = rpot,
+                Lobsh = Lobsh,
+                Lzap = lengths.Lzap,
+                Lzadv = lengths.Lzadv,
+                Lfl = lengths.Lfl,
+                Lop = lengths.Lop,
+                Pobogr = Pobogrrab,
+                Pkabrab = result.Pkabrab,
+                Scheme = structure.Parameters.ConnectionScheme,
+                Ssec = caclRes.ssec,
+                Lsec = Lsec,
+                Lust = Lust,
+                TempClass = structure.Parameters.TemperatureClass,
+                Pit = 0,
+                Urab = Urab,
+                Psec20 = caclRes.Psec20,
+                Ivklmin = caclRes.Ivklmin,
+                Irab = caclRes.Irab,
+                Psecvklmin = caclRes.Psecvklmin,
+                Psecrab= result.Rsecrab,
+                HeatCableLenght = Lsec,
+                CH = CH,
+                Mark = selectedCable.Mark,
+                Cross = decimal.Parse(selectedCable.Cross),
+                Resistance = selectedCable.Resistance,
+                Tobol = shellTemp.Tobol
+            };
             structure.HasWarning = false;
             return finalResult;
         }
@@ -252,16 +240,6 @@ namespace UncomClc.Service
         }
 
         // Вспомогательные методы
-        private void PrintVariables(Parameters param)
-        {
-            TextBlock.Text += $"\r\nПЕРЕМЕННЫЕ\r\n";
-            TextBlock.Text += $"\r\nDtr - {param.Diam / 1000.0}";
-            TextBlock.Text += $"\r\nTst - {param.Thickness / 1000.0}";
-            TextBlock.Text += $"\r\nLtr - {param.Lenght}";
-            TextBlock.Text += $"\r\nKLtr - {param.PipeKoef}";
-            TextBlock.Text += $"\r\nTclass/value  - {param.TemperatureClass} - {param.TemperatureClassValue}";
-        }
-
         private Lengths CalculateLengths(Parameters param)
         {
             return new Lengths
@@ -272,15 +250,6 @@ namespace UncomClc.Service
                 Lfl = param.FlangCount * param.FlangLength,
                 Lop = param.SupportCount * param.SupportLenght
             };
-        }
-
-        private void PrintLengths(Lengths lengths)
-        {
-            TextBlock.Text += $"\r\n1 РАСЧЕТ\r\n";
-            TextBlock.Text += $"\r\nLzap - {lengths.Lzap}";
-            TextBlock.Text += $"\r\nLzadv - {lengths.Lzadv}";
-            TextBlock.Text += $"\r\nLfl - {lengths.Lfl}";
-            TextBlock.Text += $"\r\nLop - {lengths.Lop}";
         }
 
         private double CalculateTotalLength(Lengths lengths)

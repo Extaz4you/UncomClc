@@ -23,7 +23,7 @@ using UncomClc.Views.Line;
 
 namespace UncomClc.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class Main : INotifyPropertyChanged
     {
         public string TempFile;
         public ProcessView ProcessVM { get; } = new ProcessView();
@@ -103,9 +103,9 @@ namespace UncomClc.ViewModels
             }
         }
 
-        public MainViewModel(TextBlock textBlock)
+        public Main()
         {
-            calculationService = new CalculateService(textBlock);
+            calculationService = new CalculateService();
             // Инициализация команд
             AddPipeCommand = new RelayCommand(AddNewPipe);
             DeleteCommand = new RelayCommand(DeleteSelectedPipe);
@@ -120,7 +120,6 @@ namespace UncomClc.ViewModels
             EnvironmentVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             PowerSupplyParametersVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             ResultView.PropertyChanged += (s, e) => OnChildPropertyChanged();
-            TextBlock = textBlock;
             CurrentFile = "Нет файла";
 
             PipeLines = new ObservableCollection<GeneralStructure>();
@@ -582,6 +581,30 @@ namespace UncomClc.ViewModels
                 // Обновляем отображение
                 ResultView.CalculatedHeatLoss = result.Rpot;
                 ResultView.HeatCableLength = result.HeatCableLenght;
+                ResultView.Lobsh = result.Lobsh;
+                ResultView.Lzap = result.Lzap;
+                ResultView.Lzadv = result.Lzadv;
+                ResultView.Lfl = result.Lfl;
+                ResultView.Lop = result.Lop;
+                ResultView.Pobogr = result.Pobogr;
+                ResultView.Pkabrab = result.Pkabrab;
+                ResultView.Scheme = result.Scheme;
+                ResultView.Ssec = result.Ssec;
+                ResultView.Tobol = result.Tobol;
+                ResultView.CH = result.CH;
+                ResultView.Mark = result.Mark;
+                ResultView.Cross = result.Cross;
+                ResultView.Resistance = result.Resistance;
+                ResultView.Urab = result.Urab;
+                ResultView.Psec20 = result.Psec20;
+                ResultView.Lsec = result.Lsec;
+                ResultView.Lust = result.Lust;
+                ResultView.TempClass = result.TempClass;
+                ResultView.Pit = result.Pit;
+                ResultView.Ivklmin = result.Ivklmin;
+                ResultView.Irab = result.Irab;
+                ResultView.Psecvklmin = result.Psecvklmin;
+                ResultView.Psecrab = result.Psecrab;
                 // Сохраняем изменения
                 SaveToTempFile();
 

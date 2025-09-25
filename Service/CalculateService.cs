@@ -145,7 +145,7 @@ namespace UncomClc.Service
 
             var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
-            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
+            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance*1000}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
 
             var finalResult = new CalculateResult
             {
@@ -158,22 +158,22 @@ namespace UncomClc.Service
                 Pobogr = Pobogrrab,
                 Pkabrab = result.Pkabrab,
                 Scheme = structure.Parameters.ConnectionScheme,
-                Ssec = caclRes.ssec,
+                Ssec = (int)caclRes.ssec,
                 Lsec = Lsec,
                 Lust = Lust,
                 TempClass = structure.Parameters.TemperatureClass,
-                Pit = 0,
+                Pit = structure.Parameters.Nutrition,
                 Urab = Urab,
-                Psec20 = caclRes.Psec20,
+                Psec20 = Math.Round(caclRes.Psec20 / 1000, 2, MidpointRounding.AwayFromZero),
                 Ivklmin = caclRes.Ivklmin,
                 Irab = caclRes.Irab,
                 Psecvklmin = caclRes.Psecvklmin,
-                Psecrab = result.Rsecrab,
+                Psecrab = result.Psecrab,
                 HeatCableLenght = Lsec,
                 CH = CH,
                 Mark = selectedCable.Mark,
                 Cross = decimal.Parse(selectedCable.Cross),
-                Resistance = selectedCable.Resistance,
+                Resistance = selectedCable.Resistance*1000,
                 Tobol = shellTemp.Tobol
             };
 

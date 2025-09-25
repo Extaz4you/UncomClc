@@ -85,7 +85,7 @@ namespace UncomClc.Models
         public double Pobogr { get; set; }
         public double Pkabrab { get; set; }
         public string Scheme { get; set; }
-        public double Ssec { get; set; }
+        public int Ssec { get; set; }
         public double Tobol { get; set; }
         public string CH { get; set; }
         public string Mark { get; set; }
@@ -96,7 +96,7 @@ namespace UncomClc.Models
         public double Lsec { get; set; }
         public decimal Lust { get; set; }
         public string TempClass { get; set; }
-        public decimal Pit { get; set; }
+        public  string Pit { get; set; }
         public double Ivklmin { get; set; }
         public double Irab { get; set; }
         public double Psecvklmin { get; set; }

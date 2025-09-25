@@ -240,8 +240,8 @@ namespace UncomClc.ViewModels
             }
         }
 
-        private decimal _pit;
-        public decimal Pit
+        private string _pit;
+        public string Pit
         {
             get => _pit;
             set

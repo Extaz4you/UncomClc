@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:UncomClc"
         mc:Ignorable="d"
         Icon="pack://application:,,,/Images/uncomtech.png"
-        Title="UncomClc" Height="1000" Width="2000"
+        Title="UncomClc" Height="1113" Width="2000"
         WindowState="Maximized">
 
     <Window.Resources>
@@ -608,7 +608,7 @@ SnapsToDevicePixels="True">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#FF000000"/>
         </Style>
-        <Style x:Key="ErrorTextBoxStyle" BasedOn="{StaticResource CurrnetTextBoxStyle}" TargetType="TextBox">
+        <Style x:Key="ErrorTextBoxStyle" BasedOn="{StaticResource TemperatureTextBoxStyle}" TargetType="TextBox">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ResultView.IsLengthError}" Value="True">
                     <Setter Property="Background" Value="#FFFFE0E0"/>
@@ -627,7 +627,7 @@ SnapsToDevicePixels="True">
                 </DataTrigger>
             </Style.Triggers>
         </Style>-->
-        <Style x:Key="ErrorTextBoxStyle2" BasedOn="{StaticResource TemperatureTextBoxStyle}" TargetType="TextBox">
+        <Style x:Key="ErrorTextBoxStyle2" BasedOn="{StaticResource CurrnetTextBoxStyle}" TargetType="TextBox">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ResultView.IsStartCurrent}" Value="True">
                     <Setter Property="Background" Value="#FFFFE0E0"/>
@@ -1054,7 +1054,7 @@ SnapsToDevicePixels="True">
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Кол-во нагревательных секций: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Ssec, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource CountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Ssec, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина нагревательного кабеля секции: "/>
@@ -1086,19 +1086,19 @@ SnapsToDevicePixels="True">
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Сечение жилы: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Cross, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MM2CountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Cross, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MM2CountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Номинальное эквив. сопр. жил при 20°C: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Resistance, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}"  Style="{StaticResource OmCountTextBoxStyle}"/>
+                                            <TextBox Width="90" Height="25" Text="{Binding ResultView.Resistance, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource OmCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочее напряжение: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}"  Style="{StaticResource VoltageTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource VoltageTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Расчетная мощность при 20°C: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psec20, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psec20, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина нагревательного кабеля секции: "/>
@@ -1125,11 +1125,11 @@ SnapsToDevicePixels="True">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Питание "/>
-                                            <TextBox Width="70" Text="{Binding ResultView.Pit, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Height="25"/>
+                                            <TextBox Width="70" Text="{Binding ResultView.Pit, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочее напряжение: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Стартовый ток секции: "/>

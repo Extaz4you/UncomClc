@@ -103,6 +103,23 @@ namespace UncomClc.Models
         public double Psecrab { get; set; }
 
 
+        private bool isShellTemp;
+
+        public bool IsShellTemp
+        {
+            get => isShellTemp;
+            set { isShellTemp = value; OnPropertyChanged(nameof(IsShellTemp)); }
+        }
+
+        private bool isStartCurrent;
+
+        public bool IsStartCurrent
+        {
+            get => isStartCurrent;
+            set { isStartCurrent = value; OnPropertyChanged(nameof(IsStartCurrent)); }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

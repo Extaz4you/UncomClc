@@ -295,6 +295,16 @@ namespace UncomClc.ViewModels
             }
         }
 
+        private bool _isLengthError;
+        public bool IsLengthError
+        {
+            get => _isLengthError;
+            set
+            {
+                _isLengthError = value;
+                OnPropertyChanged(nameof(IsLengthError));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public virtual void OnPropertyChanged(string propertyName)

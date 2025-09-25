@@ -25,6 +25,7 @@ namespace UncomClc.Service
         public CalculateService()
         {
         }
+
         public CalculateResult Calculation(GeneralStructure structure)
         {
             if (structure == null) return new CalculateResult();
@@ -136,19 +137,7 @@ namespace UncomClc.Service
             }
             while (iteration <= maxRow);
 
-            // Проверяем, найден ли подходящий кабель
-            if (!cableFound)
-            {
-                ShowWarningMessage(1, structure);
-                return new CalculateResult();
-            }
 
-
-            if (double.Parse(selectedCable.Length) < Lsec)
-            {
-                ShowWarningMessage(2, structure);
-                return new CalculateResult();
-            }
 
             double Rsecvklmin = Rsec20 * (1 + double.Parse(selectedCable.Alfa) * (Tvklmin - 20));
 
@@ -156,31 +145,10 @@ namespace UncomClc.Service
 
             var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
-
-            var maxTemp = GetmaxTempFromBd(bd);
-            if (shellTemp.Tobol > maxRow)
-            {
-                ShowWarningMessage(3, structure);
-                return new CalculateResult();
-            }
-            if (shellTemp.Tobol > Taddmax)
-            {
-                ShowWarningMessage(4, structure);
-                return new CalculateResult();
-            }
-            if (shellTemp.Tobol > Tvalue)
-            {
-                ShowWarningMessage(5, structure);
-                return new CalculateResult();
-            }
-            if (caclRes.Ivklmin > Iabnom)
-            {
-                ShowWarningMessage(6, structure);
-                return new CalculateResult();
-            }
-
             var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
-            var finalResult = new CalculateResult { 
+
+            var finalResult = new CalculateResult
+            {
                 Rpot = rpot,
                 Lobsh = Lobsh,
                 Lzap = lengths.Lzap,
@@ -200,7 +168,7 @@ namespace UncomClc.Service
                 Ivklmin = caclRes.Ivklmin,
                 Irab = caclRes.Irab,
                 Psecvklmin = caclRes.Psecvklmin,
-                Psecrab= result.Rsecrab,
+                Psecrab = result.Rsecrab,
                 HeatCableLenght = Lsec,
                 CH = CH,
                 Mark = selectedCable.Mark,
@@ -208,6 +176,42 @@ namespace UncomClc.Service
                 Resistance = selectedCable.Resistance,
                 Tobol = shellTemp.Tobol
             };
+
+            var maxTemp = GetmaxTempFromBd(bd);
+
+            // Проверяем, найден ли подходящий кабель
+            if (!cableFound)
+            {
+                ShowWarningMessage(1, structure);
+                return new CalculateResult() ;
+            }
+
+            if (double.Parse(selectedCable.Length) < Lsec)
+            {
+                ShowWarningMessage(2, structure);
+                return new CalculateResult();
+            }
+            if (shellTemp.Tobol > maxRow)
+            {
+                ShowWarningMessage(3, structure);
+                return new CalculateResult() { IsShellTemp = true };
+            }
+            if (shellTemp.Tobol > Taddmax)
+            {
+                ShowWarningMessage(4, structure);
+                return new CalculateResult() { IsShellTemp = true };
+            }
+            if (shellTemp.Tobol > Tvalue)
+            {
+                ShowWarningMessage(5, structure);
+                return new CalculateResult() { IsShellTemp = true };
+            }
+            if (caclRes.Ivklmin > Iabnom)
+            {
+                ShowWarningMessage(6, structure);
+                return new CalculateResult() { IsStartCurrent = true};
+            }
+
             structure.HasWarning = false;
             return finalResult;
         }

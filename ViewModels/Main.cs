@@ -605,6 +605,7 @@ namespace UncomClc.ViewModels
                 ResultView.Irab = result.Irab;
                 ResultView.Psecvklmin = result.Psecvklmin;
                 ResultView.Psecrab = result.Psecrab;
+                ResultView.IsLengthError = result.IsShellTemp;
                 // Сохраняем изменения
                 SaveToTempFile();
 

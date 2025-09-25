@@ -183,33 +183,37 @@ namespace UncomClc.Service
             if (!cableFound)
             {
                 ShowWarningMessage(1, structure);
-                return new CalculateResult() ;
+                return finalResult;
             }
 
             if (double.Parse(selectedCable.Length) < Lsec)
             {
                 ShowWarningMessage(2, structure);
-                return new CalculateResult();
+                return finalResult;
             }
             if (shellTemp.Tobol > maxRow)
             {
                 ShowWarningMessage(3, structure);
-                return new CalculateResult() { IsShellTemp = true };
+                finalResult.IsShellTemp = true;
+                return finalResult;
             }
             if (shellTemp.Tobol > Taddmax)
             {
                 ShowWarningMessage(4, structure);
-                return new CalculateResult() { IsShellTemp = true };
+                finalResult.IsShellTemp = true;
+                return finalResult;
             }
             if (shellTemp.Tobol > Tvalue)
             {
                 ShowWarningMessage(5, structure);
-                return new CalculateResult() { IsShellTemp = true };
+                finalResult.IsShellTemp = true;
+                return finalResult;
             }
             if (caclRes.Ivklmin > Iabnom)
             {
                 ShowWarningMessage(6, structure);
-                return new CalculateResult() { IsStartCurrent = true};
+                finalResult.IsStartCurrent = true;
+                return finalResult; 
             }
 
             structure.HasWarning = false;

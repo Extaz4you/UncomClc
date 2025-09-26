@@ -191,7 +191,7 @@ namespace UncomClc.Service
                 ShowWarningMessage(2, structure);
                 return finalResult;
             }
-            if (shellTemp.Tobol > maxRow)
+            if (shellTemp.Tobol > maxTemp)
             {
                 ShowWarningMessage(3, structure);
                 finalResult.IsShellTemp = true;

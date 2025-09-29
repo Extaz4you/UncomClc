@@ -646,6 +646,15 @@ SnapsToDevicePixels="True">
                 </DataTrigger>
             </Style.Triggers>
         </Style>-->
+        <Style x:Key="ErrorTextBoxStyle3" BasedOn="{StaticResource MetersTextBoxStyle}" TargetType="TextBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ResultView.IsLenght}" Value="True">
+                    <Setter Property="Background" Value="#FFFFE0E0"/>
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     
 
@@ -773,7 +782,7 @@ SnapsToDevicePixels="True">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="Lenght" Content="Длина:"/>
-                                        <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Lenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                        <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Lenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ErrorTextBoxStyle3}"/>
                                         <Label Content="Коэф. запаса:"/>
                                         <TextBox x:Name="PipeKoef" Width="60"  Height="25" Padding="0,3,0,0" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                                     </StackPanel>

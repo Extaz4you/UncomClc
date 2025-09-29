@@ -183,13 +183,12 @@ namespace UncomClc.Service
             if (!cableFound)
             {
                 ShowWarningMessage(1, structure);
-                return finalResult;
             }
 
             if (double.Parse(selectedCable.Length) < Lsec)
             {
                 ShowWarningMessage(2, structure);
-                return finalResult;
+                finalResult.IsLenght = true;
             }
             if (shellTemp.Tobol > maxTemp)
             {

@@ -129,7 +129,13 @@ namespace UncomClc.Models
             get => isStartCurrent;
             set { isStartCurrent = value; OnPropertyChanged(nameof(IsStartCurrent)); }
         }
+        private bool isLenght;
 
+        public bool IsLenght
+        {
+            get => isLenght;
+            set { isLenght = value; OnPropertyChanged(nameof(IsLenght)); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

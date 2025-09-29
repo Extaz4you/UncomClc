@@ -518,6 +518,8 @@ namespace UncomClc.ViewModels
                 ResultView.Resistance = result.Resistance * 1000;
                 ResultView.Tobol = result.Tobol;
                 ResultView.IsShellTemp = result.IsShellTemp;
+                ResultView.IsStartCurrent = result.IsStartCurrent;
+                ResultView.IsLenght = result.IsLenght;
 
             }
             finally
@@ -643,6 +645,7 @@ namespace UncomClc.ViewModels
                 ResultView.Psecrab = result.Psecrab;
                 ResultView.IsShellTemp = result.IsShellTemp;
                 ResultView.IsStartCurrent = result.IsStartCurrent;
+                ResultView.IsLenght = result.IsLenght;
 
                 SelectedPipeLine.SuccessCalculation = true;
                 // Сохраняем изменения

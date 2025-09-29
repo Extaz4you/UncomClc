@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
+using OfficeOpenXml.Table.PivotTable;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,6 +47,7 @@ namespace UncomClc.ViewModels
         private TextBlock TextBlock;
         private string _currentFileName;
         private bool _isCalculating = false;
+        private bool showMessage = false;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -117,7 +119,7 @@ namespace UncomClc.ViewModels
             SaveCommand = new RelayCommand(SaveFile);
             EditLineNameCommand = new RelayCommand(EditLineName);
             CopyCommand = new RelayCommand(CopyRow);
-            Calculate = new RelayCommand(ExecuteCalculate);
+            Calculate = new RelayCommand(CalculateWithMessages);
 
             ProcessVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
             EnvironmentVM.PropertyChanged += (s, e) => OnChildPropertyChanged();
@@ -162,6 +164,7 @@ namespace UncomClc.ViewModels
             // Рассчитываем текущую выбранную трубу перед добавлением новой
             if (SelectedPipeLine != null)
             {
+                showMessage = false;
                 ExecuteCalculate(); // Рассчитываем текущую трубу
                 SaveCurrentParameters(); // Сохраняем параметры и результаты
             }
@@ -391,6 +394,33 @@ namespace UncomClc.ViewModels
         {
             var result = new CalculateResult();
             result.Rpot = ResultView.CalculatedHeatLoss;
+            result.Lobsh = ResultView.Lobsh;
+            result.Lzap = ResultView.Lzap;
+            result.Lzadv = ResultView.Lzadv;
+            result.Lfl = ResultView.Lfl;
+            result.Lop = ResultView.Lop;
+            result.Pobogr = ResultView.Pobogr;
+            result.Pkabrab = ResultView.Pkabrab;
+            result.Scheme = ResultView.Scheme;
+            result.Ssec = (int)ResultView.Ssec;
+            result.Lsec = ResultView.Lsec;
+            result.Lust = ResultView.Lust;
+            result.TempClass = ResultView.TempClass;
+            result.Pit = ResultView.Pit;
+            result.Urab = ResultView.Urab;
+            result.Psec20 = ResultView.Psec20 * 1000;
+            result.Ivklmin = ResultView.Ivklmin;
+            result.Irab = ResultView.Irab;
+            result.Psecvklmin = ResultView.Psecvklmin;
+            result.Psecrab = ResultView.Psecrab;
+            result.CH = ResultView.CH;
+            result.Mark = ResultView.Mark;
+            result.Cross = ResultView.Cross;
+            result.Resistance = ResultView.Resistance / 1000;
+            result.Tobol = ResultView.Tobol;
+            result.IsShellTemp = ResultView.IsShellTemp;
+            result.IsStartCurrent = ResultView.IsStartCurrent;
+            result.IsLenght = ResultView.IsLenght;
             return result;
         }
 
@@ -610,7 +640,7 @@ namespace UncomClc.ViewModels
         public void ExecuteCalculate()
         {
             if (SelectedPipeLine == null || SelectedPipeLine.SuccessCalculation) return;
-            var result = calculationService.Calculation(SelectedPipeLine);
+            var result = calculationService.Calculation(SelectedPipeLine, showMessage);
             if (result != null)
             {
                 // Сохраняем результат в текущий объект
@@ -656,6 +686,11 @@ namespace UncomClc.ViewModels
             }
         }
 
+        public void CalculateWithMessages()
+        {
+            showMessage = true;
+            ExecuteCalculate();
+        }
         private void QuestionBeforeExite()
         {
             var result = MessageBox.Show("Сохранить изменения перед закрытием?", "Подтверждение",

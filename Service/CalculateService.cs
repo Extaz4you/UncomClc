@@ -26,7 +26,7 @@ namespace UncomClc.Service
         {
         }
 
-        public CalculateResult Calculation(GeneralStructure structure)
+        public CalculateResult Calculation(GeneralStructure structure, bool showMessage = true)
         {
             if (structure == null) return new CalculateResult();
             if (structure.Parameters.Diam < 2 * structure.Parameters.Thickness)
@@ -145,7 +145,7 @@ namespace UncomClc.Service
 
             var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
-            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance*1000}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
+            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance * 1000}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
 
             var finalResult = new CalculateResult
             {
@@ -180,38 +180,38 @@ namespace UncomClc.Service
             var maxTemp = GetmaxTempFromBd(bd);
 
             // Проверяем, найден ли подходящий кабель
-            if (!cableFound)
+            if (!cableFound && showMessage)
             {
                 ShowWarningMessage(1, structure);
             }
 
-            if (double.Parse(selectedCable.Length) < Lsec)
+            if (double.Parse(selectedCable.Length) < Lsec && showMessage)
             {
                 ShowWarningMessage(2, structure);
                 finalResult.IsLenght = true;
             }
-            if (shellTemp.Tobol > maxTemp)
+            if (shellTemp.Tobol > maxTemp && showMessage)
             {
                 ShowWarningMessage(3, structure);
                 finalResult.IsShellTemp = true;
             }
-            if (shellTemp.Tobol > Taddmax)
+            if (shellTemp.Tobol > Taddmax && showMessage)
             {
                 ShowWarningMessage(4, structure);
                 finalResult.IsShellTemp = true;
             }
-            if (shellTemp.Tobol > Tvalue)
+            if (shellTemp.Tobol > Tvalue && showMessage)
             {
                 ShowWarningMessage(5, structure);
                 finalResult.IsShellTemp = true;
             }
-            if (caclRes.Ivklmin > Iabnom)
+            if (caclRes.Ivklmin > Iabnom && showMessage)
             {
                 ShowWarningMessage(6, structure);
                 finalResult.IsStartCurrent = true;
             }
 
-            structure.HasWarning = false;
+           if(!cableFound && double.Parse(selectedCable.Length) > Lsec && shellTemp.Tobol < maxTemp && shellTemp.Tobol < Taddmax && shellTemp.Tobol < Tvalue && caclRes.Ivklmin < Iabnom) structure.HasWarning = false;
             structure.SuccessCalculation = true;
 
             return finalResult;
@@ -448,7 +448,7 @@ namespace UncomClc.Service
             return (Psec20, Psecvklmin, ssec, Ivklmin, Irab);
         }
 
-        private (double Rsecmax, double Psecmax, double Pkabmax, double Ttpmax, double Pobogmax, double iteration, double Tobol, double Tobol0) 
+        private (double Rsecmax, double Psecmax, double Pkabmax, double Ttpmax, double Pobogmax, double iteration, double Tobol, double Tobol0)
             CalculateShellTemperature(int Tokrmax, double Rsec20, double Urab, double Lsec, string connectionScheme, CableModel cable, Parameters param)
         {
             double Tobol = Tokrmax;
@@ -480,7 +480,7 @@ namespace UncomClc.Service
                 }
                 else
                 {
-                    Psecmax = Math.Pow(Urab * 1.1, 2) / (3*Rsecmax);
+                    Psecmax = Math.Pow(Urab * 1.1, 2) / (3 * Rsecmax);
                 }
 
                 Pkabmax = Psecmax / Lsec;

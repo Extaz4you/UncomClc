@@ -782,7 +782,7 @@ SnapsToDevicePixels="True">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label x:Name="Lenght" Content="Длина:"/>
-                                        <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Lenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ErrorTextBoxStyle3}"/>
+                                        <TextBox Width="60" Height="25" Text="{Binding ProcessVM.Lenght, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         <Label Content="Коэф. запаса:"/>
                                         <TextBox x:Name="PipeKoef" Width="60"  Height="25" Padding="0,3,0,0" Text="{Binding ProcessVM.PipeKoef, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                                     </StackPanel>
@@ -1067,9 +1067,7 @@ SnapsToDevicePixels="True">
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина нагревательного кабеля секции: "/>
-                                            <TextBox Width="70" Height="25" Style="{StaticResource MetersTextBoxStyle}"
-                                                    Foreground="{Binding HasWarning, Converter={StaticResource WarningConverter}}"
-                                                    Text="{Binding ResultView.HeatCableLength, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.HeatCableLength, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource ErrorTextBoxStyle3}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Максимальная температура оболочки кабеля: "/>

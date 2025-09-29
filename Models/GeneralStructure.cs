@@ -27,6 +27,17 @@ namespace UncomClc.Models
             }
         }
 
+        private bool successCalculation;
+        public bool SuccessCalculation
+        {
+            get => successCalculation;
+            set
+            {
+                successCalculation = value;
+                OnPropertyChanged(nameof(SuccessCalculation));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

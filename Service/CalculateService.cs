@@ -173,7 +173,7 @@ namespace UncomClc.Service
                 CH = CH,
                 Mark = selectedCable.Mark,
                 Cross = decimal.Parse(selectedCable.Cross),
-                Resistance = selectedCable.Resistance*1000,
+                Resistance = selectedCable.Resistance,
                 Tobol = shellTemp.Tobol
             };
 
@@ -195,28 +195,26 @@ namespace UncomClc.Service
             {
                 ShowWarningMessage(3, structure);
                 finalResult.IsShellTemp = true;
-                return finalResult;
             }
             if (shellTemp.Tobol > Taddmax)
             {
                 ShowWarningMessage(4, structure);
                 finalResult.IsShellTemp = true;
-                return finalResult;
             }
             if (shellTemp.Tobol > Tvalue)
             {
                 ShowWarningMessage(5, structure);
                 finalResult.IsShellTemp = true;
-                return finalResult;
             }
             if (caclRes.Ivklmin > Iabnom)
             {
                 ShowWarningMessage(6, structure);
                 finalResult.IsStartCurrent = true;
-                return finalResult; 
             }
 
             structure.HasWarning = false;
+            structure.SuccessCalculation = true;
+
             return finalResult;
         }
 

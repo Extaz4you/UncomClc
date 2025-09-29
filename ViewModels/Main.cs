@@ -14,12 +14,14 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Xml;
 using UncomClc.Models;
 using UncomClc.Models.Insulations;
 using UncomClc.Service;
 using UncomClc.Views.Line;
+using static UncomClc.Service.CalculateService;
 
 namespace UncomClc.ViewModels
 {
@@ -43,6 +45,7 @@ namespace UncomClc.ViewModels
         private readonly CalculateService calculationService;
         private TextBlock TextBlock;
         private string _currentFileName;
+        private bool _isCalculating = false;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -128,6 +131,12 @@ namespace UncomClc.ViewModels
         {
             if (!_isUpdatingUI && SelectedPipeLine != null)
             {
+                // Сбрасываем флаг успешного расчета при изменении параметров
+                if (SelectedPipeLine.SuccessCalculation)
+                {
+                    SelectedPipeLine.SuccessCalculation = false;
+                    OnPropertyChanged(nameof(SelectedPipeLine));
+                }
                 SaveCurrentParameters();
                 SaveToTempFile();
             }
@@ -483,6 +492,33 @@ namespace UncomClc.ViewModels
                 // result
 
                 ResultView.CalculatedHeatLoss = result.Rpot;
+                ResultView.Lobsh = result.Lobsh;
+                ResultView.Lzap = result.Lzap;
+                ResultView.Lzadv = result.Lzadv;
+                ResultView.Lfl = result.Lfl;
+                ResultView.Lop = result.Lop;
+                ResultView.Pobogr = result.Pobogr;
+                ResultView.Pkabrab = result.Pkabrab;
+                ResultView.Scheme = SelectedPipeLine.Parameters.ConnectionScheme;
+                ResultView.Ssec = result.Ssec;
+                ResultView.Lsec = result.Lsec;
+                ResultView.Lust = result.Lust;
+                ResultView.TempClass = SelectedPipeLine.Parameters.TemperatureClass;
+                ResultView.Pit = SelectedPipeLine.Parameters.Nutrition;
+                ResultView.Urab = result.Urab;
+                ResultView.Psec20 = Math.Round(result.Psec20 / 1000, 2, MidpointRounding.AwayFromZero); ;
+                ResultView.Ivklmin = result.Ivklmin;
+                ResultView.Irab = result.Irab;
+                ResultView.Psecvklmin = result.Psecvklmin;
+                ResultView.Psecrab = result.Psecrab;
+                ResultView.Lsec = result.Lsec;
+                ResultView.CH = result.CH;
+                ResultView.Mark = result.Mark;
+                ResultView.Cross = result.Cross;
+                ResultView.Resistance = result.Resistance * 1000;
+                ResultView.Tobol = result.Tobol;
+                ResultView.IsShellTemp = result.IsShellTemp;
+
             }
             finally
             {
@@ -571,7 +607,7 @@ namespace UncomClc.ViewModels
         }
         public void ExecuteCalculate()
         {
-            if (SelectedPipeLine == null) return;
+            if (SelectedPipeLine == null || SelectedPipeLine.SuccessCalculation) return;
             var result = calculationService.Calculation(SelectedPipeLine);
             if (result != null)
             {
@@ -605,7 +641,10 @@ namespace UncomClc.ViewModels
                 ResultView.Irab = result.Irab;
                 ResultView.Psecvklmin = result.Psecvklmin;
                 ResultView.Psecrab = result.Psecrab;
-                ResultView.IsLengthError = result.IsShellTemp;
+                ResultView.IsShellTemp = result.IsShellTemp;
+                ResultView.IsStartCurrent = result.IsStartCurrent;
+
+                SelectedPipeLine.SuccessCalculation = true;
                 // Сохраняем изменения
                 SaveToTempFile();
 

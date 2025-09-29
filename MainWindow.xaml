@@ -610,7 +610,7 @@ SnapsToDevicePixels="True">
         </Style>
         <Style x:Key="ErrorTextBoxStyle" BasedOn="{StaticResource TemperatureTextBoxStyle}" TargetType="TextBox">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ResultView.IsLengthError}" Value="True">
+                <DataTrigger Binding="{Binding ResultView.IsShellTemp}" Value="True">
                     <Setter Property="Background" Value="#FFFFE0E0"/>
                     <Setter Property="BorderBrush" Value="Red"/>
                     <Setter Property="BorderThickness" Value="2"/>

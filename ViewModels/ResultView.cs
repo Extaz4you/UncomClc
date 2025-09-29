@@ -295,14 +295,24 @@ namespace UncomClc.ViewModels
             }
         }
 
-        private bool _isLengthError;
-        public bool IsLengthError
+        private bool isShellTemp;
+        public bool IsShellTemp
         {
-            get => _isLengthError;
+            get => isShellTemp;
             set
             {
-                _isLengthError = value;
-                OnPropertyChanged(nameof(IsLengthError));
+                isShellTemp = value;
+                OnPropertyChanged(nameof(IsShellTemp));
+            }
+        }
+        private bool isStartCurrent;
+        public bool IsStartCurrent
+        {
+            get => isStartCurrent;
+            set
+            {
+                isStartCurrent = value;
+                OnPropertyChanged(nameof(IsStartCurrent));
             }
         }
 

@@ -178,6 +178,7 @@ namespace UncomClc.Service
             };
 
             var maxTemp = GetmaxTempFromBd(bd);
+            structure.HasWarning = false;
 
             // Проверяем, найден ли подходящий кабель
             if (!cableFound && showMessage)
@@ -210,8 +211,6 @@ namespace UncomClc.Service
                 ShowWarningMessage(6, structure);
                 finalResult.IsStartCurrent = true;
             }
-
-           if(!cableFound && double.Parse(selectedCable.Length) > Lsec && shellTemp.Tobol < maxTemp && shellTemp.Tobol < Taddmax && shellTemp.Tobol < Tvalue && caclRes.Ivklmin < Iabnom) structure.HasWarning = false;
             structure.SuccessCalculation = true;
 
             return finalResult;

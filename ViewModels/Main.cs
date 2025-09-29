@@ -173,6 +173,8 @@ namespace UncomClc.ViewModels
             {
                 Id = newId,
                 Name = $"NewLine_{newId}",
+                HasWarning = SelectedPipeLine.HasWarning,
+                SuccessCalculation = false,
                 Parameters = UpdateCurrentParameters(),
                 CalculateResult = UpdateCurrentResult()
             };

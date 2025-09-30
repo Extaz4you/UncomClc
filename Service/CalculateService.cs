@@ -143,6 +143,7 @@ namespace UncomClc.Service
             {
                 if (showMessage) ShowWarningMessage(1);
                 structure.HasWarning = true;
+                return new CalculateResult();
             }
 
 

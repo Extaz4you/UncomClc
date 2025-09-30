@@ -153,7 +153,9 @@ namespace UncomClc.Service
 
             var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
-            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance * 1000}-U{Urab}-P{Math.Round(caclRes.Psec20 / 1000, 2, MidpointRounding.AwayFromZero)}-L{Lsec.ToString("N1")}/{Lust.ToString("N1")}-{Tclass.Replace('-', ' ')} ТУ 16.К03-76-2018";
+            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance * 1000}-U{Urab}-P{Math.Round(caclRes.Psec20 / 1000, 2, MidpointRounding.AwayFromZero)}-L{Lsec.ToString("N1")}/{Lust.ToString("N1")}";
+            if (Tvalue > 0) CH += $"-{Tclass}";
+            CH += " ТУ 16.К03-76-2018";
 
             var finalResult = new CalculateResult
             {
@@ -195,7 +197,7 @@ namespace UncomClc.Service
                 finalResult.IsLenght = true;
                 structure.HasWarning = true;
             }
-            if (shellTemp.Tobol > maxTemp )
+            if (shellTemp.Tobol > maxTemp)
             {
                 if (showMessage) ShowWarningMessage(3);
                 finalResult.IsShellTemp = true;
@@ -207,7 +209,7 @@ namespace UncomClc.Service
                 finalResult.IsShellTemp = true;
                 structure.HasWarning = true;
             }
-            if (Tvalue> 0 && shellTemp.Tobol > Tvalue)
+            if (Tvalue > 0 && shellTemp.Tobol > Tvalue)
             {
                 if (showMessage) ShowWarningMessage(5);
                 finalResult.IsShellTemp = true;
@@ -526,7 +528,7 @@ namespace UncomClc.Service
                 { "КНММ", 200 },
                 { "КНММН", 400 },
                 { "КНМС", 600 },
-                { "КНМСин", 800 },
+                { "КНМСин", 600 },
                 { "КНМС825", 650 },
                 { "2КНММ-В3", 200 },
                 { "2КНММН-В3", 400 },

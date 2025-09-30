@@ -497,6 +497,7 @@ namespace UncomClc.ViewModels
                 ProcessVM.MaxAddProductTemp = temp.MaxAddProductTemp;
                 ProcessVM.SteamingStatus = temp.SteamingStatus;
                 ProcessVM.StreamingTemperature = temp.StreamingTemperature;
+                ProcessVM.TemperatureClass = temp.TemperatureClass;
                 ProcessVM.TemperatureClassValue = temp.TemperatureClassValue;
                 ProcessVM.SupportCount = temp.SupportCount;
                 ProcessVM.SupportLenght = temp.SupportLenght;

@@ -110,8 +110,8 @@ namespace UncomClc.Models
         public  string Pit { get; set; }
         public double Ivklmin { get; set; }
         public double Irab { get; set; }
-        public double Psecvklmin { get; set; }
-        public double Psecrab { get; set; }
+        public decimal Psecvklmin { get; set; }
+        public decimal Psecrab { get; set; }
 
 
         private bool isShellTemp;

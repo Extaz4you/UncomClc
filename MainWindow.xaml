@@ -1148,11 +1148,11 @@ SnapsToDevicePixels="True">
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Стартовая мощность секции: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psecvklmin, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psecvklmin, UpdateSourceTrigger=PropertyChanged, StringFormat=N3}" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочая мощность секции: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psecrab, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psecrab, UpdateSourceTrigger=PropertyChanged, StringFormat=N3}" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>

@@ -103,7 +103,7 @@ namespace UncomClc.Service
             CableModel selectedCable = null;
             double Lsec;
             double Rsec20;
-            (double Rsecrab, double Psecrab, double Pkabrab, decimal Tkabrab0, int Tkabrab, int iteration) result;
+            (double Rsecrab, decimal Psecrab, double Pkabrab, decimal Tkabrab0, int Tkabrab, int iteration) result;
             do
             {
                 iteration++;
@@ -138,6 +138,13 @@ namespace UncomClc.Service
             while (iteration <= maxRow);
 
 
+            // Проверяем, найден ли подходящий кабель
+            if (!cableFound)
+            {
+                if (showMessage) ShowWarningMessage(1);
+                structure.HasWarning = true;
+            }
+
 
             double Rsecvklmin = Rsec20 * (1 + double.Parse(selectedCable.Alfa) * (Tvklmin - 20));
 
@@ -145,7 +152,7 @@ namespace UncomClc.Service
 
             var shellTemp = CalculateShellTemperature(Tokrmax, Rsec20, Urab, Lsec, param.ConnectionScheme, selectedCable, param);
 
-            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance * 1000}-U{Urab}-P{caclRes.Psec20}-L{Lsec}/{Lust}-{Tclass} ТУ 16.К03-76-2018";
+            var CH = $"CH-{selectedCable.Mark} {selectedCable.Cross}-R{selectedCable.Resistance * 1000}-U{Urab}-P{Math.Round(caclRes.Psec20 / 1000, 2, MidpointRounding.AwayFromZero)}-L{Lsec.ToString("N1")}/{Lust.ToString("N1")}-{Tclass.Replace('-', ' ')} ТУ 16.К03-76-2018";
 
             var finalResult = new CalculateResult
             {
@@ -167,8 +174,8 @@ namespace UncomClc.Service
                 Psec20 = Math.Round(caclRes.Psec20 / 1000, 2, MidpointRounding.AwayFromZero),
                 Ivklmin = caclRes.Ivklmin,
                 Irab = caclRes.Irab,
-                Psecvklmin = caclRes.Psecvklmin,
-                Psecrab = result.Psecrab,
+                Psecvklmin = (decimal)caclRes.Psecvklmin / 1000,
+                Psecrab = (decimal)result.Psecrab / 1000,
                 HeatCableLenght = Lsec,
                 CH = CH,
                 Mark = selectedCable.Mark,
@@ -180,12 +187,6 @@ namespace UncomClc.Service
             var maxTemp = GetmaxTempFromBd(bd);
             structure.HasWarning = false;
 
-            // Проверяем, найден ли подходящий кабель
-            if (!cableFound)
-            {
-                if(showMessage) ShowWarningMessage(1);
-                structure.HasWarning = true;
-            }
 
             if (double.Parse(selectedCable.Length) < Lsec)
             {
@@ -205,7 +206,7 @@ namespace UncomClc.Service
                 finalResult.IsShellTemp = true;
                 structure.HasWarning = true;
             }
-            if (shellTemp.Tobol > Tvalue)
+            if (Tvalue> 0 && shellTemp.Tobol > Tvalue)
             {
                 if (showMessage) ShowWarningMessage(5);
                 finalResult.IsShellTemp = true;
@@ -299,7 +300,7 @@ namespace UncomClc.Service
             }
         }
 
-        private (double Rsecrab, double Psecrab, double Pkabrab, decimal Tkabrab0, int Tkabrab, int iteration)
+        private (double Rsecrab, decimal Psecrab, double Pkabrab, decimal Tkabrab0, int Tkabrab, int iteration)
             CalculateCableTemperatureIterative(double Rsec20, int Urab, string connectionScheme, double Lsec,
                                               CableModel cable, int Ttr)
         {
@@ -307,7 +308,8 @@ namespace UncomClc.Service
             int iteration = 0;
             int Tkabrab = Ttr; // Начальное значение температуры кабеля
             decimal Tkabrab0;
-            double Rsecrab, Psecrab, Pkabrab;
+            decimal Psecrab;
+            double Rsecrab, Pkabrab;
 
             bool converged = false;
 
@@ -321,14 +323,14 @@ namespace UncomClc.Service
                 // Вычисляем мощность в зависимости от схемы подключения
                 if (connectionScheme == "линия" || connectionScheme == "петля" || connectionScheme == "две петли" || connectionScheme == "три петли")
                 {
-                    Psecrab = (Urab * Urab) / Rsecrab;
+                    Psecrab = (decimal)((Urab * Urab) / Rsecrab);
                 }
                 else
                 {
-                    Psecrab = (Urab * Urab) / (3 * Rsecrab);
+                    Psecrab = (decimal)((Urab * Urab) / (3 * Rsecrab));
                 }
 
-                Pkabrab = Psecrab / Lsec;
+                Pkabrab = (double)Psecrab / Lsec;
                 Tkabrab0 = (decimal)Pkabrab / (60m * 3.14m * (cable.Dkab / 1000)) + Ttr;
 
                 // Проверяем сходимость
@@ -425,21 +427,21 @@ namespace UncomClc.Service
 
         }
 
-        private (double Psec20, double Psecvklmin, double ssec, double Ivklmin, double Irab)
+        private (double Psec20, decimal Psecvklmin, double ssec, double Ivklmin, double Irab)
             CalculateResistance(Parameters param, double Rsec20, double Urab, double Rsecvklmin, double Rsecrab)
         {
             double Psec20 = 0;
-            double Psecvklmin = 0;
+            decimal Psecvklmin = 0;
 
             if (param.ConnectionScheme == "линия" || param.ConnectionScheme == "петля" || param.ConnectionScheme == "две петли" || param.ConnectionScheme == "три петли")
             {
                 Psec20 = Math.Pow(Urab, 2) / Rsec20;
-                Psecvklmin = Math.Pow(Urab, 2) / Rsecvklmin;
+                Psecvklmin = (decimal)(Math.Pow(Urab, 2) / Rsecvklmin);
             }
             else
             {
                 Psec20 = Math.Pow(Urab, 2) / (3 * Rsec20);
-                Psecvklmin = Math.Pow(Urab, 2) / (3 * Rsecvklmin);
+                Psecvklmin = (decimal)(Math.Pow(Urab, 2) / (3 * Rsecvklmin));
             }
             var ssec = HeatSection(param.ConnectionScheme);
             var Ivklmin = Urab / Rsecvklmin;

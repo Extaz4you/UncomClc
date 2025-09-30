@@ -273,8 +273,8 @@ namespace UncomClc.ViewModels
             }
         }
 
-        private double _psecvklmin;
-        public double Psecvklmin
+        private decimal _psecvklmin;
+        public decimal Psecvklmin
         {
             get => _psecvklmin;
             set
@@ -284,8 +284,8 @@ namespace UncomClc.ViewModels
             }
         }
 
-        private double _psecrab;
-        public double Psecrab
+        private decimal _psecrab;
+        public decimal Psecrab
         {
             get => _psecrab;
             set

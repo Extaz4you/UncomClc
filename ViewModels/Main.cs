@@ -178,9 +178,9 @@ namespace UncomClc.ViewModels
                 Parameters = UpdateCurrentParameters(),
                 CalculateResult = UpdateCurrentResult()
             };
-
             PipeLines.Add(newStructure);
             SelectedPipeLine = newStructure;
+            CalculateWithMessages();
             SaveToTempFile();
         }
         private void CopyRow()

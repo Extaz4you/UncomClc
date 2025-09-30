@@ -69,6 +69,7 @@ namespace UncomClc.ViewModels
                 // Выполняем расчет для текущего элемента перед переключением
                 if (_selectedPipeLine != null)
                 {
+                    showMessage = false;
                     ExecuteCalculate(); // Рассчитываем текущую трубу
                     SaveCurrentParameters(); // Сохраняем параметры и результаты
                 }
@@ -173,14 +174,13 @@ namespace UncomClc.ViewModels
             {
                 Id = newId,
                 Name = $"NewLine_{newId}",
-                HasWarning = SelectedPipeLine.HasWarning,
+                HasWarning = true,
                 SuccessCalculation = false,
                 Parameters = UpdateCurrentParameters(),
                 CalculateResult = UpdateCurrentResult()
             };
             PipeLines.Add(newStructure);
             SelectedPipeLine = newStructure;
-            CalculateWithMessages();
             SaveToTempFile();
         }
         private void CopyRow()
@@ -207,6 +207,8 @@ namespace UncomClc.ViewModels
                     Id = newId,
                     Name = $"{SelectedPipeLine.Name}_Copy",
                     Parameters = copiedParams,
+                    HasWarning = true,
+                    SuccessCalculation = false,
                     CalculateResult = copiedresult
                 };
 
@@ -641,7 +643,7 @@ namespace UncomClc.ViewModels
         }
         public void ExecuteCalculate()
         {
-            if (SelectedPipeLine == null || SelectedPipeLine.SuccessCalculation) return;
+            if (SelectedPipeLine == null ) return;
             var result = calculationService.Calculation(SelectedPipeLine, showMessage);
             if (result != null)
             {

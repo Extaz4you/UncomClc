@@ -181,35 +181,41 @@ namespace UncomClc.Service
             structure.HasWarning = false;
 
             // Проверяем, найден ли подходящий кабель
-            if (!cableFound && showMessage)
+            if (!cableFound)
             {
-                ShowWarningMessage(1, structure);
+                if(showMessage) ShowWarningMessage(1);
+                structure.HasWarning = true;
             }
 
-            if (double.Parse(selectedCable.Length) < Lsec && showMessage)
+            if (double.Parse(selectedCable.Length) < Lsec)
             {
-                ShowWarningMessage(2, structure);
+                if (showMessage) ShowWarningMessage(2);
                 finalResult.IsLenght = true;
+                structure.HasWarning = true;
             }
-            if (shellTemp.Tobol > maxTemp && showMessage)
+            if (shellTemp.Tobol > maxTemp )
             {
-                ShowWarningMessage(3, structure);
+                if (showMessage) ShowWarningMessage(3);
                 finalResult.IsShellTemp = true;
+                structure.HasWarning = true;
             }
-            if (shellTemp.Tobol > Taddmax && showMessage)
+            if (shellTemp.Tobol > Taddmax)
             {
-                ShowWarningMessage(4, structure);
+                if (showMessage) ShowWarningMessage(4);
                 finalResult.IsShellTemp = true;
+                structure.HasWarning = true;
             }
-            if (shellTemp.Tobol > Tvalue && showMessage)
+            if (shellTemp.Tobol > Tvalue)
             {
-                ShowWarningMessage(5, structure);
+                if (showMessage) ShowWarningMessage(5);
                 finalResult.IsShellTemp = true;
+                structure.HasWarning = true;
             }
-            if (caclRes.Ivklmin > Iabnom && showMessage)
+            if (caclRes.Ivklmin > Iabnom)
             {
-                ShowWarningMessage(6, structure);
+                if (showMessage) ShowWarningMessage(6);
                 finalResult.IsStartCurrent = true;
+                structure.HasWarning = true;
             }
             structure.SuccessCalculation = true;
 
@@ -387,39 +393,33 @@ namespace UncomClc.Service
             }
         }
 
-        private void ShowWarningMessage(int errorPlace, GeneralStructure structure)
+        private void ShowWarningMessage(int errorPlace)
         {
             switch (errorPlace)
             {
                 case 1:
                     MessageBox.Show("Не удалось подобрать нагревательную секцию по необходимой мощности обогрева. Попробуйте изменить параметры КСЭО или питающей сети",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    structure.HasWarning = true;
                     break;
                 case 2:
                     MessageBox.Show("Расчетная длина нагревательной секции превышает максимальную длину кабеля в бухте. Обратитесь к производителю нагревательных секций на предмет сращивания кабеля муфтами",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    structure.HasWarning = true;
                     break;
                 case 3:
                     MessageBox.Show("Расчетная максимальная температура оболочки кабеля превышает максимальную допустимую температуру воздействия на кабель. Попробуйте изменить параметры КСЭО, марку кабеля или предусмотрите систему регулирования температуры",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    structure.HasWarning = true;
                     break;
                 case 4:
                     MessageBox.Show("Расчетная максимальная температура оболочки кабеля превышает максимальную допустимую температуру продукта. Попробуйте изменить параметры КСЭО или предусмотрите систему регулирования температуры",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    structure.HasWarning = true;
                     break;
                 case 5:
                     MessageBox.Show("Расчетная максимальная температура оболочки кабеля превышает температурный класс ВЗЭО. Попробуйте изменить параметры КСЭО или предусмотрите систему регулирования температуры",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    structure.HasWarning = true;
                     break;
                 case 6:
                     MessageBox.Show("Стартовый ток секции превышает номинальный ток автоматического выключателя. Попробуйте изменить параметры КСЭО или предусмотреть другое защитное оборудование",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    structure.HasWarning = true;
                     break;
             }
 

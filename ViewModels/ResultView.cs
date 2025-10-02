@@ -163,8 +163,8 @@ namespace UncomClc.ViewModels
             }
         }
 
-        private decimal _cross;
-        public decimal Cross
+        private string _cross;
+        public string Cross
         {
             get => _cross;
             set

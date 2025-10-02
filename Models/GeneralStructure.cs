@@ -100,7 +100,7 @@ namespace UncomClc.Models
         public double Tobol { get; set; }
         public string CH { get; set; }
         public string Mark { get; set; }
-        public decimal Cross { get; set; }
+        public string Cross { get; set; }
         public double Resistance { get; set; }
         public decimal Urab { get; set; }
         public double Psec20 { get; set; }

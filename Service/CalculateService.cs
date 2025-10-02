@@ -182,7 +182,7 @@ namespace UncomClc.Service
                 HeatCableLenght = Lsec,
                 CH = CH,
                 Mark = selectedCable.Mark,
-                Cross = decimal.Parse(selectedCable.Cross),
+                Cross = selectedCable.Cross,
                 Resistance = selectedCable.Resistance,
                 Tobol = shellTemp.Tobol
             };

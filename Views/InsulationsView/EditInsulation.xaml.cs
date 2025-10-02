@@ -30,7 +30,7 @@ namespace UncomClc.Views.InsulationsView
         }
         private void Load()
         {
-            InsulationDataGrid.ItemsSource = Data.UploadedData.Instance.Insulations;
+            InsulationDataGrid.ItemsSource = Data.UploadedData.Instance.Insulations.Where(x=>x.Name != "-");
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +53,6 @@ namespace UncomClc.Views.InsulationsView
             if (selectedItem != null)
             {
                 var insulationItem = selectedItem as Insulation;
-
                 var editWindow = new Change_Insulation(insulationItem);
                 if (editWindow.ShowDialog() == true)
                 {
@@ -78,7 +77,7 @@ namespace UncomClc.Views.InsulationsView
                 var insulationToRemove = selectedItem as Insulation;
 
                 var result = MessageBox.Show(
-                    $"Вы уверены, что хотите удалить трубу '{insulationToRemove.Name}'?",
+                    $"Вы уверены, что хотите удалить'{insulationToRemove.Name}'?",
                     "Подтверждение удаления",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);

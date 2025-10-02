@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace UncomClc.Data
         {
             get
             {
-                if(instance == null) instance = new UploadedData();
+                if (instance == null) instance = new UploadedData();
                 return instance;
             }
         }
@@ -36,6 +37,7 @@ namespace UncomClc.Data
         private void Load()
         {
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //var path = System.IO.Path.Combine(baseDirectory, "Data", "data.json");
             var path = System.IO.Path.Combine(baseDirectory, "..", "..", "Data", "data.json");
             if (!File.Exists(path))
             {
@@ -54,8 +56,9 @@ namespace UncomClc.Data
 
         public void Save()
         {
-            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var baseDirectory = GetAppDirectory();
             var path = System.IO.Path.Combine(baseDirectory, "..", "..", "Data", "data.json");
+            //var path = System.IO.Path.Combine(baseDirectory, "Data", "data.json");
 
             var options = new JsonSerializerOptions
             {
@@ -73,6 +76,18 @@ namespace UncomClc.Data
             public List<Pipe> Pipes { get; set; }
             public List<Insulation> Insulations { get; set; }
         }
-    }
+        public static string GetAppDirectory()
+        {
+            // Для Single File приложения
+            if (AppContext.BaseDirectory.EndsWith(".exe"))
+            {
+                // Возвращаем директорию где находится exe
+                return System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+            }
 
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
+
+    }
 }
+

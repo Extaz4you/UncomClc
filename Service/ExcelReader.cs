@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace UncomClc.Service
         {
             var cableData = new List<CableModel>();
             string filePath = Path.Combine("..", "..", "Catalog.xlsx");
+            //string filePath = Path.Combine(GetAppDirectory(), "Catalog.xlsx");
             // Проверка существования файла
             if (!File.Exists(filePath))
             {
@@ -60,6 +62,17 @@ namespace UncomClc.Service
             }
 
             return cableData;
+        }
+        public static string GetAppDirectory()
+        {
+            // Для Single File приложения
+            if (AppContext.BaseDirectory.EndsWith(".exe"))
+            {
+                // Возвращаем директорию где находится exe
+                return Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+            }
+
+            return AppDomain.CurrentDomain.BaseDirectory;
         }
 
     }

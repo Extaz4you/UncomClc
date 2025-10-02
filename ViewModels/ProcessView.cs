@@ -17,7 +17,7 @@ namespace UncomClc.ViewModels
         private string steamingStatus = "Нет";
         public bool IsSteamingTemperatureEnabled => SteamingStatus == "Есть";
         public bool IsTemperatureClassEnabled => TemperatureClass != "-";
-        public bool IsIsolationThicknessEnabled => ThermalIsolation2 != "- не выбрано -";
+        public bool IsIsolationThicknessEnabled => ThermalIsolation2 != "-";
         private int steamingTemperature = 200;
         private string temperatureClass = "-";
         private int temperatureClassValue = 0;
@@ -28,7 +28,7 @@ namespace UncomClc.ViewModels
         private int lenght = 10;
         private string thermalIsolation = "минеральная вата";
         private string previousThermalIsolation = "минеральная вата";
-        private string thermalIsolation2 = "- не выбрано -";
+        private string thermalIsolation2 = "-";
         private int isolationThickness = 50;
         private int isolationThickness2 = 0;
         private int supportCount = 0;
@@ -95,26 +95,8 @@ namespace UncomClc.ViewModels
             get => thermalIsolation;
             set
             {
-                if (string.IsNullOrEmpty(value) || value == "")
-                {
-                    MessageBox.Show("Нельзя выбрать пустое значение", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                    // Восстанавливаем значение через Dispatcher чтобы UI успел обновиться
-                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        thermalIsolation = previousThermalIsolation;
-                        OnPropertyChanged(nameof(ThermalIsolation));
-                    }));
-
-                    return;
-                }
-
-                if (thermalIsolation != value)
-                {
-                    previousThermalIsolation = thermalIsolation;
-                    thermalIsolation = value;
-                    OnPropertyChanged(nameof(ThermalIsolation));
-                }
+                thermalIsolation = value;
+                OnPropertyChanged(nameof(ThermalIsolation));
             }
         }
         public string ThermalIsolation2
@@ -314,7 +296,7 @@ namespace UncomClc.ViewModels
                        .Select(x => x.Value)
                        .FirstOrDefault();
 
-            if(SupportCount > 0) SupportLenght = info.SupLength;
+            if (SupportCount > 0) SupportLenght = info.SupLength;
             if (ValveCount > 0) ValveLenght = info.ValLength;
             if (FlangCount > 0) FlangLength = info.FlLength;
         }

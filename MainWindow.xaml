@@ -663,7 +663,7 @@ SnapsToDevicePixels="True">
             <RowDefinition Height="Auto" />
             <RowDefinition Height="0.9*" />
             <!--<RowDefinition Height="0.2*" />-->
-            <RowDefinition Height="0.6*" />
+            <RowDefinition Height="0.7*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -754,8 +754,8 @@ SnapsToDevicePixels="True">
         </Border>
 
         <!-- Верхняя 2 часть с вертикальными разделами -->
-        <TabControl x:Name="MyTabControl" Grid.Row="1" Grid.Column="2" Margin="5">
-            <TabItem Header="Исходные данные для расчета нагревательной секции из кабеля нагревостойкого с минеральной изоляцией" Grid.Row="1" Grid.Column="2" >
+        <TabControl x:Name="MyTabControl" Grid.Row="1" Grid.Column="2" Margin="5" Background="Tan">
+            <TabItem Header="Исходные данные для расчета нагревательных секций из кабеля нагревостойкого с минеральной изоляцией" Grid.Row="1" Grid.Column="2" >
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
                     <StackPanel Orientation="Horizontal" Margin="10" >
@@ -983,7 +983,7 @@ SnapsToDevicePixels="True">
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Дополнительные функции" IsEnabled="False">
+            <TabItem Header="Дополнительные функции" IsEnabled="False" Visibility="Hidden">
 
             </TabItem>
         </TabControl>
@@ -1014,27 +1014,27 @@ SnapsToDevicePixels="True">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Расчетные тепловые потери с запасом: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.CalculatedHeatLoss, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.CalculatedHeatLoss, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина одной нитки кабеля с запасом: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Lobsh, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Lobsh, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на трубу: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Lzap, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Lzap, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на задвижки: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Lzadv, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Lzadv, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5"  HorizontalAlignment="Right">
                                             <Label Content="Запас длины на фланцы: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Lfl, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Lfl, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Запас длины на опоры: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Lop, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Lop, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>
@@ -1042,7 +1042,7 @@ SnapsToDevicePixels="True">
                                 
                                 
                             </StackPanel>
-                            <StackPanel Orientation="Vertical" Margin="10">
+                            <StackPanel Orientation="Vertical" Margin="10,20,100,10">
 
                                 <GroupBox>
                                     <GroupBox.Header>
@@ -1051,27 +1051,27 @@ SnapsToDevicePixels="True">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Мощность обогрева трубы рабочая: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Pobogr, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Pobogr, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Мощность одной нитки кабеля рабочая: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Pkabrab, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VatCountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Pkabrab, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource VatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Схема соединения: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Scheme, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Scheme, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Кол-во нагревательных секций: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Ssec, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Ssec, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина нагревательного кабеля секции: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.HeatCableLength, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource ErrorTextBoxStyle3}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.HeatCableLength, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource ErrorTextBoxStyle3}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Максимальная температура оболочки кабеля: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Tobol, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource ErrorTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Tobol, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource ErrorTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>
@@ -1085,39 +1085,39 @@ SnapsToDevicePixels="True">
                                     </GroupBox.Header>
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                            <TextBox Width="350" Height="25" Text="{Binding ResultView.CH, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBox Width="550" Height="25" Text="{Binding ResultView.CH, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Марка кабеля: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Mark, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Mark, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Сечение жилы: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Cross, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MM2CountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Cross, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MM2CountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Номинальное эквив. сопр. жил при 20°C: "/>
-                                            <TextBox Width="90" Height="25" Text="{Binding ResultView.Resistance, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource OmCountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Resistance, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource OmCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочее напряжение: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource VoltageTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource VoltageTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Расчетная мощность при 20°C: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psec20, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Psec20, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина нагревательного кабеля секции: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Lsec, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Lsec, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Длина холодного ввода: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Lust, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Lust, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource MetersTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Температурный класс ВЗЭО: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.TempClass, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.TempClass, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>
@@ -1132,27 +1132,27 @@ SnapsToDevicePixels="True">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Питание "/>
-                                            <TextBox Width="70" Text="{Binding ResultView.Pit, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
+                                            <TextBox Width="100" Text="{Binding ResultView.Pit, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочее напряжение: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Urab, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VoltageTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Стартовый ток секции: "/>
-                                            <TextBox Width="70" Text="{Binding ResultView.Ivklmin, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Height="25" Style="{StaticResource ErrorTextBoxStyle2}"/>
+                                            <TextBox Width="100" Text="{Binding ResultView.Ivklmin, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Height="25" Style="{StaticResource ErrorTextBoxStyle2}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочий ток секции: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Irab, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource CurrnetTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Irab, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource CurrnetTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Стартовая мощность секции: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psecvklmin, UpdateSourceTrigger=PropertyChanged, StringFormat=N3}" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Psecvklmin, UpdateSourceTrigger=PropertyChanged, StringFormat=N3}" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                             <Label Content="Рабочая мощность секции: "/>
-                                            <TextBox Width="70" Height="25" Text="{Binding ResultView.Psecrab, UpdateSourceTrigger=PropertyChanged, StringFormat=N3}" Style="{StaticResource KVatCountTextBoxStyle}"/>
+                                            <TextBox Width="100" Height="25" Text="{Binding ResultView.Psecrab, UpdateSourceTrigger=PropertyChanged, StringFormat=N3}" Style="{StaticResource KVatCountTextBoxStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>

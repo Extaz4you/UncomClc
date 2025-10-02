@@ -46,7 +46,7 @@ namespace UncomClc
             ClearComboBoxes();
 
             AddItemsToComboBox(Pipes, config.Pipes.Select(pipe => pipe.Name));
-            AddItemsToComboBox(ThermalIsolationCombobox, config.Insulations.Select(ins => ins.Name));
+            AddItemsToComboBox(ThermalIsolationCombobox, config.Insulations.Where(x=>x.Name != "-").Select(ins => ins.Name));
             AddItemsToComboBox(ThermalIsolationCombobox2, config.Insulations.Select(ins => ins.Name));
 
         }
@@ -101,8 +101,8 @@ namespace UncomClc
                 ThermalIsolationCombobox.ItemsSource = null;
                 ThermalIsolationCombobox2.Items.Clear();
                 ThermalIsolationCombobox2.ItemsSource = null;
-                AddItemsToComboBox(ThermalIsolationCombobox, Data.UploadedData.Instance.Insulations.Select(insulation => insulation.Name));
-                AddItemsToComboBox(ThermalIsolationCombobox2, Data.UploadedData.Instance.Insulations.Select(insulation => insulation.Name));
+                AddItemsToComboBox(ThermalIsolationCombobox, Data.UploadedData.Instance.Insulations.Where(x=>x.Name != "-").Select(insulation => insulation.Name));
+                AddItemsToComboBox(ThermalIsolationCombobox2, Data.UploadedData.Instance.Insulations.Where(x => x.Name != "-").Select(insulation => insulation.Name));
                 ThermalIsolationCombobox.Items.Refresh();
                 ThermalIsolationCombobox2.Items.Refresh();
             };

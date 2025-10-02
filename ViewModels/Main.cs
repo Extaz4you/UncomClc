@@ -245,8 +245,8 @@ namespace UncomClc.ViewModels
             if (!string.IsNullOrEmpty(file)) QuestionBeforeExite();
             var saveFileDialog = new SaveFileDialog
             {
-                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
-                DefaultExt = ".json",
+                Filter = "Unctrace files (*.unctrace)|*.unctrace|All files (*.*)|*.*\"",
+                DefaultExt = ".unctrace",
             };
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -278,7 +278,7 @@ namespace UncomClc.ViewModels
             if (!string.IsNullOrEmpty(file)) QuestionBeforeExite();
             var openFileDialog = new OpenFileDialog
             {
-                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                Filter = "Unctrace files (*.unctrace)|*.unctrace|All files (*.*)|*.*\"",
                 DefaultExt = ".json"
             };
 

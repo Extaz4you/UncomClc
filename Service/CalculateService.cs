@@ -284,7 +284,7 @@ namespace UncomClc.Service
             int a = param.PipelinePlacement == "открытый воздух" ? 30 : 10;
             float Kzap = param.Diam >= 100 ? 1.1f : 1.15f;
 
-            if (param.ThermalIsolation2 != null && !string.IsNullOrEmpty(param.ThermalIsolation2.Name))
+            if (param.ThermalIsolation2 != null && param.ThermalIsolation2.Name != "-")
             {
                 return Kzap * (param.SupportedTemp - param.MinEnvironmentTemp) / (
                     Math.Log(Dtr_m / (Dtr_m - 2 * Tst_m)) / (2 * Math.PI * Ktr) +
@@ -491,7 +491,7 @@ namespace UncomClc.Service
 
                 Pobogmax = CalculatePobogr(Pkabmax, param);
 
-                if (param.ThermalIsolation2 != null && !string.IsNullOrEmpty(param.ThermalIsolation2.Name) && Tiz2_m > 0)
+                if (param.ThermalIsolation2 != null && param.ThermalIsolation2.Name != "-" && Tiz2_m > 0)
                 {
                     Ttpmax = (Pobogmax / 3.14) * (Math.Log((Dtr_m + 2 * Tiz1_m) / Dtr_m) / (2 * Kiz) + Math.Log((Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) / (Dtr_m + 2 * Tiz1_m)) / (2 * Kiz2) + 1 / ((Dtr_m + 2 * Tiz1_m + 2 * Tiz2_m) * a)) + Tokrmax;
                 }

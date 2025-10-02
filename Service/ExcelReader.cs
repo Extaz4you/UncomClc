@@ -16,8 +16,8 @@ namespace UncomClc.Service
         public static List<CableModel> ReadCableDataFromExcel(string sheetName)
         {
             var cableData = new List<CableModel>();
-            string filePath = Path.Combine("..", "..", "Catalog.xlsx");
-            //string filePath = Path.Combine(GetAppDirectory(), "Catalog.xlsx");
+            //string filePath = Path.Combine("..", "..", "Catalog.xlsx");
+            string filePath = Path.Combine(GetAppDirectory(), "Catalog.xlsx");
             // Проверка существования файла
             if (!File.Exists(filePath))
             {

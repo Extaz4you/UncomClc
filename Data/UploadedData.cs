@@ -37,8 +37,8 @@ namespace UncomClc.Data
         private void Load()
         {
             var baseDirectory = GetAppDirectory();
-            //var path = System.IO.Path.Combine(baseDirectory, "Data", "data.json");
-            var path = System.IO.Path.Combine(baseDirectory, "..", "..", "Data", "data.json");
+            var path = System.IO.Path.Combine(baseDirectory, "Data", "data.json");
+            //var path = System.IO.Path.Combine(baseDirectory, "..", "..", "Data", "data.json");
             if (!File.Exists(path))
             {
                 var emptyData = new Db { Pipes = new List<Pipe>() };
@@ -57,8 +57,8 @@ namespace UncomClc.Data
         public void Save()
         {
             var baseDirectory = GetAppDirectory();
-            var path = System.IO.Path.Combine(baseDirectory, "..", "..", "Data", "data.json");
-            //var path = System.IO.Path.Combine(baseDirectory, "Data", "data.json");
+            //var path = System.IO.Path.Combine(baseDirectory, "..", "..", "Data", "data.json");
+           var path = System.IO.Path.Combine(baseDirectory, "Data", "data.json");
 
             var options = new JsonSerializerOptions
             {

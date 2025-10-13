@@ -40,8 +40,10 @@ namespace UncomClc.Views.InsulationsView
                 var newInsulation = pipePropertiesWindow.NewInsulation;
                 if (newInsulation != null)
                 {
-                    InsulationUpdated?.Invoke();
+                    InsulationDataGrid.ItemsSource = UploadedData.Instance.Insulations.Where(x => x.Name != "-");
                     InsulationDataGrid.Items.Refresh();
+                    InsulationUpdated?.Invoke();
+
                 }
 
             }
@@ -56,7 +58,6 @@ namespace UncomClc.Views.InsulationsView
                 var editWindow = new Change_Insulation(insulationItem);
                 if (editWindow.ShowDialog() == true)
                 {
-                    InsulationDataGrid.ItemsSource = null;
                     InsulationDataGrid.ItemsSource = UploadedData.Instance.Insulations;
                     InsulationDataGrid.Items.Refresh();
                     InsulationUpdated?.Invoke();

@@ -48,6 +48,7 @@ namespace UncomClc.ViewModels
         private string _currentFileName;
         private bool _isCalculating = false;
         private bool showMessage = false;
+        private Parameters reset;
 
         public ObservableCollection<GeneralStructure> PipeLines
         {
@@ -112,6 +113,7 @@ namespace UncomClc.ViewModels
         public Main()
         {
             calculationService = new CalculateService();
+            reset = UpdateCurrentParameters();
             // Инициализация команд
             AddPipeCommand = new RelayCommand(AddNewPipe);
             DeleteCommand = new RelayCommand(DeleteSelectedPipe);
@@ -265,8 +267,8 @@ namespace UncomClc.ViewModels
                 {
                     Id = 1,
                     Name = "NewLine",
-                    Parameters = UpdateCurrentParameters(),
-                    CalculateResult = UpdateCurrentResult()
+                    Parameters = reset,
+                    CalculateResult = new CalculateResult()
                 };
                 PipeLines.Add(newStructure);
                 SelectedPipeLine = newStructure;
@@ -420,7 +422,7 @@ namespace UncomClc.ViewModels
             result.CH = ResultView.CH;
             result.Mark = ResultView.Mark;
             result.Cross = ResultView.Cross;
-            result.Resistance = ResultView.Resistance / 1000;
+            result.Resistance = ResultView.Resistance;
             result.Tobol = ResultView.Tobol;
             result.IsShellTemp = ResultView.IsShellTemp;
             result.IsStartCurrent = ResultView.IsStartCurrent;
@@ -550,7 +552,7 @@ namespace UncomClc.ViewModels
                 ResultView.CH = result.CH;
                 ResultView.Mark = result.Mark;
                 ResultView.Cross = result.Cross;
-                ResultView.Resistance = result.Resistance * 1000;
+                ResultView.Resistance = result.Resistance;
                 ResultView.Tobol = result.Tobol;
                 ResultView.IsShellTemp = result.IsShellTemp;
                 ResultView.IsStartCurrent = result.IsStartCurrent;

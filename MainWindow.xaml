@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:UncomClc"
         mc:Ignorable="d"
-        Icon="pack://application:,,,/Images/uncom.ico"
+        Icon="pack://application:,,,/Images/uncomtech.png"
         Title="UncomClc" Height="1113" Width="2000"
         WindowState="Maximized">
 
@@ -794,15 +794,15 @@ SnapsToDevicePixels="True">
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
-                                        <Label Content="Опоры: "/>
-                                        <TextBox x:Name="SupportsCount" Margin="0,0,5,0" Width="60" Height="25" Text="{Binding ProcessVM.SupportCount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
-                                        <TextBox x:Name="SupportsLenght"  Width="70" Height="25" Text="{Binding ProcessVM.SupportLenght, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource LenghtCountTextBoxStyle}" />
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
                                         <Label Content="Фланцы: "/>
                                         <TextBox x:Name="FlangsCount" Margin="0,0,5,0" Width="60" Height="25" Text="{Binding ProcessVM.FlangCount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
                                         <TextBox x:Name="FlangsLengt"  Width="70" Height="25" Text="{Binding ProcessVM.FlangLength, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource LenghtCountTextBoxStyle}" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                                        <Label Content="Опоры: "/>
+                                        <TextBox x:Name="SupportsCount" Margin="0,0,5,0" Width="60" Height="25" Text="{Binding ProcessVM.SupportCount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CountTextBoxStyle}"/>
+                                        <TextBox x:Name="SupportsLenght"  Width="70" Height="25" Text="{Binding ProcessVM.SupportLenght, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource LenghtCountTextBoxStyle}" />
                                     </StackPanel>
 
                                 </StackPanel>
@@ -906,7 +906,7 @@ SnapsToDevicePixels="True">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Рабочая среда:"/>
-                                        <ComboBox x:Name="WorkEnvironment" Width="150" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.WorkEnvironmentOptions}" SelectedItem="{Binding PowerSupplyParametersVM.WorkEnvironment, UpdateSourceTrigger=PropertyChanged, Delay=50, NotifyOnSourceUpdated=True}"/>
+                                        <ComboBox x:Name="WorkEnvironment" Width="160" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.WorkEnvironmentOptions}" SelectedItem="{Binding PowerSupplyParametersVM.WorkEnvironment, UpdateSourceTrigger=PropertyChanged, Delay=50, NotifyOnSourceUpdated=True}"/>
                                     </StackPanel>
 
 
@@ -949,7 +949,7 @@ SnapsToDevicePixels="True">
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Label Content="Схема соединения:"/>
-                                        <ComboBox x:Name="ConnectionScheme" Width="80" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.ConnectionSchemeOptions}" SelectedItem="{Binding PowerSupplyParametersVM.ConnectionScheme}"/>
+                                        <ComboBox x:Name="ConnectionScheme" Width="90" Height="25" ItemsSource="{Binding PowerSupplyParametersVM.ConnectionSchemeOptions}" SelectedItem="{Binding PowerSupplyParametersVM.ConnectionScheme}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -1042,7 +1042,7 @@ SnapsToDevicePixels="True">
                                 
                                 
                             </StackPanel>
-                            <StackPanel Orientation="Vertical" Margin="10,20,100,10">
+                            <StackPanel Orientation="Vertical" Margin="10">
 
                                 <GroupBox>
                                     <GroupBox.Header>

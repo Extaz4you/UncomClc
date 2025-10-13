@@ -82,8 +82,6 @@ namespace UncomClc
             EditPipes editPipes = new EditPipes();
             editPipes.MainEditPipe += () =>
             {
-                Pipes.Items.Clear();
-                Pipes.ItemsSource = null;
                 AddItemsToComboBox(Pipes, Data.UploadedData.Instance.Pipes.Select(pipe => $"{pipe.Name}"));
                 Pipes.Items.Refresh();
             };
@@ -97,10 +95,6 @@ namespace UncomClc
             var editWindow = new EditInsulation();
             editWindow.InsulationUpdated += () =>
             {
-                ThermalIsolationCombobox.Items.Clear();
-                ThermalIsolationCombobox.ItemsSource = null;
-                ThermalIsolationCombobox2.Items.Clear();
-                ThermalIsolationCombobox2.ItemsSource = null;
                 AddItemsToComboBox(ThermalIsolationCombobox, Data.UploadedData.Instance.Insulations.Where(x=>x.Name != "-").Select(insulation => insulation.Name));
                 AddItemsToComboBox(ThermalIsolationCombobox2, Data.UploadedData.Instance.Insulations.Where(x => x.Name != "-").Select(insulation => insulation.Name));
                 ThermalIsolationCombobox.Items.Refresh();

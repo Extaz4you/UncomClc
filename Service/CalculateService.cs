@@ -183,7 +183,7 @@ namespace UncomClc.Service
                 CH = CH,
                 Mark = selectedCable.Mark,
                 Cross = selectedCable.Cross,
-                Resistance = selectedCable.Resistance,
+                Resistance = selectedCable.Resistance * 1000,
                 Tobol = shellTemp.Tobol
             };
 

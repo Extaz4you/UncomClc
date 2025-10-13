@@ -98,6 +98,7 @@ namespace UncomClc.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand EditLineNameCommand { get; }
         public ICommand CopyCommand { get; }
+        public ICommand InfoCommand { get; }
         public ICommand Calculate { get; }
 
         public string CurrentFile
@@ -120,6 +121,7 @@ namespace UncomClc.ViewModels
             CreateCommand = new RelayCommand(CreateFile);
             OpenCommand = new RelayCommand(OpenFile);
             SaveCommand = new RelayCommand(SaveFile);
+            InfoCommand = new RelayCommand(ShowInfo);
             EditLineNameCommand = new RelayCommand(EditLineName);
             CopyCommand = new RelayCommand(CopyRow);
             Calculate = new RelayCommand(CalculateWithMessages);
@@ -715,6 +717,19 @@ namespace UncomClc.ViewModels
             {
                 return;
             }
+        }
+
+        private void ShowInfo()
+        {
+            Window imageWindow = new Window
+            {
+                Title = "Информация",
+                Width = 800,
+                Height = 700,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+
+            imageWindow.ShowDialog();
         }
 
     }

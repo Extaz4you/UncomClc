@@ -660,7 +660,7 @@ SnapsToDevicePixels="True">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="0.9*" />
             <!--<RowDefinition Height="0.2*" />-->
             <RowDefinition Height="0.7*" />
@@ -677,13 +677,15 @@ SnapsToDevicePixels="True">
         <!-- Верхний горизонтальный раздел -->
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1">
 
-            <ToolBar Background="Transparent">
+            <ToolBar Background="Transparent" >
 
                 <Menu Background="White">
                     <MenuItem Width="32" Height="25" Margin="5" Background="Tan" BorderBrush="Black">
+                        
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/folder.png" Width="20" Height="20"/>
                         </MenuItem.Icon>
+                        
                         <MenuItem Header="Создать" Command="{Binding CreateCommand}">
                             <MenuItem.Icon>
                                 <Image Source="pack://application:,,,/Images/CreateFile.png" Width="20" Height="20"/>
@@ -715,10 +717,15 @@ SnapsToDevicePixels="True">
                         </MenuItem.Header>
                     </MenuItem>
                 </Menu>
-
+                <Menu Background="White">
+                    <MenuItem Header="" Command="{Binding InfoCommand}" Height="35" Width="45">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/Info.png" Width="30" Height="30"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </Menu>
             </ToolBar>
             
-
         </StackPanel>
 
         <!-- Верхняя 1 часть с вертикальными разделами -->

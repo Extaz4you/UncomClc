@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace UncomClc.ViewModels
 {
@@ -28,6 +29,11 @@ namespace UncomClc.ViewModels
             get => minEnvironmentTemp;
             set
             {
+                if(value > MaxEnvironmentTemp)
+                {
+                    MessageBox.Show("Минимальная температура окружающей среды не может быть больше максимальной температуры окружающей среды", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 minEnvironmentTemp = value;
                 OnPropertyChanged(nameof(MinEnvironmentTemp));
             }

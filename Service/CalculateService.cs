@@ -41,7 +41,7 @@ namespace UncomClc.Service
             double Dtr_m = param.Diam / 1000.0;
             int Tst = param.Thickness;
             double Tst_m = param.Thickness / 1000.0;
-            int Ltr = param.Lenght;
+            double Ltr = param.Lenght;
             float KLtr = param.PipeKoef;
             int Tiz1 = param.IsolationThickness;
             double Tiz1_m = param.IsolationThickness / 1000.0;
@@ -58,7 +58,7 @@ namespace UncomClc.Service
             int Urab = param.WorkLoad;
             int Tvklmin = param.MinTempOn;
             int Szhil = param.NumberCores;
-            int Lust = param.LenghtSection;
+            double Lust = param.LenghtSection;
             int Szadv = param.ValveCount;
             int Sop = param.SupportCount;
             int Sfl = param.FlangCount;
@@ -259,7 +259,7 @@ namespace UncomClc.Service
             return new Lengths
             {
                 Ltr = param.Lenght,
-                Lzap = param.Lenght * param.PipeKoef - param.Lenght,
+                Lzap = (float)(param.Lenght * param.PipeKoef - param.Lenght),
                 Lzadv = param.ValveCount * param.ValveLenght,
                 Lfl = param.FlangCount * param.FlangLength,
                 Lop = param.SupportCount * param.SupportLenght

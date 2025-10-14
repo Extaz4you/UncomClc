@@ -17,6 +17,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Xml;
 using UncomClc.Models;
 using UncomClc.Models.Insulations;
@@ -724,14 +726,85 @@ namespace UncomClc.ViewModels
             Window imageWindow = new Window
             {
                 Title = "Информация",
-                Width = 800,
-                Height = 700,
+                Width = 400,
+                Height = 400,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
+            
 
+            // Создание основного контейнера
+            StackPanel mainPanel = new StackPanel
+            {
+                Margin = new Thickness(20),
+                Background = Brushes.White
+            };
+
+            // Заголовок
+            TextBlock title = new TextBlock
+            {
+                Text = "Контактная информация",
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 20)
+            };
+
+            // Изображение
+            Image logo = new Image
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Images/uncomtech.png")),
+                Width = 150,
+                Height = 150,
+                Margin = new Thickness(0, 0, 0, 20),
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            // Контактная информация
+            StackPanel contactPanel = new StackPanel
+            {
+                Margin = new Thickness(0, 0, 0, 20)
+            };
+
+            contactPanel.Children.Add(CreateContactItem("Телефон:", "8 (800) 600-10-20 (по всей стране)"));
+            contactPanel.Children.Add(CreateContactItem("", "+7 (499) 277-17-50"));
+            contactPanel.Children.Add(CreateContactItem("Email:", "https://www.uncomtech.ru/"));
+            contactPanel.Children.Add(CreateContactItem("Адрес:", "г. Москва, ул. Большая Ордынка, д. 46с5"));
+
+
+            // Добавление элементов в основную панель
+            mainPanel.Children.Add(title);
+            mainPanel.Children.Add(logo);
+            mainPanel.Children.Add(contactPanel);
+
+            imageWindow.Content = mainPanel;
             imageWindow.ShowDialog();
         }
+        private StackPanel CreateContactItem(string label, string value)
+        {
+            StackPanel panel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Margin = new Thickness(0, 5, 0, 5)
+            };
 
+            TextBlock labelText = new TextBlock
+            {
+                Text = label,
+                FontWeight = FontWeights.Bold,
+                Width = 80,
+                Margin = new Thickness(0, 0, 10, 0)
+            };
+
+            TextBlock valueText = new TextBlock
+            {
+                Text = value
+            };
+
+            panel.Children.Add(labelText);
+            panel.Children.Add(valueText);
+
+            return panel;
+        }
     }
 
     public static class ObservableCollectionExtensions

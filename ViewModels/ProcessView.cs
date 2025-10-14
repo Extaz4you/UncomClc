@@ -25,7 +25,7 @@ namespace UncomClc.ViewModels
         private int diam = 57;
         private int thickness = 3;
         private float pipeKoef = 1.01f;
-        private int lenght = 10;
+        private double lenght = 10;
         private string thermalIsolation = "минеральная вата";
         private string previousThermalIsolation = "минеральная вата";
         private string thermalIsolation2 = "-";
@@ -77,11 +77,16 @@ namespace UncomClc.ViewModels
             get => pipeKoef;
             set
             {
+                if(value < 1)
+                {
+                    MessageBox.Show("Не может быть меньше 1", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 pipeKoef = value;
                 OnPropertyChanged(nameof(PipeKoef));
             }
         }
-        public int Lenght
+        public double Lenght
         {
             get => lenght;
             set

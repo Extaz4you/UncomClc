@@ -18,7 +18,7 @@ namespace UncomClc.ViewModels
         private int current = 25;
         private int numberCores = 1;
         private bool isRecalculating = false;
-        private int lenghtSection = 2;
+        private double lenghtSection = 2;
         private string cableType = "КНМС825";
         private int minTempOn = -20;
         private string connectionScheme = "петля";
@@ -143,7 +143,7 @@ namespace UncomClc.ViewModels
             }
         }
 
-        public int LenghtSection
+        public double LenghtSection
         {
             get => lenghtSection;
             set

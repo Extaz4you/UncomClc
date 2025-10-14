@@ -218,8 +218,8 @@ namespace UncomClc.ViewModels
             }
         }
 
-        private decimal _lust;
-        public decimal Lust
+        private double _lust;
+        public double Lust
         {
             get => _lust;
             set

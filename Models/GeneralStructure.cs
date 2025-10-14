@@ -51,7 +51,7 @@ namespace UncomClc.Models
         public int Diam { get; set; }
         public int Thickness { get; set; }
         public float PipeKoef { get; set; }
-        public int Lenght { get; set; }
+        public double Lenght { get; set; }
         public Insulation ThermalIsolation { get; set; }
         public Insulation ThermalIsolation2 { get; set; }
         public int IsolationThickness { get; set; }
@@ -77,7 +77,7 @@ namespace UncomClc.Models
         public int Current { get; set; }
         public int WorkLoad { get; set; }
         public int NumberCores { get; set; }
-        public int LenghtSection { get; set; }
+        public double LenghtSection { get; set; }
         public string CableType { get; set; }
         public int MinTempOn { get; set; }
         public string ConnectionScheme { get; set; }
@@ -105,7 +105,7 @@ namespace UncomClc.Models
         public decimal Urab { get; set; }
         public double Psec20 { get; set; }
         public double Lsec { get; set; }
-        public decimal Lust { get; set; }
+        public double Lust { get; set; }
         public string TempClass { get; set; }
         public  string Pit { get; set; }
         public double Ivklmin { get; set; }

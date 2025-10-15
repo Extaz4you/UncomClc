@@ -36,7 +36,7 @@ namespace UncomClc.ViewModels
         public PowerSupplyParametersView PowerSupplyParametersVM { get; } = new PowerSupplyParametersView();
 
         public ResultView ResultView { get; } = new ResultView();
-        
+
 
         private ObservableCollection<GeneralStructure> _pipeLines = new ObservableCollection<GeneralStructure>();
         private GeneralStructure _selectedPipeLine;
@@ -650,7 +650,7 @@ namespace UncomClc.ViewModels
         }
         public void ExecuteCalculate()
         {
-            if (SelectedPipeLine == null ) return;
+            if (SelectedPipeLine == null) return;
             var result = calculationService.Calculation(SelectedPipeLine, showMessage);
             if (result != null)
             {
@@ -727,10 +727,10 @@ namespace UncomClc.ViewModels
             {
                 Title = "Информация",
                 Width = 400,
-                Height = 400,
+                Height = 450,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
-            
+
 
             // Создание основного контейнера
             StackPanel mainPanel = new StackPanel
@@ -766,7 +766,7 @@ namespace UncomClc.ViewModels
             };
 
             contactPanel.Children.Add(CreateContactItem("Телефон:", "8 (800) 600-10-20 (по всей стране)"));
-            contactPanel.Children.Add(CreateContactItem("", "+7 (499) 277-17-50"));
+            contactPanel.Children.Add(CreateContactItem("", "+7 (499) 277-17-50 (Московская область)"));
             contactPanel.Children.Add(CreateContactItem("Email:", "https://www.uncomtech.ru/"));
             contactPanel.Children.Add(CreateContactItem("Адрес:", "г. Москва, ул. Большая Ордынка, д. 46с5"));
 
@@ -794,14 +794,43 @@ namespace UncomClc.ViewModels
                 Width = 80,
                 Margin = new Thickness(0, 0, 10, 0)
             };
-
-            TextBlock valueText = new TextBlock
+            if (label == "Email:")
             {
-                Text = value
-            };
+                Hyperlink hyperlink = new Hyperlink { NavigateUri = new Uri("mailto:info@uncomtech.com") };
+                Hyperlink hyperlink2 = new Hyperlink { NavigateUri = new Uri("mailto:mtulyakov@uncomtech.com") };
+                hyperlink.Inlines.Add("info@uncomtech.com");
+                hyperlink2.Inlines.Add("mtulyakov@uncomtech.com");
+                hyperlink.RequestNavigate += (sender, e) =>
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = e.Uri.ToString(),
+                        UseShellExecute = true
+                    });
+                };
+                hyperlink2.RequestNavigate += (sender, e) =>
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = e.Uri.ToString(),
+                        UseShellExecute = true
+                    });
+                };
 
-            panel.Children.Add(labelText);
-            panel.Children.Add(valueText);
+                TextBlock valueText = new TextBlock();
+                valueText.Inlines.Add(hyperlink);
+                valueText.Inlines.Add(Environment.NewLine);
+                valueText.Inlines.Add(hyperlink2);
+
+                panel.Children.Add(labelText);
+                panel.Children.Add(valueText);
+            }
+            else
+            {
+                TextBlock valueText = new TextBlock { Text = value };
+                panel.Children.Add(labelText);
+                panel.Children.Add(valueText);
+            }
 
             return panel;
         }

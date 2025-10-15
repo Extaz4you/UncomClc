@@ -20,6 +20,11 @@ namespace UncomClc.ViewModels
             get => maxEnvironmentTemp;
             set
             {
+                if(value < MinEnvironmentTemp)
+                {
+                    MessageBox.Show("Максимальная температура окружающей среды не может быть меньше минимальной температуры окружающей среды", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 maxEnvironmentTemp = value;
                 OnPropertyChanged(nameof(MaxEnvironmentTemp));
             }

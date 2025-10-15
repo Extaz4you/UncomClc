@@ -752,11 +752,11 @@ namespace UncomClc.ViewModels
             // Изображение
             Image logo = new Image
             {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Images/uncomtech.png")),
-                Width = 150,
+                Source = new BitmapImage(new Uri("pack://application:,,,/Images/logo.png")),
+                Width = 250,
                 Height = 150,
                 Margin = new Thickness(0, 0, 0, 20),
-                HorizontalAlignment = HorizontalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
             };
 
             // Контактная информация
@@ -765,6 +765,7 @@ namespace UncomClc.ViewModels
                 Margin = new Thickness(0, 0, 0, 20)
             };
 
+            contactPanel.Children.Add(CreateContactItem("Сайт:", "https://www.uncomtech.ru/"));
             contactPanel.Children.Add(CreateContactItem("Телефон:", "8 (800) 600-10-20 (по всей стране)"));
             contactPanel.Children.Add(CreateContactItem("", "+7 (499) 277-17-50 (Московская область)"));
             contactPanel.Children.Add(CreateContactItem("Email:", "https://www.uncomtech.ru/"));
@@ -794,21 +795,15 @@ namespace UncomClc.ViewModels
                 Width = 80,
                 Margin = new Thickness(0, 0, 10, 0)
             };
-            if (label == "Email:")
+
+            if (label == "Сайт:")
             {
-                Hyperlink hyperlink = new Hyperlink { NavigateUri = new Uri("mailto:info@uncomtech.com") };
-                Hyperlink hyperlink2 = new Hyperlink { NavigateUri = new Uri("mailto:mtulyakov@uncomtech.com") };
-                hyperlink.Inlines.Add("info@uncomtech.com");
-                hyperlink2.Inlines.Add("mtulyakov@uncomtech.com");
-                hyperlink.RequestNavigate += (sender, e) =>
+                Hyperlink hyperlink = new Hyperlink
                 {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = e.Uri.ToString(),
-                        UseShellExecute = true
-                    });
+                    NavigateUri = new Uri(value)
                 };
-                hyperlink2.RequestNavigate += (sender, e) =>
+                hyperlink.Inlines.Add(value);
+                hyperlink.RequestNavigate += (sender, e) =>
                 {
                     System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                     {
@@ -819,11 +814,59 @@ namespace UncomClc.ViewModels
 
                 TextBlock valueText = new TextBlock();
                 valueText.Inlines.Add(hyperlink);
-                valueText.Inlines.Add(Environment.NewLine);
-                valueText.Inlines.Add(hyperlink2);
 
                 panel.Children.Add(labelText);
                 panel.Children.Add(valueText);
+            }
+            else if (label == "Email:")
+            {
+                // Создаем контейнер для email-адресов
+                StackPanel emailPanel = new StackPanel
+                {
+                    Orientation = Orientation.Vertical
+                };
+
+                // Первый email
+                Hyperlink emailLink1 = new Hyperlink
+                {
+                    NavigateUri = new Uri("mailto:info@uncomtech.com")
+                };
+                emailLink1.Inlines.Add("info@uncomtech.com");
+                emailLink1.RequestNavigate += (sender, e) =>
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = e.Uri.ToString(),
+                        UseShellExecute = true
+                    });
+                };
+
+                // Второй email
+                Hyperlink emailLink2 = new Hyperlink
+                {
+                    NavigateUri = new Uri("mailto:mtulyakov@uncomtech.com")
+                };
+                emailLink2.Inlines.Add("mtulyakov@uncomtech.com");
+                emailLink2.RequestNavigate += (sender, e) =>
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = e.Uri.ToString(),
+                        UseShellExecute = true
+                    });
+                };
+
+                TextBlock emailText1 = new TextBlock();
+                emailText1.Inlines.Add(emailLink1);
+
+                TextBlock emailText2 = new TextBlock();
+                emailText2.Inlines.Add(emailLink2);
+
+                emailPanel.Children.Add(emailText1);
+                emailPanel.Children.Add(emailText2);
+
+                panel.Children.Add(labelText);
+                panel.Children.Add(emailPanel);
             }
             else
             {
